@@ -5,8 +5,8 @@ oasis-dashboard
 Oasis Dashboard
 
 * Free software: Apache license
-* Source: http://git.openstack.org/cgit/openstack/magnum-ui
-* Bugs: http://bugs.launchpad.net/magnum-ui
+* Source: https://github.com/iBluemind/oasis-dashboard
+* Bugs: https://github.com/iBluemind/oasis-dashboard
 
 Enabling in DevStack
 --------------------
