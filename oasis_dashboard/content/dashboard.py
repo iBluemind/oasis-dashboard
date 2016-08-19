@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 import horizon
 
-class Oasis(horizon.dashboard) :
+class Oasis(horizon.Dashboard) :
     name =_("Oasis")
     slug = "oasis"
     panels = ('policy')
