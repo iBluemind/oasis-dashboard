@@ -8,4 +8,4 @@ PANEL_GROUP = 'admin'
 PANEL_DASHBOARD = 'admin'
 
 # Python panel class of the PANEL to be added.
-ADD_PANEL = 'oasis_dashboard.content.admin.panel.Admin'
+ADD_PANEL = 'oasis_dashboard.content.policy.panel.Policy'
