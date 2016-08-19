@@ -7,7 +7,7 @@ import horizon
 class Oasis(horizon.dashboard) :
     name =_("Oasis")
     slug = "oasis"
-    panels = ('admin')
-    default_panel = 'admin'
+    panels = ('policy')
+    default_panel = 'policy'
 
 horizon.register(Oasis)
