@@ -1,10 +1,11 @@
 __author__ = 'kjwook'
 
-DASHBOARD = 'oasis'
-ADD_INSTALLED_APPS = [
-    'oasis_dashboard',
-    'oasis_dashboard.content'
-]
-DEFAULT = True
-AUTO_DISCOVER_STATIC_FILES = True
-# ADD_ANGULAR_MODULES = ['horizon.cluster']
+# The slug of the panel to be added to HORIZON_CONFIG. Required.
+PANEL = 'function'
+# The slug of the panel group the PANEL is associated with.
+PANEL_GROUP = 'oasis'
+# The slug of the dashboard the PANEL associated with. Required.
+PANEL_DASHBOARD = 'oasis'
+
+# Python panel class of the PANEL to be added.
+ADD_PANEL = 'oasis_dashboard.content.function.panel.Function'

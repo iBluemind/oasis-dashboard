@@ -1,7 +1,6 @@
 __author__ = 'kjwook'
 
-from django.views import generic
+from horizon import views
 
-
-class IndexView(generic.TemplateView):
-    template_name = 'content/policy/index.html'
+class IndexView(views.APIView):
+    template_name = 'policy/index.html'

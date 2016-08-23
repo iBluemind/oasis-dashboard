@@ -6,7 +6,7 @@ import horizon
 from oasis_dashboard.content import dashboard
 
 class Policy(horizon.Panel) :
-    name = _("Policy")
+    name = _("Oasis Policy")
     slug = 'policy'
 
 dashboard.Oasis.register(Policy)
