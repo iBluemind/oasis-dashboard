@@ -1,14 +1,22 @@
 {% load i18n %}
 
-<div class="form-group">
-    <div>Function</div>
-    <div id="function_input_form">
-        <textarea rows="50" cols="100">
-        </textarea>
-    </div>
-
-    <div class="field-filter">
-        <button type="button" class="btn btn-default full-config-show" >Cancel</button>
-        <button type="button" class="btn btn-default full-config-hide" >Create</button>
-    </div>
+<div id="editor" name="content" style="width:600px; height:500px">
 </div>
+
+<div class="field-filter">
+    <button type="button" class="btn btn-default full-config-show" >Cancel</button>
+    <button type="button" class="btn btn-default full-config-hide" >Create</button>
+</div>
+
+
+{% block js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/python");
+</script>
+{% endblock %}
+
+
