@@ -4,3 +4,9 @@
 {% block modal-body-right %}
     KKKKKKK
 {% endblock %}
+
+
+{% block modal-footer %}
+  <a href="{% url 'horizon:oasisdash:oasispolicy:index' %}" class="btn btn-default cancel">{% trans "Cancel" %}</a>
+  <input class="btn btn-primary" type="submit" value="{% trans "Update Policy" %}" />
+{% endblock %}

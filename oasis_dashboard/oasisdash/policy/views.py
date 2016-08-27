@@ -35,10 +35,10 @@ class IndexView(forms.ModalFormView):
     form_class = policy_forms.CreatePolicyForm
     form_id = "create_policy_form"
     modal_header = _("Define VM Policy")
-    submit_label = _("Adjust")
-    submit_url = "horizon:oasis:policy:index"
+    # submit_label = _("Adjust")
+    submit_url = reverse_lazy("horizon:oasisdash:oasispolicy:index")
     template_name = 'oasisdash/oasispolicy/index.html'
-    success_url = reverse_lazy("horizon:oasis:policy:index")
+    success_url = reverse_lazy("horizon:oasisdash:oasispolicy:index")
     page_title = _("Define VM Policy")
 
     def get_context_data(self, **kwargs):
@@ -48,7 +48,7 @@ class IndexView(forms.ModalFormView):
         # context['submit_url'] = reverse(self.submit_url, args=args)
         return context
 
-    def get_policy(self, *ag, **kwargs):
+    def _get_policy(self, *ag, **kwargs):
         try:
             return oasis.policy_get(self.request)
         except Exception:
@@ -57,8 +57,9 @@ class IndexView(forms.ModalFormView):
 
     def get_initial(self):
         policy = self._get_policy()
-        initial = {
-            'total_vm': policy['total_vm_count'],
-            'vm_per_user': policy['vm_count_per_user']
-        }
+        # initial = {
+        #     'total_vm': policy['total_vm_count'],
+        #     'vm_per_user': policy['vm_count_per_user']
+        # }
+        initial = {}
         return initial

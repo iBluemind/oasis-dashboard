@@ -25,6 +25,7 @@ class CreatePolicyForm(forms.SelfHandlingForm):
         required=True)
 
     def handle(self, request, data):
+        LOG.debug("Handle CLick!!!!")
         try:
 
             args = {
