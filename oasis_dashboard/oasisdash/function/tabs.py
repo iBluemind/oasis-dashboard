@@ -47,6 +47,7 @@ class IntegrationTab(tabs.TableTab):
                     "project_id": "1234"
                 }
             ]
+
             return functions
         except Exception:
             error_message = _('Unable to get functions')

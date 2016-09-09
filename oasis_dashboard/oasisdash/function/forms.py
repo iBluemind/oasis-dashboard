@@ -28,5 +28,3 @@ class DetailFunctionForm(forms.SelfHandlingForm):
             ('delete','DELETE'),
         ])
         self.fields['method'].choices = choices
-
-
