@@ -7,13 +7,26 @@ from horizon import forms
 from horizon import messages
 
 
-class CreateFunctionForm(forms.SelfHandlingForm):
-
-    function = forms.CharField(
-        max_length=255,
-        widget=forms.Textarea(attrs={'rows': 50}),
-        label=_("Function"),
-        required=False)
+class DetailFunctionForm(forms.SelfHandlingForm):
+    function_name = forms.CharField(
+        label=_("Function Name"),
+        max_length=50,
+        required=True)
+    method = forms.ChoiceField(
+        label=_("Method"))
 
     def handle(self, request, data):
-        return 'a'
+        pass
+
+    def __init__(self, request, *args, **kwargs):
+        super(DetailFunctionForm, self).__init__(request, *args, **kwargs)
+        # choices = ["GET", "POST", "PUT", "DELETE"]
+        choices = ([
+            ('get','GET'),
+            ('post','POST'),
+            ('put','PUT'),
+            ('delete','DELETE'),
+        ])
+        self.fields['method'].choices = choices
+
+

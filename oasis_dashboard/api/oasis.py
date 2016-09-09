@@ -57,18 +57,18 @@ def policy_get(request):
 
 
 def policy_update(request, params):
+    LOG.debug("********Policy Update call*************")
     oasisclient(request).policy.update(**params)
 
 
-def function_get(request, function):
+def function_get(request, function_id):
     pass
 
 
 def function_list(request, sort_dir='desc', sort_key='created_at',
                  marker=None, paginate=False, reversed_order=False):
     """Returns all functions."""
-    LOG.debug('******************** function list  call********************')
-    oasisclient(request).function.list()
+    return oasisclient(request).function.list()
 
 
 def function_update(request, function):

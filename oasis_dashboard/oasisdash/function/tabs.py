@@ -32,8 +32,21 @@ class IntegrationTab(tabs.TableTab):
     def get_functions_data(self):
         try:
             LOG.debug('#################get_functions_data  call#################')
-            functions = oasis.function_list(self.tab_group.request)
-
+            # functions = oasis.function_list(self.tab_group.request)
+            functions = [
+                {
+                    "id":"1",
+                    "function_name": "sum",
+                    "user_name": "admin",
+                    "project_id": "1234"
+                },
+                {
+                    "id":"2",
+                    "function_name": "minus",
+                    "user_name": "admin",
+                    "project_id": "1234"
+                }
+            ]
             return functions
         except Exception:
             error_message = _('Unable to get functions')
@@ -85,4 +98,4 @@ class MonitorTab(tabs.Tab):
 
 class FunctionTabs(tabs.TabGroup):
     slug = "function_tabs"
-    tabs = (DevelopTab, IntegrationTab, MonitorTab, )
+    tabs = (IntegrationTab, MonitorTab, )
