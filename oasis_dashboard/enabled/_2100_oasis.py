@@ -24,7 +24,7 @@ DEFAULT = True
 AUTO_DISCOVER_STATIC_FILES = True
 
 
-# ADD_ANGULAR_MODULES = ['horizon.cluster']
+ADD_ANGULAR_MODULES = ['horizon.oasisdash']
 
 # ADD_EXCEPTIONS = {
 #    'recoverable': exceptions.RECOVERABLE,

@@ -27,11 +27,9 @@ class CreatePolicyForm(forms.SelfHandlingForm):
     def handle(self, request, data):
 
         try:
-
             args = {
                 'total_vm' : data['total_vm'],
                  'vm_per_user' : data['vm_per_user']
-
             }
 
             oasis.policy_update(request, args)

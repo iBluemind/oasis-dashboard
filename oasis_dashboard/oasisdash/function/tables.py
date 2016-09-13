@@ -19,7 +19,7 @@ class MyFilterAction(tables.FilterAction):
 
 
 class CreateFunction(tables.LinkAction):
-    name="create"
+    name = "create"
     verbose_name = _("Create Function")
     url = reverse_lazy("horizon:oasisdash:function:create")
     classes = ("ajax-modal",)

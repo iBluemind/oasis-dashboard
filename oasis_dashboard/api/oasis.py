@@ -78,7 +78,6 @@ def function_update(request, function):
 def function_delete(request, function):
     pass
 
-
-def function_create(request, function):
-    pass
+def function_create(request, params):
+    return oasisclient(request).function.create(**params)
 

@@ -1,5 +1,5 @@
-<div class="row-fluid">
-  <div class="span12">
-    {{ table.render }}
-  </div>
-</div>
+{% load i18n %}
+{% block main %}
+{{"'STATIC_URL'"}}
+    <ng-include src="'{{ STATIC_URL }}oasisdash/oasis/function/_integration.htm'"></ng-include>
+{% endblock %}

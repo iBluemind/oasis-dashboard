@@ -1,2 +1,4 @@
 include setup.py
-recursive-include oasis_dashboard/templates *
+recursive-include oasis_dashboard *.html, *.js, *.scss
+
+

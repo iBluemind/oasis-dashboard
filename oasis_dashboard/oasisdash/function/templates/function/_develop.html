@@ -1,0 +1,24 @@
+{% load i18n %}
+
+{% block main %}
+
+<div id="editor" name="content" style="width:600px; height:500px">{{'STATIC_URL'}}
+</div>
+
+<div class="field-filter">
+    <button type="button" class="btn btn-default full-config-show" >Cancel</button>
+    <button type="button" class="btn btn-default full-config-hide" >Create</button>
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/eclipse");
+    editor.getSession().setMode("ace/mode/python");
+</script>
+{% endblock %}
+
+

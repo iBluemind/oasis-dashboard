@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% block title %}{% trans "Functions" %}{% endblock %}
 
-{% block title %}{% trans "Function" %}{% endblock %}
+
+{% block page_header %}
+  <hz-page-header header="'My Fruits'"></hz-page-header>
+{% endblock page_header %}
+
 
 {% block main %}
-
-
-  <div class="row">
-     <div class="col-sm-12">
-     {{ tab_group.render }}
-     </div>
-  </div>
+  <ng-include src="'{{ STATIC_URL }}oasisdash/oasis/function/_integration.htm'"></ng-include>
+  {{ table.render }}
 {% endblock %}
-
-
