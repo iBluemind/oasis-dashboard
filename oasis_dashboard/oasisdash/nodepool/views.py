@@ -19,28 +19,19 @@ from horizon import tables
 from horizon import tabs
 from horizon.utils import memoized
 
-from oasis_dashboard.oasisdash.policy import forms as policy_forms
-
-# class IndexView(views.APIView):
-#     # A very simple class-based view...
-#     template_name = 'oasisdash/oasispolicy/index.html'
-#
-#     def get_data(self, request, context, *args, **kwargs):
-#         # Add data to the context here...
-#         return context
-
+from oasis_dashboard.oasisdash.nodepool import forms as nodepool_forms
 from oasis_dashboard.api import oasis
 
 
 class IndexView(forms.ModalFormView):
-    form_class = policy_forms.CreatePolicyForm
-    form_id = "create_policy_form"
-    modal_header = _("Define VM Policy")
-    # submit_label = _("Adjust")
-    submit_url = reverse_lazy("horizon:oasisdash:oasispolicy:index")
-    template_name = 'oasisdash/oasispolicy/index.html'
-    success_url = reverse_lazy("horizon:oasisdash:oasispolicy:index")
-    page_title = _("Define VM Policy")
+    template_name = "oasisdash/nodepool/index.html"
+    form_class = nodepool_forms.NodePoolForm
+    form_id = "node_pool_form"
+    modal_header = _("Define NodePool")
+    submit_url = reverse_lazy("horizon:oasisdash:nodepool:index")
+
+    success_url = reverse_lazy("horizon:oasisdash:nodepool:index")
+    page_title = _("Define NodePool")
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -49,22 +40,31 @@ class IndexView(forms.ModalFormView):
         # context['submit_url'] = reverse(self.submit_url, args=args)
         return context
 
-    def _get_policy(self, *ag, **kwargs):
+    def _get_nodepool(self, *ag, **kwargs):
         try:
-            return oasis.policy_get(self.request)
+            return oasis.node_pool_get(self.request)
         except Exception:
-            msg = _('Unable to retrieve router details.')
+            msg = _('Unable to retrieve nodepool details.')
             exceptions.handle(self.request, msg)
 
     def get_initial(self):
-        policy = self._get_policy()
+        nodepool = self._get_nodepool()
         # initial = {
         #     'total_vm': policy['total_vm_count'],
         #     'vm_per_user': policy['vm_count_per_user']
         # }
         initial = {
-            'total_vm': "200",
-            'vm_per_user': "10"
+            'scaledown_threshold': "100",
+            'scaledown_evaluation_periods': "100",
+            'scaledown_scale_period': "20",
+            'scalueup_threshold': "30",
+            'scaleup_evaluation_periods ': "40",
+            'scaleup_period': "50",
+            'scaledown_cooldown': "100",
+            'scaleup_cooldown': "150",
+            'scaledown_adjust': "10",
+            'scaleup_adjust': "20",
+            'max_size': "50",
+            'min_size': "60"
         }
         return initial
-

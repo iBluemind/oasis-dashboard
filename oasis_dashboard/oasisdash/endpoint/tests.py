@@ -10,15 +10,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from django.utils.translation import ugettext_lazy as _
-
-import horizon
-from oasis_dashboard.oasisdash import dashboard
+from horizon.test import helpers as test
 
 
-class Oasispolicy(horizon.Panel):
-    name = _("Oasispolicy")
-    slug = "oasispolicy"
-
-
-dashboard.Oasis.register(Oasispolicy)
+class EndpointTests(test.TestCase):
+    # Unit tests for function.
+    def test_me(self):
+        self.assertTrue(1 + 1 == 2)

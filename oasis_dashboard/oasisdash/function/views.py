@@ -34,11 +34,10 @@ from oasis_dashboard.api import oasis
 from oasis_dashboard.oasisdash.function import tables as function_table
 from horizon import exceptions
 from horizon import tables
+from oasis_dashboard.api.rest import oasis
 
-
-class IndexView(tables.DataTableView):
-    table_class = function_table.FunctionTable
-    template_name = "oasisdash/function/index.html"
+class IndexView(views.APIView):
+    template_name = "oasisdash/function/detail.html"
     page_title = _("Functions")
 
     # def get_context_data(self, **kwargs):
@@ -71,37 +70,37 @@ class IndexView(tables.DataTableView):
     #
     #         return []
 
-    def has_prev_data(self, table):
-        return getattr(self, "_prev", False)
-
-    def has_more_data(self, table):
-        return getattr(self, "_more", False)
-
-    def get_data(self):
-        try:
-            LOG.debug('#################get_functions_data  call#################')
-            # functions = oasis.function_list(self.tab_group.request)
-            functions = [
-                {
-                    "id": "1",
-                    "function_name": "sum",
-                    "user_name": "admin",
-                    "project_id": "1234"
-                },
-                {
-                    "id": "2",
-                    "function_name": "minus",
-                    "user_name": "admin",
-                    "project_id": "1234"
-                }
-            ]
-
-            return functions
-        except Exception:
-            error_message = _('Unable to get functions')
-            exceptions.handle(self.request, error_message)
-
-            return []
+    # def has_prev_data(self, table):
+    #     return getattr(self, "_prev", False)
+    #
+    # def has_more_data(self, table):
+    #     return getattr(self, "_more", False)
+    #
+    # def get_data(self):
+    #     try:
+    #         LOG.debug('#################get_functions_data  call#################')
+    #         # functions = oasis.function_list(self.tab_group.request)
+    #         functions = [
+    #             {
+    #                 "id": "1",
+    #                 "function_name": "sum",
+    #                 "user_name": "admin",
+    #                 "project_id": "1234"
+    #             },
+    #             {
+    #                 "id": "2",
+    #                 "function_name": "minus",
+    #                 "user_name": "admin",
+    #                 "project_id": "1234"
+    #             }
+    #         ]
+    #
+    #         return functions
+    #     except Exception:
+    #         error_message = _('Unable to get functions')
+    #         exceptions.handle(self.request, error_message)
+    #
+    #         return []
 
 # class IndexView2(tabs.TabbedTableView):
 #     # A very simple class-based view...

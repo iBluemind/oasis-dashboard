@@ -2,11 +2,11 @@
 {% load i18n %}
 
 {% block title %}
-  {% trans "Functions" %}
+  {% trans "Endpoint" %}
 {% endblock %}
 
 {% block page_header %}
-  <hz-page-header header="{$ 'Functions' | translate $}"/>
+  <hz-page-header header="{$ 'Endpoint' | translate $}"/>
 {% endblock page_header %}
 
 {% block ng_route_base %}
@@ -14,5 +14,5 @@
 {% endblock %}
 
 {% block main %}
-  <ng-include src="'{{ STATIC_URL }}oasisdash/oasis/function/table/table.html'"></ng-include>
+  <ng-include src="'{{ STATIC_URL }}oasisdash/oasis/endpoint/table/table.html'"></ng-include>
 {% endblock %}

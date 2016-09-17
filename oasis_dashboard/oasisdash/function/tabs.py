@@ -28,6 +28,9 @@ class IntegrationTab(tabs.Tab):
     slug = "integration"
     template_name = "oasisdash/function/integration.html"
 
+    def get_context_data(self, request):
+        pass
+
     # @memoized.memoized_method
     # def get_form(self, **kwargs):
     #     form_class = kwargs.get('form_class', self.get_form_class())

@@ -10,15 +10,26 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+from horizon import tabs
+
+from oasis_dashboard.oasisdash.function import tabs as function_tabs
+from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
+from oasis_dashboard.api import oasis
+
+from horizon import exceptions
+from horizon import forms
+from oasis_dashboard.api import oasis
+from horizon import views
+
+import logging
+
+LOG = logging.getLogger(__name__)
+
+
+from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-import horizon
-from oasis_dashboard.oasisdash import dashboard
-
-
-class Oasispolicy(horizon.Panel):
-    name = _("Oasispolicy")
-    slug = "oasispolicy"
-
-
-dashboard.Oasis.register(Oasispolicy)
+class IndexView(views.APIView):
+    template_name = "oasisdash/endpoint/index.html"
+    page_title = _("Endpoint")

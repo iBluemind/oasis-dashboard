@@ -16,9 +16,9 @@ import horizon
 from oasis_dashboard.oasisdash import dashboard
 
 
-class Oasispolicy(horizon.Panel):
-    name = _("Oasispolicy")
-    slug = "oasispolicy"
+class NodePool(horizon.Panel):
+    name = _("NodePool")
+    slug = "nodepool"
 
 
-dashboard.Oasis.register(Oasispolicy)
+dashboard.Oasis.register(NodePool)

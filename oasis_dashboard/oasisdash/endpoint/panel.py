@@ -15,10 +15,9 @@ from django.utils.translation import ugettext_lazy as _
 import horizon
 from oasis_dashboard.oasisdash import dashboard
 
+class Endpoint(horizon.Panel):
+    name = _("Endpoint")
+    slug = "endpoint"
 
-class Oasispolicy(horizon.Panel):
-    name = _("Oasispolicy")
-    slug = "oasispolicy"
 
-
-dashboard.Oasis.register(Oasispolicy)
+dashboard.Oasis.register(Endpoint)
