@@ -14,11 +14,14 @@
 
 from django.views import generic
 
-from magnum_ui.api import magnum
+from oasis_dashboard.api import oasis
 
 from openstack_dashboard.api.rest import urls
 from openstack_dashboard.api.rest import utils as rest_utils
 
+import logging
+
+LOG = logging.getLogger(__name__)
 
 def change_to_id(obj):
     """Change key named 'uuid' to 'id'
@@ -26,44 +29,30 @@ def change_to_id(obj):
     Magnum returns objects with a field called 'uuid' many of Horizons
     directives however expect objects to have a field called 'id'.
     """
-    obj['id'] = obj.pop('uuid')
+    obj['id'] = obj.pop('id')
     return obj
 
 
 @urls.register
-class Baymodel(generic.View):
-    """API for retrieving a single baymodel"""
-    url_regex = r'container-infra/baymodels/(?P<baymodel_id>[^/]+)$'
+class Function(generic.View):
+    """API for retrieving a single bay"""
+    url_regex = r'oasis/function/(?P<function_id>[^/]+)$'
 
     @rest_utils.ajax()
-    def get(self, request, baymodel_id):
-        """Get a specific baymodel"""
-        return magnum.baymodel_show(request, baymodel_id).to_dict()
-
+    def get(self, request, function_id):
+        """Get a specific bay"""
+        return oasis.function_get(request, function_id)
 
 @urls.register
-class Baymodels(generic.View):
+class Functions(generic.View):
     """API for Magnum Baymodels"""
-    url_regex = r'container-infra/baymodels/$'
+    url_regex = r'oasis/function/$'
 
     @rest_utils.ajax()
     def get(self, request):
-        """Get a list of the Baymodels for a project.
-
-        The returned result is an object with property 'items' and each
-        item under this is a Baymodel.
-        """
-        result = magnum.baymodel_list(request)
+        """Get a specific baymodel"""
+        result = oasis.function_list(request)
         return {'items': [change_to_id(n.to_dict()) for n in result]}
-
-    @rest_utils.ajax(data_required=True)
-    def delete(self, request):
-        """Delete one or more Baymodels by id.
-
-        Returns HTTP 204 (no content) on successful deletion.
-        """
-        for baymodel_id in request.DATA:
-            magnum.baymodel_delete(request, baymodel_id)
 
     @rest_utils.ajax(data_required=True)
     def post(self, request):
@@ -71,54 +60,9 @@ class Baymodels(generic.View):
 
         Returns the new Baymodel object on success.
         """
-        new_baymodel = magnum.baymodel_create(request, **request.DATA)
-        return rest_utils.CreatedResponse(
-            '/api/container-infra/baymodel/%s' % new_baymodel.uuid,
-            new_baymodel.to_dict())
+        LOG.debug('***************call create function************')
+        oasis.function_create(request, **request.DATA)
+        # return rest_utils.CreatedResponse(
+        #     '/api/containers/baymodel/%s' % new_function.uuid,
+        #     new_function.to_dict())
 
-
-@urls.register
-class Bay(generic.View):
-    """API for retrieving a single bay"""
-    url_regex = r'container-infra/bays/(?P<bay_id>[^/]+)$'
-
-    @rest_utils.ajax()
-    def get(self, request, bay_id):
-        """Get a specific bay"""
-        return magnum.bay_show(request, bay_id).to_dict()
-
-
-@urls.register
-class Bays(generic.View):
-    """API for Magnum Bays"""
-    url_regex = r'container-infra/bays/$'
-
-    @rest_utils.ajax()
-    def get(self, request):
-        """Get a list of the Bays for a project.
-
-        The returned result is an object with property 'items' and each
-        item under this is a Bay.
-        """
-        result = magnum.bay_list(request)
-        return {'items': [change_to_id(n.to_dict()) for n in result]}
-
-    @rest_utils.ajax(data_required=True)
-    def delete(self, request):
-        """Delete one or more Bays by id.
-
-        Returns HTTP 204 (no content) on successful deletion.
-        """
-        for bay_id in request.DATA:
-            magnum.bay_delete(request, bay_id)
-
-    @rest_utils.ajax(data_required=True)
-    def post(self, request):
-        """Create a new Bay.
-
-        Returns the new Bay object on success.
-        """
-        new_bay = magnum.bay_create(request, **request.DATA)
-        return rest_utils.CreatedResponse(
-            '/api/container-infra/bay/%s' % new_bay.uuid,
-            new_bay.to_dict())

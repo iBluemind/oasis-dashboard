@@ -46,9 +46,21 @@ def oasisclient(request):
     return oasis_client.Client(username=request.user.username,
                              project_id=request.user.tenant_id,
                              input_auth_token=request.user.token.id,
-                             oasis_url="http://172.16.176.145:9417",
+                             oasis_url="http://172.16.176.149:9417",
                              insecure=insecure,
                              cacert=cacert)
+
+
+def node_pool_get(request):
+    return oasisclient(request).nodepool.get()
+
+
+def node_pool_create(request, **params):
+    return oasisclient(request).nodepool.create(**params)
+
+
+def node_pool_update(request, **params):
+    return oasisclient(request).nodepool.update(**params)
 
 
 def policy_get(request):
@@ -62,7 +74,7 @@ def policy_update(request, params):
 
 
 def function_get(request, function_id):
-    pass
+    return oasisclient(request).function.get()
 
 
 def function_list(request, sort_dir='desc', sort_key='created_at',
@@ -78,6 +90,7 @@ def function_update(request, function):
 def function_delete(request, function):
     pass
 
-def function_create(request, params):
+
+def function_create(request, **params):
     return oasisclient(request).function.create(**params)
 
