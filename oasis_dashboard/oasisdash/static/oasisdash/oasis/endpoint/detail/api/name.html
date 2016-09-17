@@ -1,0 +1,24 @@
+<div ng-controller="EndpointAPINameController as ctrl">
+
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="form-group">
+                <label class="control-label" for="function-name" translate>Function Name</label>
+                <input name="function-name" type="text" class="form-control" id="function-name"
+                       ng-model="model.newEndpointDetailSpec.name" readonly>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="control-label" for="endpoint-method" translate>Function Method</label>
+                <select name="endpoint-method" id="endpoint-method"
+                        class="form-control" ng-options="mu.unit as mu.label for mu in ctrl.endpoint_method"
+                        ng-model="model.newEndpointDetailSpec.method" ng-change="changeMemoryUnit()">
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,22 @@
+<div ng-controller="EndpointNameController as ctrl">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="form-group">
+                <label class="control-label" for="endpoint-name" translate>Endpoint Name</label>
+                <select name="endpoint-name" id="endpoint-name"
+                        class="form-control" ng-options="mu.unit as mu.label for mu in ctrl.api"
+                        ng-model="model.newEndpointSpec.method" ng-change="changeMemoryUnit()">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="endpoint-description" translate>Endpoint Description</label>
+                <input name="endpoint-name" type="text" class="form-control" id="endpoint-description"
+                       ng-model="model.newEndpointSpec.name"
+                       placeholder="{$ 'Description of the endpoint to create.'|translate $}">
+            </div>
+
+        </div>
+    </div>
+</div>

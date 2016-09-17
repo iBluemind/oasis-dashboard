@@ -1,0 +1,61 @@
+<div ng-controller="EndpointMethodController as ctrl">
+
+    <div class="row">
+        <!--<div class="col-xs-6">-->
+        <!--<div class="form-group" id = method-group>-->
+        <!--<label class="control-label" for="function-method" translate>Function Method</label>-->
+        <!--<select name="function-method" id="function-method"-->
+        <!--class="form-control" ng-options="mu.unit as mu.label for mu in ctrl.function_method"-->
+        <!--ng-model="model.newFunctionSpec.method" ng-change="changeMemoryUnit()">-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col-xs-6">-->
+        <!--<div class="form-group">-->
+        <!--<button type="button" class="btn btn-default full-config-hide" ng-click="ctrl.addMethodElement()">Add</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="themable-checkbox">
+                    <input name="method-get" type="checkbox" id="method-get"
+                           ng-model="model.newEndpointDetailSpec.get">
+                    <label for="method-get" translate>GET</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="themable-checkbox">
+                    <input name="method-post" type="checkbox" id="method-post"
+                           ng-model="model.newEndpointDetailSpec.post">
+                    <label for="method-post" translate>POST</label>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="themable-checkbox">
+                    <input name="method-put" type="checkbox" id="method-put"
+                           ng-model="model.newEndpointDetailSpec.put">
+                    <label for="method-put" translate>PUT</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="themable-checkbox">
+                    <input name="method-patch" type="checkbox" id="method-patch"
+                           ng-model="model.newEndpointDetailSpec.patch">
+                    <label for="method-patch" translate>PATCH</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="themable-checkbox">
+                    <input name="method-delete" type="checkbox" id="method-delete"
+                           ng-model="model.newEndpointDetailSpec.delete">
+                    <label for="method-delete" translate>DELETE</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div ng-controller="EndpointRequestController as ctrl">
+
+    <div class="row" id="request-group">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="control-label" for="header-key" translate>Header Key</label>
+                <input name="header-key" type="text" class="form-control" id="header-key"
+                       ng-model="model.newEndpointDetailSpec.request.key"
+                       placeholder="{$ 'Key of the header to create.'|translate $}">
+            </div>
+
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="control-label" for="header-value" translate>Header Value</label>
+                <input name="header-value" type="text" class="form-control" id="header-value"
+                       ng-model="model.newEndpointDetailSpec.request.value"
+                       placeholder="{$ 'Value of the header to create.'|translate $}">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <button type="button" class="btn btn-default full-config-hide" ng-click="ctrl.addHeaderElement()">Add
+            </button>
+        </div>
+    </div>
+
+</div>
