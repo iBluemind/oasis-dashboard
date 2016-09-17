@@ -1,4 +1,4 @@
-#  Copyright 2015 Cisco Systems.
+#  Copyright 2015 NEC Corporation, Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -11,31 +11,21 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from django.utils.translation import ugettext_lazy as _
 
+# The slug of the panel to be added to HORIZON_CONFIG. Required.
+PANEL = 'function'
+# The slug of the panel group the PANEL is associated with.
+PANEL_GROUP = 'oasisdash'
+# The slug of the dashboard the PANEL associated with. Required.
+PANEL_DASHBOARD = 'oasisdash'
 
-DASHBOARD = 'oasisdash'
-ADD_INSTALLED_APPS = [
-    'oasis_dashboard',
-    'oasis_dashboard.oasisdash'
-]
-
-DEFAULT = True
-AUTO_DISCOVER_STATIC_FILES = True
-
+# Python panel class of the PANEL to be added.
+ADD_PANEL = 'oasis_dashboard.oasisdash.function.panel.Function'
 
 ADD_JS_FILES = [
-    'horizon/lib/angular/angular-route.js',
     'oasisdash/js/ace.js',
     'oasisdash/js/mode-python.js',
-    'oasisdash/js/theme-eclipse.js',
+    'oasisdash/js/theme-eclipse.js'
 ]
 
-ADD_ANGULAR_MODULES = ['horizon.dashboard.oasisdash', 'ui.ace']
-
-# ADD_EXCEPTIONS = {
-#    'recoverable': exceptions.RECOVERABLE,
-#    'not_found': exceptions.NOT_FOUND,
-#    'unauthorized': exceptions.UNAUTHORIZED,
-#}
-
+# ADD_ANGULAR_MODULES = ['ui.ace']
