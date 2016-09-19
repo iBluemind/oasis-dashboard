@@ -26,7 +26,7 @@
                 route: 'edit.code'
             },
             {
-                heading: <i>Integration</i>,
+                heading: '<i>Integration</i>',
                 route: 'edit.integration',
             },
             {
