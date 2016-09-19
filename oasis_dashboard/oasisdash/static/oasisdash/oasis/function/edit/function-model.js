@@ -20,9 +20,9 @@
 
         function initNewFunctionSpec() {
             model.newFunctionSpec = {
-                name: null,
-                description : null,
-                body:null
+                name: 'test',
+                description : 'This is test function',
+                body:'def get(self)'
             };
         }
 

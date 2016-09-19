@@ -1,24 +1,38 @@
 <!--<div ng-controller="IntegrationController as ctrl" style="width:600px; height:500px">-->
-    <!--<div class="row">-->
-        <!--<div class="col-xs-12">-->
+<!--<div class="row">-->
+<!--<div class="col-xs-12">-->
 
-            <!--<div class="form-group">-->
-                <!--<label class="control-label" for="bay-name" translate>Function Name</label>-->
-                <!--<input name="bay-name" type="text" class="form-control" id="bay-name"-->
-                       <!--ng-model="model.newBaySpec.name"-->
-                       <!--placeholder="{$ 'Name of the function to create.'|translate $}">-->
-            <!--</div>-->
-
-            <!--<div class="form-group">-->
-                <!--<label class="control-label" for="function-method" translate>Function Method</label>-->
-                <!--<select name="function-method" id="function-method"-->
-                        <!--class="form-control" ng-options="mu.unit as mu.label for mu in ctrl.endpoint_method"-->
-                        <!--ng-model="model.newFunctionSpec.method" ng-change="changeMemoryUnit()">-->
-                <!--</select>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label class="control-label" for="bay-name" translate>Function Name</label>-->
+<!--<input name="bay-name" type="text" class="form-control" id="bay-name"-->
+<!--ng-model="model.newBaySpec.name"-->
+<!--placeholder="{$ 'Name of the function to create.'|translate $}">-->
 <!--</div>-->
 
-integration
+<!--<div class="form-group">-->
+<!--<label class="control-label" for="function-method" translate>Function Method</label>-->
+<!--<select name="function-method" id="function-method"-->
+<!--class="form-control" ng-options="mu.unit as mu.label for mu in ctrl.endpoint_method"-->
+<!--ng-model="model.newFunctionSpec.method" ng-change="changeMemoryUnit()">-->
+<!--</select>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<div id="containers_wrapper" ng-controller="IntegrationController as ctrl">
+    <div class="col-md-3">
+        <label class="control-label" for="function-method" translate>Function Method</label>
+        <select name="function-method" id="function-method"
+                class="form-control" ng-options="mu.unit as mu.label for mu in ctrl.endpoint_method"
+                ng-model="model.newFunctionSpec.method" ng-change="changeMemoryUnit()">
+        </select>
+        <button class="btn default">Add</button>
+    </div>
+
+    <div class="col-md-9">
+    </div>
+
+
+</div>

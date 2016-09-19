@@ -39,7 +39,6 @@
             'horizon.dashboard.oasisdash.function',
             'horizon.dashboard.oasisdash.endpoint',
             'ui.router',
-            'ui.router.tabs'
         ])
         .config(config);
 
@@ -50,8 +49,8 @@
         var baseRoute = '/oasisdash/function/';
         $provide.constant('horizon.dashboard.oasisdash.baseRoute', baseRoute);
 
-        // when there is an empty route, redirect to /index
         $urlRouterProvider.otherwise(baseRoute);
+        $urlRouterProvider.when(baseRoute+'edit',baseRoute+'edit/code');
 
         $stateProvider
             .state('function', {
@@ -60,20 +59,30 @@
             })
             .state('edit',{
                 url:baseRoute+'edit',
-                controller: 'EditFunctionController',
                 templateUrl: path+'function/edit/edit.html'
             })
             .state('edit.code',{
-                url:baseRoute+'create/code',
-                templateUrl: path+'function/edit/code/code.html'
+                url:'/code',
+                templateUrl: path+'function/edit/code/code.html',
+                controller : 'CreateFunctionInputController',
+                data : {
+
+                }
             })
             .state('edit.integration',{
-                url:baseRoute+'create/integration',
-                templateUrl: path+'function/edit/integration/integration.html'
+                url:'/integration',
+                controller: 'IntegrationController',
+                templateUrl: path+'function/edit/integration/integration.html',
+                data : {
+
+                }
             })
             .state('edit.monitor',{
-                url:baseRoute+'create/monitor',
-                templateUrl: path+'function/edit/monitor/monitor.html'
+                url:'/monitor',
+                templateUrl: path+'function/edit/monitor/monitor.html',
+                data : {
+
+                }
             })
     }
 })();
