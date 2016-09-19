@@ -1,10 +1,10 @@
 <table ng-controller="FunctionTableController as table"
-    hz-table ng-cloak
-    st-table="table.function"
-    st-safe-src="table.functionSrc"
-    default-sort="name"
-    default-sort-reverse="false"
-    class="table table-striped table-rsp table-detail">
+       hz-table ng-cloak
+       st-table="table.function"
+       st-safe-src="table.functionSrc"
+       default-sort="name"
+       default-sort-reverse="false"
+       class="table table-striped table-rsp table-detail">
 
     <thead>
     <!--
@@ -12,39 +12,44 @@
       This is where batch actions like searching, creating, and deleting.
     -->
     <tr>
-      <th colspan="100" class="search-header">
-        <hz-magic-search-bar group-classes="input-group-sm" icon-classes="fa-search"
-          filter-facets="table.functionFacets">
-        </hz-magic-search-bar>
-      </th>
+        <th colspan="100" class="search-header">
+            <hz-magic-search-bar group-classes="input-group-sm" icon-classes="fa-search"
+                                 filter-facets="table.functionFacets">
+            </hz-magic-search-bar>
+        </th>
     </tr>
     <tr class="action-row">
-      <th colspan="100">
-        <actions allowed="table.functionResource.batchActions" type="batch"></actions>
-      </th>
+        <th colspan="100">
+            <actions allowed="table.functionResource.batchActions" type="batch"></actions>
+        </th>
+    </tr>
+    <tr class="action-row">
+        <th colspan="100">
+            <a ui-sref="edit" class="btn btn-default">Create Function</a>
+        </th>
     </tr>
     <!--
       Table-column-headers:
       The headers for the table columns
     -->
     <tr>
-      <th class="multi_select_column">
-        <input type="checkbox" hz-select-all="table.function">
-      </th>
+        <th class="multi_select_column">
+            <input type="checkbox" hz-select-all="table.function">
+        </th>
 
-      <th class="expander"></th>
+        <th class="expander"></th>
 
-      <th class="rsp-p1" st-sort="name" st-sort-default translate>
-        Name
-      </th>
+        <th class="rsp-p1" st-sort="name" st-sort-default translate>
+            Name
+        </th>
 
-      <th class="rsp-p2" st-sort="id" translate>
-        ID
-      </th>
+        <th class="rsp-p2" st-sort="id" translate>
+            ID
+        </th>
 
-      <th class="rsp-p1" st-sort="id" translate>
-        Status
-      </th>
+        <th class="rsp-p1" st-sort="id" translate>
+            Status
+        </th>
     </tr>
     </thead>
 
@@ -61,71 +66,71 @@
 
     <tr ng-repeat-start="b in table.function track by b.id">
 
-      <td class="multi_select_column">
-        <input type="checkbox"
-          ng-model="tCtrl.selections[b.id].checked"
-          hz-select="b">
-      </td>
+        <td class="multi_select_column">
+            <input type="checkbox"
+                   ng-model="tCtrl.selections[b.id].checked"
+                   hz-select="b">
+        </td>
 
-      <td class="expander">
-        <span class="fa fa-chevron-right"
+        <td class="expander">
+    <span class="fa fa-chevron-right"
           hz-expand-detail
           duration="200">
-        </span>
-      </td>
+    </span>
+        </td>
 
-      <td class="rsp-p1"><a ng-href="project/function/{$ b.id $}">{$ b.name|noName $}</a></td>
-      <td class="rsp-p2">{$ b.id $}</td>
-      <td class="rsp-p1">{$ b.status $}</td>
+        <td class="rsp-p1"><a ng-href="project/function/{$ b.id $}">{$ b.name|noName $}</a></td>
+        <td class="rsp-p2">{$ b.id $}</td>
+        <td class="rsp-p1">{$ b.status $}</td>
 
-      <td class="actions_column">
-        <!--
-          Table-row-action-column:
-          Actions taken here applies to a single item/row.
-        -->
-        <actions allowed="table.functionResource.itemActions" type="row" item="b"></actions>
-      </td>
+        <td class="actions_column">
+            <!--
+              Table-row-action-column:
+              Actions taken here applies to a single item/row.
+            -->
+            <actions allowed="table.functionResource.itemActions" type="row" item="b"></actions>
+        </td>
     </tr>
     <tr ng-repeat-end class="detail-row">
-      <!--
-        Detail-row:
-        Contains detailed information on this item.
-        Can be toggled using the chevron button.
-        Ensure colspan is greater or equal to number of column-headers.
-      -->
-      <td class="detail" colspan="100">
         <!--
-          The responsive columns that disappear typically should reappear here
-          with the same responsive priority that they disappear.
-          E.g. table header with rsp-p2 should be here with rsp-alt-p2
+          Detail-row:
+          Contains detailed information on this item.
+          Can be toggled using the chevron button.
+          Ensure colspan is greater or equal to number of column-headers.
         -->
-        <div class="row">
-          <span class="rsp-alt-p2">
-            <dl class="col-xs-5">
-              <dt translate>ID</dt>
-              <dd>{$ b.id $}</dd>
-            </dl>
-            <!--<dl class="col-xs-3">-->
-              <!--<dt translate>Master Count</dt>-->
-              <!--<dd>{$ b.master_count $}</dd>-->
-            <!--</dl>-->
-            <!--<dl class="col-xs-3">-->
-              <!--<dt translate>Node Count</dt>-->
-              <!--<dd>{$ b.node_count $}</dd>-->
-            <!--</dl>-->
-          </span>
-        </div>
-        <div class="row">
-          <dl class="col-xs-5">
-            <dt translate>Baymodel</dt>
-            <dd><a ng-href="project/function/{$ b.baymodel_id $}">{$ b.baymodel_id $}</a></dd>
-          </dl>
-          <!--<dl class="col-xs-3">-->
-            <!--<dt translate>Node Addresses</dt>-->
-            <!--<dd ng-repeat="addr in b.node_addresses">{$ addr $}</dd>-->
-          <!--</dl>-->
-        </div>
-      </td>
+        <td class="detail" colspan="100">
+            <!--
+              The responsive columns that disappear typically should reappear here
+              with the same responsive priority that they disappear.
+              E.g. table header with rsp-p2 should be here with rsp-alt-p2
+            -->
+            <div class="row">
+      <span class="rsp-alt-p2">
+        <dl class="col-xs-5">
+            <dt translate>ID</dt>
+            <dd>{$ b.id $}</dd>
+        </dl>
+        <!--<dl class="col-xs-3">-->
+          <!--<dt translate>Master Count</dt>-->
+          <!--<dd>{$ b.master_count $}</dd>-->
+        <!--</dl>-->
+        <!--<dl class="col-xs-3">-->
+          <!--<dt translate>Node Count</dt>-->
+          <!--<dd>{$ b.node_count $}</dd>-->
+        <!--</dl>-->
+      </span>
+            </div>
+            <div class="row">
+                <dl class="col-xs-5">
+                    <dt translate>Baymodel</dt>
+                    <dd><a ng-href="project/function/{$ b.baymodel_id $}">{$ b.baymodel_id $}</a></dd>
+                </dl>
+                <!--<dl class="col-xs-3">-->
+                <!--<dt translate>Node Addresses</dt>-->
+                <!--<dd ng-repeat="addr in b.node_addresses">{$ addr $}</dd>-->
+                <!--</dl>-->
+            </div>
+        </td>
     </tr>
     <tr hz-no-items items="table.function"></tr>
     </tbody>

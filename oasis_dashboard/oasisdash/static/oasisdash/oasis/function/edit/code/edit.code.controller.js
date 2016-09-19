@@ -51,7 +51,6 @@
               restrict: 'EA',
               require: '?ngModel',
               link: function (scope, elm, attrs, ngModel) {
-
                 /**
                  * Corresponds the uiAceConfig ACE configuration.
                  * @type object

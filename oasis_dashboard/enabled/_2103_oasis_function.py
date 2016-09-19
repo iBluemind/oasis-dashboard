@@ -22,10 +22,10 @@ PANEL_DASHBOARD = 'oasisdash'
 # Python panel class of the PANEL to be added.
 ADD_PANEL = 'oasis_dashboard.oasisdash.function.panel.Function'
 
-ADD_JS_FILES = [
-    'oasisdash/js/ace.js',
-    'oasisdash/js/mode-python.js',
-    'oasisdash/js/theme-eclipse.js'
-]
+# ADD_JS_FILES = [
+#     'oasisdash/js/ace.js',
+#     'oasisdash/js/mode-python.js',
+#     'oasisdash/js/theme-eclipse.js'
+# ]
 
 # ADD_ANGULAR_MODULES = ['ui.ace']

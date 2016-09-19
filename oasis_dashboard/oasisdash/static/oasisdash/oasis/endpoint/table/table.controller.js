@@ -27,10 +27,37 @@
 
     function EndpointTableController($scope, $location, oasis, events, registry, endpointResourceType, wizardModalService, detailWorkFlow, model) {
         var ctrl = this;
+
+        ctrl.createEndpoint = createEndpoint;
+        ctrl.createEndpointAction = createEndpointAction;
         ctrl.endpoint = [];
         ctrl.endpointSrc = [];
         ctrl.endpointResource = registry.getResourceType(endpointResourceType);
         ctrl.showDetailModal = showDetailModal;
+
+        function createEndpoint() {
+            var localSpec = {
+                backdrop: 'static',
+                controller: 'CreateEndpointModalController as ctrl',
+                templateUrl: basePath + 'create-endpoint-modal.html'
+            };
+            $modal.open(localSpec).result.then(function create(result) {
+                return ctrl.createEndpointAction(result);
+            });
+        }
+
+        function createEndpointAction(result) {
+            //swiftAPI.createContainer(result.name, result.public).then(
+            //    function success() {
+            //        toastService.add('success', interpolate(
+            //            gettext('Container %(name)s created.'), result, true
+            //        ));
+            //        // generate a table row with no contents
+            //        ctrl.model.containers.push({name: result.name, count: 0, bytes: 0});
+            //    }
+            //);
+        }
+
         /**
          * Filtering - client-side MagicSearch
          * all facets for endpoint table
@@ -91,7 +118,7 @@
             $scope.params = func;
             $scope.model = model;
             wizardModalService.modal({
-                scope:$scope,
+                scope: $scope,
                 workflow: detailWorkFlow,
                 submit: submit
             });
