@@ -50,6 +50,9 @@
         var baseRoute = '/oasisdash/function/';
         $provide.constant('horizon.dashboard.oasisdash.baseRoute', baseRoute);
 
+        // when there is an empty route, redirect to /index
+        $urlRouterProvider.otherwise(baseRoute);
+
         $stateProvider
             .state('function', {
                 url: baseRoute,
