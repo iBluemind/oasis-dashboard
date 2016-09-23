@@ -3,8 +3,8 @@
 
     angular
         .module('horizon.dashboard.oasisdash.function')
-        .factory('horizon.dashboard.oasisdash.function.functionModel', functionModel);
-
+        .factory('horizon.dashboard.oasisdash.function.functionModel', functionModel)
+        .factory('hotizon.dashboard.oasisdash.function.functionIntegrationModel', functionIntegrationModel);
     functionModel.$inject = [
         'horizon.app.core.openstack-service-api.oasisdash'
     ];
@@ -40,6 +40,12 @@
         }
 
         return model;
+    }
+
+    function functionIntegrationModel() {
+        var model = {
+
+        }
     }
 })
 ();

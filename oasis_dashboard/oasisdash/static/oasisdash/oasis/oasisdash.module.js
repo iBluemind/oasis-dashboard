@@ -39,8 +39,9 @@
             'horizon.dashboard.oasisdash.function',
             'horizon.dashboard.oasisdash.endpoint',
             'ui.router',
+            'ui.bootstrap',
         ])
-        .config(config);
+        .config(config)
 
     config.$inject = ['$provide', '$windowProvider', '$stateProvider', '$urlRouterProvider'];
     function config($provide, $windowProvider, $stateProvider, $urlRouterProvider) {
@@ -55,10 +56,12 @@
         $stateProvider
             .state('function', {
                 url: baseRoute,
+                controller : 'FunctionTableController',
                 templateUrl: path + 'function/table/table.html'
             })
             .state('edit',{
                 url:baseRoute+'edit',
+                controller: 'TabsController',
                 templateUrl: path+'function/edit/edit.html'
             })
             .state('edit.code',{
@@ -73,13 +76,16 @@
                 url:'/integration',
                 controller: 'IntegrationController',
                 templateUrl: path+'function/edit/integration/integration.html',
-                data : {
-
-                }
+            })
+            .state('edit.integration.setting', {
+                url:'/integration/:param',
+                controller:'IntegrationSettingController',
+                templateUrl: path+'function/edit/integration/setting/integration.setting.html',
             })
             .state('edit.monitor',{
                 url:'/monitor',
                 templateUrl: path+'function/edit/monitor/monitor.html',
+                controller: 'MonitorController',
                 data : {
 
                 }
