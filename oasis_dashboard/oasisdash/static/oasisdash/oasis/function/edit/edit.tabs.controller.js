@@ -21,7 +21,12 @@
     ]
 
     function TabsController($q, $scope, basePath, oasis, model) {
+        //$scope.selectMethods = []
+        //$state.transitionTo('edit.integration');
+        $scope.text="asdf";
+        $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
+        });
     }
 
 })();

@@ -138,14 +138,12 @@
 
         function init() {
             model.init();
-            console.log(model);
             if ($state.current.data && !isEmpty($state.current.data)) {
                 $scope.model = $state.current.data;
             } else {
                 $scope.model = model;
             }
             $state.current.data = $scope.model;
-            console.log("Second CTRL", $stateParams, $state);
 
             //keystone.getCurrentUserSession().success(getSessionSuccess);
         }
