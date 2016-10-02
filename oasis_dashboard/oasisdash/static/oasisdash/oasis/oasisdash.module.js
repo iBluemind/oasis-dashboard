@@ -47,6 +47,7 @@
     function config($provide, $windowProvider, $stateProvider, $urlRouterProvider) {
         var path = $windowProvider.$get().STATIC_URL + 'oasisdash/oasis/';
         $provide.constant('horizon.dashboard.oasisdash.basePath', path);
+
         var baseRoute = '/oasisdash/function/';
         $provide.constant('horizon.dashboard.oasisdash.baseRoute', baseRoute);
 

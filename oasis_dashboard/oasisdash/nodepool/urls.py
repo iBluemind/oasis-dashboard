@@ -12,9 +12,18 @@
 
 from django.conf.urls import url
 
+from django.conf.urls import include
+from django.conf.urls import patterns
+
 from oasis_dashboard.oasisdash.nodepool import views
 
+from oasis_dashboard.oasisdash.nodepool.policy import urls as policy_urls
+from oasis_dashboard.oasisdash.nodepool.nodepool import urls as nodepool_urls
 
-urlpatterns = [
+
+urlpatterns = patterns(
+    '',
     url(r'^$', views.IndexView.as_view(), name='index'),
-]
+    url(r'policy/', include(policy_urls, namespace='policy')),
+    url(r'nodepool/', include(nodepool_urls, namespace='nodepool')),
+)

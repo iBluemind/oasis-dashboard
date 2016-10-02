@@ -1,4 +1,8 @@
-#  Copyright 2015 NEC Corporation, Inc.
+# Copyright 2012 United States Government as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All Rights Reserved.
+#
+# Copyright 2012 Nebula, Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -12,12 +16,12 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-# The slug of the panel to be added to HORIZON_CONFIG. Required.
-PANEL = 'endpoint'
-# The slug of the panel group the PANEL is associated with.
-PANEL_GROUP = 'oasisdash'
-# The slug of the dashboard the PANEL associated with. Required.
-PANEL_DASHBOARD = 'oasisdash'
+from django.conf.urls import patterns
+from django.conf.urls import url
 
-# Python panel class of the PANEL to be added.
-ADD_PANEL = 'oasis_dashboard.oasisdash.endpoint.panel.Endpoint'
+from oasis_dashboard.oasisdash.nodepool.nodepool import  views
+
+urlpatterns = patterns(
+    '',
+    url(r'^create/$', views.CreateView.as_view(), name='create'),
+)

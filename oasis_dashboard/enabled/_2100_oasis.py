@@ -24,14 +24,15 @@ DEFAULT = True
 AUTO_DISCOVER_STATIC_FILES = True
 
 
-# ADD_JS_FILES = [
-#     'horizon/lib/angular/angular-route.js',
-#     'oasisdash/js/ace.js',
-#     'oasisdash/js/mode-python.js',
-#     'oasisdash/js/theme-eclipse.js',
-# ]
+ADD_JS_FILES = [
+    'horizon/lib/angular/angular-route.js',
+    'oasisdash/js/ui-ace.js',
+    'oasisdash/js/ace.js',
+    'oasisdash/js/mode-python.js',
+    'oasisdash/js/theme-eclipse.js',
+]
 
-ADD_ANGULAR_MODULES = ['horizon.dashboard.oasisdash']
+ADD_ANGULAR_MODULES = ['horizon.dashboard.oasisdash', 'ui.ace']
 
 # ADD_EXCEPTIONS = {
 #    'recoverable': exceptions.RECOVERABLE,

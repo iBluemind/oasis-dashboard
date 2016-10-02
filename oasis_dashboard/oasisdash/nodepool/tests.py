@@ -13,7 +13,7 @@
 from horizon.test import helpers as test
 
 
-class NodePoolTest(test.TestCase):
+class NodePoolTests(test.TestCase):
     # Unit tests for function.
     def test_me(self):
         self.assertTrue(1 + 1 == 2)

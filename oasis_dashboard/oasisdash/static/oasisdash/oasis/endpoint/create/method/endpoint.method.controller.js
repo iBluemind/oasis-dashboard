@@ -26,6 +26,7 @@
         ctrl.name = "";
         ctrl.description = "";
         ctrl.addMethodElement = addMethodElement;
+        ctrl.clickTest = clickTest;
         ctrl.function_method = [{unit: "get", label: gettext("GET")},
             {unit: "post", label: gettext("POST")},
             {unit: "put", label: gettext("PUT")},
@@ -40,6 +41,10 @@
             var temp = $compile(btnhtml)($scope);
             angular.element(document.getElementById('method-group')).append(temp);
 
+        }
+
+        function clickTest(){
+            console.log('click');
         }
     }
 })();

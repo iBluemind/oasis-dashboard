@@ -26,7 +26,7 @@ min_size = Column(Integer())
 """
 
 
-class NodePoolForm(forms.SelfHandlingForm):
+class CreateForm(forms.SelfHandlingForm):
     max_size = forms.IntegerField(
         label=_("NodePool Max Size"),
         min_value=1,

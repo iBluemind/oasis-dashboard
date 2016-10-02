@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('horizon.dashboard.oasisdash.function', ['horizon.dashboard.oasisdash.function.actions', 'ui.ace'])
+        .module('horizon.dashboard.oasisdash.function', ['ui.ace'])
         .constant('horizon.dashboard.oasisdash.function.events', events())
         .constant('horizon.dashboard.oasisdash.function.resourceType', 'OS::Oasis::Function');
 
@@ -13,20 +13,3 @@
         };
     }
 })();
-
-
-//(function() {
-//  'use strict';
-//
-//  /**
-//   * @ngdoc horizon.dashboard.admin.flavors
-//   * @ngModule
-//   *
-//   * @description
-//   * Provides all of the services and widgets required
-//   * to support and display the flavors panel.
-//   */
-//  angular
-//    .module('horizon.dashboard.oasisdash.function', []);
-//
-//})();

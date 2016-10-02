@@ -1,7 +1,0 @@
-{% extends "horizon/common/_modal_form.html" %}
-{% load i18n %}
-
-{% block modal-footer %}
-  <a href="{% url 'horizon:oasisdash:nodepool:index' %}" class="btn btn-default cancel">{% trans "Cancel" %}</a>
-  <input class="btn btn-primary" type="submit" value="{% trans "Update NodePool" %}" />
-{% endblock %}
