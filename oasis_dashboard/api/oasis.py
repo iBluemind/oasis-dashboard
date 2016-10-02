@@ -63,6 +63,28 @@ def node_pool_update(request, **params):
     return oasisclient(request).nodepool.update(**params)
 
 
+def node_pool_policy_create(request, **params):
+    return ''
+
+
+def node_pool_policy_update(request, policy_id, **params):
+    return ''
+
+
+def node_pool_policy_list(request):
+    return [{
+        'id': '1q2e3r6-zc34',
+        'name': 'policy1'
+        },
+        {
+        'id': '123d23rfwef',
+        'name': 'policy2'
+        }
+    ]
+
+
+
+
 def policy_get(request):
     """Returns policy."""
     return oasisclient(request).policy.get()

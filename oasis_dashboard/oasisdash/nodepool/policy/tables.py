@@ -24,6 +24,15 @@ class CreatePolicyAction(tables.LinkAction):
     icon = "plus"
 
 
+class EditPolicyAction(tables.LinkAction):
+    name = "update"
+    verbose_name = _("Edit Policy")
+    url = reverse_lazy("horizon:oasisdash:nodepool:policy:update")
+    classes = ("ajax-modal",)
+    icon = "pencil"
+    policy_rules = (("network", "update_network"),)
+
+
 class NodePoolPolicyTable(tables.DataTable):
     name = tables.Column("nodepool_policy_name",
                          link="horizon:admin:hypervisors:detail",
