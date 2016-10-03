@@ -24,7 +24,7 @@
         return service;
 
         function createFunction(params) {
-            return apiService.post('/api/oasis/function/', params)
+            return apiService.post('/api/oasis/functions/', params)
                 .error(function () {
                     toastService.add('error', gettext('Unable to create Function.'));
                 });
@@ -38,14 +38,14 @@
         }
 
         function getFunctions() {
-           return apiService.get('/api/oasis/function/')
+           return apiService.get('/api/oasis/functions/')
                 .error(function() {
                     toastService.add('error', gettext('Unable to retrieve Function.'));
                 });
         }
 
         function createEndpoint(params) {
-            return apiService.post('/api/oasis/endpoint/', params)
+            return apiService.post('/api/oasis/endpoints/', params)
                 .error(function () {
                     toastService.add('error', gettext('Unable to create Endpoint.'));
                 });
@@ -59,9 +59,9 @@
         }
 
         function getEndpoints() {
-           return apiService.get('/api/oasis/endpoint/')
+           return apiService.get('/api/oasis/endpoints/')
                 .error(function() {
-                    toastService.add('error', gettext('Unable to retrieve Endpoint.'));
+                    toastService.add('error', gettext('Unable to retrieve Endpoints.'));
                 });
         }
 

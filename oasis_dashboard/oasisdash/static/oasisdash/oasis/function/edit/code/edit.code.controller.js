@@ -26,20 +26,45 @@
     function CreateFunctionInputController($state, $scope, $stateParams, basePath, oasis, keystone, model) {
         var ctrl = this;
         ctrl.region = [];
-        ctrl.endpoint = [];
+        ctrl.endpoints = [];
+        ctrl.createFunction = createFunction;
 
         init();
 
         function init() {
-            model.init();
+            //model.init();
             if ($state.current.data && !isEmpty($state.current.data)) {
                 $scope.model = $state.current.data;
             } else {
                 $scope.model = model;
             }
             $state.current.data = $scope.model;
-
+            oasis.getEndpoints().success(getEndPointSuccess);
             //keystone.getCurrentUserSession().success(getSessionSuccess);
+        }
+
+        function createFunction() {
+            console.log(model.newFunctionSpec);
+            model.createFunction().success(createFunctionSuccess);
+        }
+
+        function createFunctionSuccess() {
+            console.log('create function success')
+        }
+
+        function getEndPointSuccess(response){
+
+            console.log(response);
+            for (var i in response) {
+                var item = {
+                    unit: response[i].id,
+                    label: response[i].name
+                }
+
+                ctrl.endpoints.push(item)
+            }
+
+            console.log(ctrl.endpoints);
         }
 
         function getSessionSuccess(response) {

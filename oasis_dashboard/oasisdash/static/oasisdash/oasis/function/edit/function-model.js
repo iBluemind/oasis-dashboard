@@ -11,7 +11,12 @@
 
     function functionModel(oasis) {
         var model = {
-            newFunctionSpec: {},
+            newFunctionSpec: {
+                endpoint: null,
+                name: null,
+                description : null,
+                body: null
+            },
 
             // API methods
             init: init,
@@ -20,6 +25,7 @@
 
         function initNewFunctionSpec() {
             model.newFunctionSpec = {
+                endpoint:'',
                 name: 'test',
                 description : 'This is test function',
                 body:'def get(self)'
@@ -32,8 +38,11 @@
         }
 
         function createFunction() {
+            console.log('model');
+            console.log(model.newFunctionSpec);
             var finalSpec = angular.copy(model.newFunctionSpec);
-
+            console.log('final');
+            console.log(finalSpec);
             //cleanNullProperties(finalSpec);
 
             return oasis.createFunction(finalSpec);

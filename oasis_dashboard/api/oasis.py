@@ -83,18 +83,6 @@ def node_pool_policy_list(request):
     ]
 
 
-
-
-def policy_get(request):
-    """Returns policy."""
-    return oasisclient(request).policy.get()
-
-
-def policy_update(request, params):
-    LOG.debug("********Policy Update call*************")
-    oasisclient(request).policy.update(**params)
-
-
 def function_get(request, function_id):
     return oasisclient(request).function.get()
 
@@ -116,3 +104,30 @@ def function_delete(request, function):
 def function_create(request, **params):
     return oasisclient(request).function.create(**params)
 
+
+def endpoint_create(request, **params):
+    return ''
+
+
+def endpoint_get(request, id):
+    return ''
+
+
+def endpoint_list(request):
+    return [{
+        'id': '1q2e3r6-zc34',
+        'name': 'endpoint1'
+        },
+        {
+        'id': '123d23rfwef',
+        'name': 'endpoint2'
+        }
+    ]
+
+
+def endpoint_update(request, **params):
+    return ''
+
+
+def endpoint_delete(request, **params):
+    return ''

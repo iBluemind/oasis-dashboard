@@ -1,11 +1,10 @@
-<div class="container">
+<div class="container" ng-controller="CreateFunctionInputController as ctrl">
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
                 <label class="control-label" for="endpoint-name" translate>EndPoint Name</label>
-                <select name="endpoint-name" id="endpoint-name" ng-model="method"
-                        class="form-control" ng-options="mu as mu.label for mu in ctrl.function_method"
-                        ng-change="ctrl.selectMethod(method)">
+                <select name="endpoint-name" id="endpoint-name" ng-model="model.newFunctionSpec.endpoint"
+                        class="form-control" ng-options="mu as mu.unit for mu in ctrl.endpoints">
                     <option value="">Select EndPoint</option>
                 </select>
             </div>
@@ -30,6 +29,10 @@
                   theme:'eclipse',
                   mode: 'python',
                 }"></div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-default" ng-click="ctrl.createFunction()">Create Function</button>
             </div>
         </div>
     </div>
