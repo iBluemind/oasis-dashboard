@@ -10,7 +10,7 @@ class CreateView(forms.ModalFormView):
     form_id = "create_nodepool_policy_form"
     modal_header = _("Create NodePool Policy")
     template_name = 'oasisdash/nodepool/nodepool/create.html'
-    success_url = reverse_lazy("horizon:project:routers:index")
+    submit_url = reverse_lazy("horizon:oasisdash:nodepool:nodepool:create")
+    success_url = reverse_lazy("horizon:oasisdash:nodepool:index")
     page_title = _("Create Node Pool")
     submit_label = _("Create Node Pool")
-    submit_url = reverse_lazy("horizon:project:routers:create")

@@ -55,20 +55,21 @@ def node_pool_get(request):
     return oasisclient(request).nodepool.get()
 
 
-def node_pool_create(request, **params):
+def node_pool_create(request, params):
     return oasisclient(request).nodepool.create(**params)
 
 
-def node_pool_update(request, **params):
+def node_pool_update(request, params):
     return oasisclient(request).nodepool.update(**params)
 
 
-def node_pool_policy_create(request, **params):
-    return ''
+def node_pool_policy_create(request, params):
+    LOG.debug("********Policy Create call*************")
+    return oasisclient(request).nodepool_policy.create(**params)
 
 
-def node_pool_policy_update(request, policy_id, **params):
-    return ''
+def node_pool_policy_update(request, policy_id, params):
+    return oasisclient(request).nodepool_policy.update(policy_id, **params)
 
 
 def node_pool_policy_list(request):

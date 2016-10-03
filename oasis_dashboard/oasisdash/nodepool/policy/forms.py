@@ -100,7 +100,6 @@ class CreateForm(forms.SelfHandlingForm):
         help_text=_('Input scaledown threshold'),
         required=True)
 
-
     def handle(self, request, data):
         try:
             args = {
@@ -117,7 +116,8 @@ class CreateForm(forms.SelfHandlingForm):
                 'max_size': data['max_size'],
                 'min_size': data['min_size']
             }
-
+            LOG.debug("@@@@@@@@@@@@@@@@@@Create policy@@@@@@@@@@@@@@@@@@@")
+            LOG.debug(args)
             oasis.node_pool_policy_create(request, args)
             messages.success(request,
                              _('Your nodepool policy has been created.'))
