@@ -9,18 +9,15 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from django.conf import settings
+
+import logging
+
+from horizon import views
+
+LOG = logging.getLogger(__name__)
+
 from django.utils.translation import ugettext_lazy as _
 
-import horizon
-
-
-class Oasis(horizon.Dashboard):
-    name = _("Oasis")
-    slug = "oasisdash"
-    panels = ('nodepool', 'function', 'endpoint')
-    default_panel = "function"
-    supports_tenants = True
-
-
-horizon.register(Oasis)
+class IndexView(views.APIView):
+    template_name = "oasisdash/endpoint/index.html"
+    page_title = _("Endpoint")

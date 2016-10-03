@@ -48,20 +48,20 @@
         var path = $windowProvider.$get().STATIC_URL + 'oasisdash/oasis/';
         $provide.constant('horizon.dashboard.oasisdash.basePath', path);
 
-        var baseRoute = '/oasisdash/function/';
+        var baseRoute = '/oasisdash/';
         $provide.constant('horizon.dashboard.oasisdash.baseRoute', baseRoute);
 
-        $urlRouterProvider.otherwise(baseRoute);
-        $urlRouterProvider.when(baseRoute+'edit',baseRoute+'edit/code');
+        $urlRouterProvider.otherwise(baseRoute + 'function/');
+        $urlRouterProvider.when(baseRoute+'function/edit',baseRoute+'function/edit/code');
 
         $stateProvider
             .state('function', {
-                url: baseRoute,
+                url: baseRoute+'function/',
                 controller : 'FunctionTableController',
                 templateUrl: path + 'function/table/table.html'
             })
             .state('edit',{
-                url:baseRoute+'edit',
+                url:baseRoute+'function/edit',
                 controller: 'TabsController',
                 templateUrl: path+'function/edit/edit.html'
             })
@@ -73,16 +73,6 @@
 
                 }
             })
-            .state('edit.integration',{
-                url:'/integration',
-                controller: 'IntegrationController',
-                templateUrl: path+'function/edit/integration/integration.html',
-            })
-            .state('edit.integration.setting', {
-                url:'/integration/:param',
-                controller:'IntegrationSettingController',
-                templateUrl: path+'function/edit/integration/setting/integration.setting.html',
-            })
             .state('edit.monitor',{
                 url:'/monitor',
                 templateUrl: path+'function/edit/monitor/monitor.html',
@@ -90,6 +80,13 @@
                 data : {
 
                 }
+            })
+            .state('endpoint', {
+                url: baseRoute + 'endpoint/:param',
+                params: {'index': 0},
+                controller: 'EndpointSettingController',
+                templateUrl: path + 'endpoint/create/method/setting/method.setting.html',
+                data: {}
             })
     }
 })();

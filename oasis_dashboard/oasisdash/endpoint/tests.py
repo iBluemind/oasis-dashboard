@@ -9,18 +9,11 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
 
-import horizon
+from horizon.test import helpers as test
 
 
-class Oasis(horizon.Dashboard):
-    name = _("Oasis")
-    slug = "oasisdash"
-    panels = ('nodepool', 'function', 'endpoint')
-    default_panel = "function"
-    supports_tenants = True
-
-
-horizon.register(Oasis)
+class EndpointTests(test.TestCase):
+    # Unit tests for function.
+    def test_me(self):
+        self.assertTrue(1 + 1 == 2)

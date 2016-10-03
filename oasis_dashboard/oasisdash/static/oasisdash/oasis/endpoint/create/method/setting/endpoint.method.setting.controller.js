@@ -11,19 +11,18 @@
      */
     angular
         .module('horizon.dashboard.oasisdash.endpoint')
-        .controller('EndpointMethodController', EndpointMethodController);
+        .controller('EndpointSettingController', EndpointSettingController);
 
-    EndpointMethodController.$inject = [
+    EndpointSettingController.$inject = [
         '$q',
         '$scope',
+        '$state',
         'horizon.dashboard.oasisdash.basePath',
         'horizon.app.core.openstack-service-api.oasisdash',
-        '$compile',
-        '$state'
+        '$compile'
     ];
 
-    function EndpointMethodController($q, $scope, basePath, oasis, $compile, $state) {
-
+    function EndpointSettingController($q, $scope, $state, basePath, oasis, $compile) {
         var ctrl = this;
 
         ctrl.function_method = [{unit: "get", label: "GET"},
@@ -74,9 +73,8 @@
             //if ($scope.integrationModel.method!=null )
             //    $scope.integrationModel.method = method;
             //$state.current.data.index = index;
-            $state.go('endpoint', {'index': index, 'param': method});
+            $state.go('endpoint', {'index':index, 'param':method});
         }
-
 
     }
 })();
