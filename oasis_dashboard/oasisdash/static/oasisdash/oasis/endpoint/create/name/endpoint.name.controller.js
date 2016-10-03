@@ -16,29 +16,23 @@
     EndpointNameController.$inject = [
         '$q',
         '$scope',
-        'horizon.dashboard.oasisdash.basePath',
-        'horizon.app.core.openstack-service-api.oasisdash'
+        '$state',
+        'horizon.dashboard.oasisdash.endpoint.endpointModel',
     ];
 
-    function EndpointNameController($q, $scope, basePath, oasis) {
+    function EndpointNameController($q, $scope, $state, integrationModel) {
         var ctrl = this;
-        ctrl.api = [];
-        ctrl.description = "";
 
         init();
 
         function init() {
-            var items = [
-                {
-                    unit : 'sum',
-                    label : 'sum'
-                },
-                {
-                    unit : 'minus',
-                    label : 'minus'
-                }
-            ]
-            ctrl.api = items;
+
+            if ($state.current.data && !isEmpty($state.current.data)) {
+                $scope.integrationModel = $state.current.data;
+            } else {
+                $scope.integrationModel = integrationModel;
+            }
+            $state.current.data = $scope.integrationModel;
         }
 
     }

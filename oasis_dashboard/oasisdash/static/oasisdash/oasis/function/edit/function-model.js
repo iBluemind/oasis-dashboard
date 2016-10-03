@@ -5,19 +5,28 @@
         .module('horizon.dashboard.oasisdash.function')
         .factory('horizon.dashboard.oasisdash.function.functionModel', functionModel)
         .factory('hotizon.dashboard.oasisdash.function.functionIntegrationModel', functionIntegrationModel);
+
     functionModel.$inject = [
         'horizon.app.core.openstack-service-api.oasisdash'
     ];
 
     function functionModel(oasis) {
+        //var model = {
+        //    newFunctionSpec: {
+        //        name: null,
+        //        body: null,
+        //        links:'kjwook',
+        //        stack_id: 'stack-kjwook',
+        //        project_id: 'project-kjwook',
+        //        user_id: 'user-kjwook',
+        //        status: 'running'
+        //    },
         var model = {
             newFunctionSpec: {
-                endpoint: null,
                 name: null,
-                description : null,
-                body: null
+                body: null,
+                stack_id: 'stack-kjwook',
             },
-
             // API methods
             init: init,
             createFunction: createFunction
@@ -25,10 +34,6 @@
 
         function initNewFunctionSpec() {
             model.newFunctionSpec = {
-                endpoint:'',
-                name: 'test',
-                description : 'This is test function',
-                body:'def get(self)'
             };
         }
 
@@ -52,9 +57,13 @@
     }
 
     function functionIntegrationModel() {
-        var model = {
+        var integrationModel = {
+            method: 'bb',
+            newFunctionSpec: []
+        };
 
-        }
+        return integrationModel;
+
     }
 })
 ();

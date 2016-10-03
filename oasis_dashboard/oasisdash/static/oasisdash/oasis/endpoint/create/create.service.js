@@ -46,7 +46,7 @@
         }
 
         function perform(selected) {
-            scope.model.init();
+            //scope.model.init();
             scope.selected = selected;
             wizardModalService.modal({
                 scope: scope,
@@ -56,6 +56,7 @@
         }
 
         function submit() {
+            console.log(model.endpoint);
             return model.createEndpoint().then(success);
         }
 

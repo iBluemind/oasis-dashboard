@@ -84,7 +84,6 @@
             .state('endpoint', {
                 url: baseRoute + 'endpoint/:param',
                 params: {'index': 0},
-                controller: 'EndpointSettingController',
                 templateUrl: path + 'endpoint/create/method/setting/method.setting.html',
                 data: {}
             })

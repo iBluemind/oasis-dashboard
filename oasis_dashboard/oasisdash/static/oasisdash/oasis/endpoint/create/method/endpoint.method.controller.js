@@ -10,73 +10,83 @@
      * Controller for the containers bay info step in create workflow
      */
     angular
-        .module('horizon.dashboard.oasisdash.endpoint')
-        .controller('EndpointMethodController', EndpointMethodController);
+        .module('horizon.dashboard.oasisdash.function')
+        .controller('IntegrationController', IntegrationController);
 
-    EndpointMethodController.$inject = [
-        '$q',
+    IntegrationController.$inject = [
         '$scope',
-        'horizon.dashboard.oasisdash.basePath',
-        'horizon.app.core.openstack-service-api.oasisdash',
-        '$compile',
-        '$state'
+        '$state',
+        'horizon.dashboard.oasisdash.endpoint.endpointModel',
     ];
 
-    function EndpointMethodController($q, $scope, basePath, oasis, $compile, $state) {
-
+    function IntegrationController($scope, $state, integrationModel) {
         var ctrl = this;
 
-        ctrl.function_method = [{unit: "get", label: "GET"},
+        $scope.function_method = [{unit: "get", label: "GET"},
             {unit: "post", label: "POST"},
             {unit: "put", label: "PUT"},
             {unit: "patch", label: "PATCH"},
             {unit: "delete", label: "DELETE"}];
         //$scope.selectMethods = [];
-        ctrl.selectMethod = selectMethod;
-        ctrl.showSetting = showSetting;
-        ctrl.methods = [];
+        $scope.selectMethod = selectMethod;
+        $scope.showSetting = showSetting;
 
         init();
 
         function init() {
-            //if ($state.current.data && !isEmpty($state.current.data)) {
-            //    $scope.integrationModel = $state.current.data;
-            //    if ( $state.current.data.method != null ){
-            //        //var method = $scope.integrationModel.method;
-            //        var method = $state.current.data.method;
-            //        var index = $state.current.data.index;
-            //        //console.log('init()' + $state.current.data);
-            //        $state.go('edit.integration.setting', {param:method, index:index});
-            //    }
-            //} else {
-            //    $scope.integrationModel = integrationModel;
-            //}
-            //$state.current.data = $scope.integrationModel;
+            //$scope.integrationModel = integrationModel;
+            if ($state.current.data && !isEmpty($state.current.data)) {
+                $scope.integrationModel = $state.current.data;
+                if ( $state.current.data.method != null ){
+                    var method = $state.current.data.method;
+                    var index = $state.current.data.index;
+                    $state.go('endpoint', {param:method, index:index});
+                }
+            } else {
+                $scope.integrationModel = integrationModel;
+            }
+            $state.current.data = $scope.integrationModel;
         }
 
         function selectMethod(method) {
-            //$scope.integrationModel.newFunctionSpec.method = [];
-            var index = ctrl.methods.length;
-            var methodArray = new Array();
+            var index = $scope.integrationModel.newFunctionSpec.length;
             var methodInfo = new Object();
             methodInfo.id = index;
             methodInfo.method = method.label;
             methodInfo.request = [];
             methodInfo.responses = [];
             methodInfo.resCodes = [];
-            //methodArray.push(methodInfo);
-            ctrl.methods.push(methodInfo);
-            //$scope.integrationModel.newFunctionSpec[method.label] = methodArray;
-            console.log(ctrl.methods);
+            $scope.integrationModel.newFunctionSpec.push(methodInfo);
         }
 
         function showSetting(method, index) {
-            //if ($scope.integrationModel.method!=null )
-            //    $scope.integrationModel.method = method;
-            //$state.current.data.index = index;
-            $state.go('endpoint', {'index': index, 'param': method});
+            if ($scope.integrationModel.method!=null )
+                $scope.integrationModel.method = method;
+            $state.current.data.index = index;
+            $state.go('endpoint', {'index':index, 'param':method});
+        }
+    }
+
+
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+    function isEmpty(obj) {
+
+        // null and undefined are "empty"
+        if (obj == null) return true;
+
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (obj.length && obj.length > 0)    return false;
+        if (obj.length === 0)  return true;
+
+        // Otherwise, does it have any properties of its own?
+        // Note that this doesn't handle
+        // toString and toValue enumeration bugs in IE < 9
+        for (var key in obj) {
+            if (hasOwnProperty.call(obj, key)) return false;
         }
 
-
+        return true;
     }
 })();

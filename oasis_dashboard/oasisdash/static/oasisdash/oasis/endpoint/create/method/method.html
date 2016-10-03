@@ -1,14 +1,14 @@
-<div id="container" ng-controller="EndpointMethodController as ctrl">
+<div id="container" ng-controller="IntegrationController">
     <div class="col-md-3">
         <label class="control-label" for="function-method" translate>Function Method</label>
         <select name="function-method" id="function-method" ng-model="method"
-                class="form-control" ng-options="mu as mu.label for mu in ctrl.function_method"
-                ng-change="ctrl.selectMethod(method)">
+                class="form-control" ng-options="mu as mu.label for mu in function_method"
+                ng-change="selectMethod(method)">
             <option value="">Select Method</option>
         </select>
 
-        <div ng-repeat="select in ctrl.methods">
-            <a href="" ng-click="ctrl.showSetting(select.method, $index)"> {$ select.method $} </a>
+        <div ng-repeat="select in integrationModel.newFunctionSpec">
+            <a href="" ng-click="showSetting(select.method, $index)"> {$ select.method $} </a>
             <button class="btn btn-default" ng-click="selectMethods.splice($index,1)">Delete</button>
         </div>
     </div>
