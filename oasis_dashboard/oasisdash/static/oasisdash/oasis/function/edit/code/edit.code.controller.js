@@ -14,6 +14,7 @@
         .controller('CreateFunctionInputController', CreateFunctionInputController);
 
     CreateFunctionInputController.$inject = [
+        '$cookies',
         '$location',
         '$state',
         '$scope',
@@ -24,8 +25,10 @@
         'horizon.dashboard.oasisdash.function.functionModel',
     ]
 
-    function CreateFunctionInputController($location, $state, $scope, $stateParams, baseRoute, oasis, keystone, model) {
+    function CreateFunctionInputController($cookies, $location, $state, $scope, $stateParams, baseRoute, oasis, keystone, model) {
         var ctrl = this;
+
+        var functionId = $stateParams.functionId;
         ctrl.region = [];
         ctrl.endpoints = [];
         ctrl.createFunction = createFunction;
@@ -33,6 +36,8 @@
         init();
 
         function init() {
+
+            console.log('function Id : ' + functionId);
             //model.init();
             if ($state.current.data && !isEmpty($state.current.data)) {
                 $scope.model = $state.current.data;
@@ -41,7 +46,18 @@
             }
             $state.current.data = $scope.model;
             oasis.getEndpoints().success(getEndPointSuccess);
+
+            if ( functionId != null )
+            oasis.getFunction(functionId).success(getFunctionSuccess);
             //keystone.getCurrentUserSession().success(getSessionSuccess);
+        }
+
+        function getFunctionSuccess(response) {
+            console.log('get function');
+            console.log(response);
+            $scope.model.newFunctionSpec.name = response.name;
+            $scope.model.newFunctionSpec.desc = response.desc;
+            $scope.model.newFunctionSpec.body = response.body;
         }
 
         function createFunction() {
@@ -52,12 +68,35 @@
         function createFunctionSuccess(response) {
             console.log('create function success');
             console.log(response);
-            $location.path(baseRoute + 'function');
+            //$cookies.put('function', response);
+            alert('Create Success');
+            //$location.path(baseRoute + 'function');
         }
 
         function getEndPointSuccess(response){
 
             console.log(response);
+            response  = [
+                [{
+                    'id': '1q2e3r6-zc34',
+                    'name': 'endpoint1',
+                    'desc': 'test endpoint1',
+                    'status': 'running'
+                },
+                    {
+                        'id': '123d23rfwef',
+                        'name': 'endpoint2',
+                        'desc': 'test endpoint2',
+                        'status': 'running'
+                    },
+                    {
+                        'id': 'zasdf45-dfg',
+                        'name': 'endpoint3',
+                        'desc': 'test endpoint3',
+                        'stats': 'running'
+                    }
+                ]
+            ]
             for (var i in response) {
                 var item = {
                     unit: response[i].id,

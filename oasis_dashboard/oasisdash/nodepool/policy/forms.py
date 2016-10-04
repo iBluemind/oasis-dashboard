@@ -9,7 +9,6 @@ from oasis_dashboard.api import oasis
 
 LOG = logging.getLogger(__name__)
 
-
 """
 min_size = Column(Integer())
     max_size = Column(Integer())
@@ -27,6 +26,10 @@ min_size = Column(Integer())
 
 
 class CreateForm(forms.SelfHandlingForm):
+    policy_name = forms.CharField(
+        label=_("Name"),
+        widget=forms.TextInput())
+
     max_size = forms.IntegerField(
         label=_("NodePool Max Size"),
         min_value=1,
@@ -103,6 +106,7 @@ class CreateForm(forms.SelfHandlingForm):
     def handle(self, request, data):
         try:
             args = {
+                'policy_name': data['policy_name'],
                 'scaledown_threshold': data['scaledown_threshold'],
                 'scaledown_evaluation_periods': data['scaledown_evaluation_periods'],
                 'scaledown_scale_period': data['scaledown_scale_period'],
@@ -118,9 +122,13 @@ class CreateForm(forms.SelfHandlingForm):
             }
             LOG.debug("@@@@@@@@@@@@@@@@@@Create policy@@@@@@@@@@@@@@@@@@@")
             LOG.debug(args)
-            oasis.node_pool_policy_create(request, args)
+            policy = oasis.node_pool_policy_create(request, args)
+            data['policy'] = {data['policy_name']}
             messages.success(request,
                              _('Your nodepool policy has been created.'))
+
+            return policy
+
         except Exception:
             msg = _('Failed to update policy')
             LOG.info(msg)
@@ -128,7 +136,6 @@ class CreateForm(forms.SelfHandlingForm):
 
 
 class UpdateForm(forms.SelfHandlingForm):
-
     policy_id = forms.CharField(
         label=_("ID"),
         widget=forms.TextInput(
@@ -224,11 +231,13 @@ class UpdateForm(forms.SelfHandlingForm):
                 'min_size': data['min_size']
             }
 
-            oasis.node_pool_policy_update(request, data['policy_id'], args)
+            policy = oasis.node_pool_policy_update(request, data['policy_id'], args)
             messages.success(request,
                              _('Your nodepool policy has been updated.'))
+
+            return policy
+
         except Exception:
             msg = _('Failed to update policy')
             LOG.info(msg)
             exceptions.handle(request, msg)
-

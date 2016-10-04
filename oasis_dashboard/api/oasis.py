@@ -27,7 +27,8 @@ USER_AGENT = 'python-oasisclient'
 
 LOG = logging.getLogger(__name__)
 
-
+policies = []
+nodepool = []
 
 class Function(base.APIResourceWrapper):
     _attrs = ['id', 'project_id', 'stack_id', 'status', 'name', 'body', 'trust_id', 'trustee_username', 'trustee_user_id', 'turestee_password']
@@ -52,43 +53,51 @@ def oasisclient(request):
 
 
 def node_pool_get(request):
-    return oasisclient(request).nodepool.get()
-
+    # return oasisclient(request).nodepool.get()
+    return {}
 
 def node_pool_create(request, params):
-    return oasisclient(request).nodepool.create(**params)
+    # return oasisclient(request).nodepool.create(**params)
+    LOG.debug(params)
+    nodepool.append(params)
+    return {}
 
+def node_pool_list(request, params):
+    # return oasisclient(request).nodepool.update(**params)
+    return nodepool
 
 def node_pool_update(request, params):
-    return oasisclient(request).nodepool.update(**params)
-
+    # return oasisclient(request).nodepool.update(**params)
+    return {}
 
 def node_pool_policy_create(request, params):
     LOG.debug("********Policy Create call*************")
-    return oasisclient(request).nodepool_policy.create(**params)
+    # return oasisclient(request).nodepool_policy.create(**params)
 
+    policies.append(params)
+    return {}
 
 def node_pool_policy_update(request, policy_id, params):
-    return oasisclient(request).nodepool_policy.update(policy_id, **params)
-
+    # return oasisclient(request).nodepool_policy.update(policy_id, **params)
+    return {}
 
 def node_pool_policy_list(request):
-    return [{
-        'id': '1q2e3r6-zc34',
-        'name': 'policy1'
-        },
-        {
-        'id': '123d23rfwef',
-        'name': 'policy2'
-        }
-    ]
+    LOG.debug(policies)
+    return policies
+    # return [{
+    #     'id': '1q2e3r6-zc34',
+    #     'name': 'policy1'
+    #     },
+    # ]
 
 
 def function_get(request, function_id):
     # return oasisclient(request).function.get()
     return {
         'id': '1q2e3r6-zc34',
-        'name': 'function1'
+        'name': 'function1',
+        'desc': 'this is test function1',
+        'body': 'def test(self): '
         }
 
 

@@ -42,7 +42,7 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <label class="control-label" for="endpoint-name" translate>EndPoint Name</label>
-                <select name="endpoint-name" id="endpoint-name"
+                <select name="endpoint-name" id="endpoint-name" ng-model="model.newFunctionSpec.endpoint"
                         class="form-control" ng-options="mu as mu.unit for mu in ctrl.endpoints">
                     <option value="">Select EndPoint</option>
                 </select>
@@ -58,6 +58,7 @@
             <div class="form-group">
                 <label class="control-label" for="function-description" translate>Function Description</label>
                 <input name="bay-name" type="text" class="form-control" id="function-description"
+                       ng-model="model.newFunctionSpec.desc"
                        placeholder="{$ 'Description of the function to create.'|translate $}">
             </div>
 

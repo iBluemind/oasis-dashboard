@@ -15,6 +15,8 @@
         .controller('FunctionTableController', FunctionTableController);
 
     FunctionTableController.$inject = [
+        '$cookies',
+        '$rootScope',
         '$scope',
         '$location',
         'horizon.app.core.openstack-service-api.oasisdash',
@@ -23,11 +25,12 @@
         'horizon.dashboard.oasisdash.function.resourceType'
     ];
 
-    function FunctionTableController($scope, $location, oasis, events, registry, functionResourceType) {
+    function FunctionTableController($cookies, $rootScope, $scope, $location, oasis, events, registry, functionResourceType) {
         var ctrl = this;
         ctrl.function = [];
         ctrl.functionSrc = [];
         ctrl.functionResource = registry.getResourceType(functionResourceType);
+        $rootScope.index = 0;
 
         /**
          * Filtering - client-side MagicSearch
@@ -59,14 +62,20 @@
         init();
 
         function init() {
+            console.log($rootScope.index);
             registry.initActions(functionResourceType, $scope);
-
             oasis.getFunctions().success(getFunctionsSuccess);
         }
 
         function getFunctionsSuccess(response) {
             ctrl.functionSrc = response;
-            //ctrl.functionSrc = response.items;
+        }
+
+        function getFunctionsSuccess(response) {
+            console.log('ge function');
+            //if ( $cookies.get('function') != null )
+            //    response.append($cookies.get('function'));
+            ctrl.functionSrc = response;
         }
 
         function onCreateSuccess(e, createdItem) {

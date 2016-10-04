@@ -34,7 +34,7 @@ class EditPolicyAction(tables.LinkAction):
 
 
 class NodePoolPolicyTable(tables.DataTable):
-    name = tables.Column("nodepool_policy_name",
+    policy_name = tables.Column("policy_name",
                          link="horizon:admin:hypervisors:detail",
                          verbose_name=_("PolicyName"))
 

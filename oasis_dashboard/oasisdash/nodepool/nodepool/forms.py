@@ -33,9 +33,14 @@ class CreateForm(forms.SelfHandlingForm):
             LOG.info(msg)
             messages.warning(request, msg)
             policies = []
-
-        choices = [(policy['id'], policy['name'])
-                   for policy in policies]
+        choices = [('1a2a3a', 'policy1'),
+                   ('1a2a3a', 'policy2'),
+                   ('1a2a3a', 'policy3'),
+                   ('1a2a3a', 'policy4'),
+                   ('1a2a3a', 'policy5'),
+                   ]
+        # choices = [(policy['id'], policy['name'])
+        #            for policy in policies]
         if choices:
             choices.insert(0, ("", _("Select policy")))
         return choices
@@ -48,9 +53,12 @@ class CreateForm(forms.SelfHandlingForm):
                 'policy_id': data['policy']
             }
 
-            oasis.node_pool_create(request, args)
+            node_pool = oasis.node_pool_create(request, args)
             messages.success(request,
                              _('Your nodepool has been created.'))
+
+            return node_pool
+
         except Exception:
             msg = _('Failed to update policy')
             LOG.info(msg)

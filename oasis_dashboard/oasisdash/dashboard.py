@@ -18,7 +18,7 @@ import horizon
 class Oasis(horizon.Dashboard):
     name = _("Oasis")
     slug = "oasisdash"
-    panels = ('nodepool', 'function', 'endpoint')
+    panels = ('nodepool', 'endpoint','function')
     default_panel = "function"
     supports_tenants = True
 

@@ -16,11 +16,15 @@
     TabsController.$inject = [
         '$q',
         '$scope',
+        '$stateParams',
         'horizon.dashboard.oasisdash.basePath',
         'horizon.dashboard.oasisdash.function.functionModel',
     ]
 
-    function TabsController($q, $scope, basePath, oasis, model) {
+    function TabsController($q, $scope, $stateParams, basePath, oasis, model) {
+
+        $scope.functionId = $stateParams.functionId;
+
         $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
         });

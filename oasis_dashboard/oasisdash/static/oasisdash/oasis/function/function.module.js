@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('horizon.dashboard.oasisdash.function', ['ui.ace'])
+        .module('horizon.dashboard.oasisdash.function', ['ui.ace', 'ngCookies'])
         .constant('horizon.dashboard.oasisdash.function.events', events())
         .constant('horizon.dashboard.oasisdash.function.resourceType', 'OS::Oasis::Function');
 
