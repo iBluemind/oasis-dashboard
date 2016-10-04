@@ -19,7 +19,7 @@ from horizon import tables
 class CreatePolicyAction(tables.LinkAction):
     name = "create"
     verbose_name = _("Create Policy")
-    url = reverse_lazy("horizon:oasisdash:nodepool:policy:create")
+    url = "horizon:oasisdash:nodepool:policy:create"
     classes = ("ajax-modal",)
     icon = "plus"
 
@@ -35,11 +35,14 @@ class EditPolicyAction(tables.LinkAction):
 
 class NodePoolPolicyTable(tables.DataTable):
     policy_name = tables.Column("policy_name",
-                         link="horizon:admin:hypervisors:detail",
+                         link="horizon:oasisdash:nodepool:policy:update",
                          verbose_name=_("PolicyName"))
 
     create_time = tables.Column("create_time",
                                 verbose_name=_("Create Time"))
+
+    def get_object_id(self, obj):
+        return "%s-%s" % (obj['id'], obj['policy_name'])
 
     class Meta(object):
         name = "nodepoolpolicytable"

@@ -32,7 +32,7 @@
         ctrl.region = [];
         ctrl.endpoints = [];
         ctrl.createFunction = createFunction;
-
+        ctrl.nodepools=[];
         init();
 
         function init() {
@@ -68,7 +68,8 @@
         function createFunctionSuccess(response) {
             console.log('create function success');
             console.log(response);
-            //$cookies.put('function', response);
+            $cookies.name = model.newFunctionSpec.name;
+            $cookies.desc = model.newFunctionSpec.desc;
             alert('Create Success');
             //$location.path(baseRoute + 'function');
         }
@@ -77,26 +78,26 @@
 
             console.log(response);
             response  = [
-                [{
+                {
                     'id': '1q2e3r6-zc34',
                     'name': 'endpoint1',
                     'desc': 'test endpoint1',
                     'status': 'running'
                 },
-                    {
-                        'id': '123d23rfwef',
-                        'name': 'endpoint2',
-                        'desc': 'test endpoint2',
-                        'status': 'running'
-                    },
-                    {
-                        'id': 'zasdf45-dfg',
-                        'name': 'endpoint3',
-                        'desc': 'test endpoint3',
-                        'stats': 'running'
-                    }
-                ]
-            ]
+                {
+                    'id': '123d23rfwef',
+                    'name': 'endpoint2',
+                    'desc': 'test endpoint2',
+                    'status': 'running'
+                },
+                {
+                    'id': 'zasdf45-dfg',
+                    'name': 'endpoint3',
+                    'desc': 'test endpoint3',
+                    'stats': 'running'
+                }]
+
+
             for (var i in response) {
                 var item = {
                     unit: response[i].id,
@@ -106,6 +107,36 @@
                 ctrl.endpoints.push(item)
             }
 
+            var nodepools = [
+                {
+                    'id': '1f2343',
+                    'name': 'nodepool1'
+                },
+                {
+                    'id': '1f2343',
+                    'name': 'nodepool2'
+                },
+                {
+                    'id': '1f2343',
+                    'name': 'nodepool3'
+                },
+                {
+                    'id': '1f2343',
+                    'name': 'nodepool5'
+                },
+                {
+                    'id': '1f2343',
+                    'name': 'nodepool6'
+                }
+            ]
+            for (var i in nodepools) {
+                var item = {
+                    unit: nodepools[i].id,
+                    label: nodepools[i].name
+                }
+
+                ctrl.nodepools.push(item)
+            }
             console.log(ctrl.endpoints);
 
         }

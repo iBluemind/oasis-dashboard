@@ -19,17 +19,30 @@ from horizon import tables
 class CreateNodePoolAction(tables.LinkAction):
     name = "create"
     verbose_name = _("Create Policy")
-    url = reverse_lazy("horizon:oasisdash:nodepool:nodepool:create")
+    url = "horizon:oasisdash:nodepool:nodepool:create"
     classes = ("ajax-modal",)
     icon = "plus"
 
 
+class EditNodePoolAction(tables.LinkAction):
+    name = "update"
+    verbose_name = _("Edit Policy")
+    url = reverse_lazy("horizon:oasisdash:nodepool:policy:update")
+    classes = ("ajax-modal",)
+    icon = "pencil"
+    policy_rules = (("network", "update_network"),)
+
+
 class NodePoolTable(tables.DataTable):
-    id = tables.Column("nodepool_policy_id",
-                       verbose_name=_("NodePool Id"))
+    nodepool_name = tables.Column("nodepool_name",
+                        link="horizon:oasisdash:nodepool:nodepool:update",
+                        verbose_name=_("NodePool Name"))
 
     create_time = tables.Column("create_time",
                                 verbose_name=_("Create Time"))
+
+    def get_object_id(self, obj):
+        return "%s-%s" % (obj['id'], obj['nodepool_name'])
 
     class Meta(object):
         name = "nodepooltable"

@@ -37,11 +37,6 @@
         <th class="rsp-p1" st-sort="name" st-sort-default translate>
             Name
         </th>
-
-        <th class="rsp-p1" st-sort="id" translate>
-            ID
-        </th>
-
         <th class="rsp-p2" st-sort="description" translate>
             Description
         </th>
@@ -79,9 +74,8 @@
         </td>
 
         <td class="rsp-p1"><a ui-sref="edit.code({functionId: '{$b.id$}'})">{$ b.name|noName $}</a></td>
-        <td class="rsp-p1">{$ b.id $}</td>
         <td class="rsp-p2">{$ b.desc $}</td>
-        <td class="rsp-p1">{$ b.status $}</td>
+        <td class="rsp-p1">running</td>
 
         <td class="actions_column">
             <!--

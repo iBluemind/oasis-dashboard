@@ -123,10 +123,9 @@ class CreateForm(forms.SelfHandlingForm):
             LOG.debug("@@@@@@@@@@@@@@@@@@Create policy@@@@@@@@@@@@@@@@@@@")
             LOG.debug(args)
             policy = oasis.node_pool_policy_create(request, args)
-            data['policy'] = {data['policy_name']}
             messages.success(request,
                              _('Your nodepool policy has been created.'))
-
+            request.session['policy'] = args
             return policy
 
         except Exception:

@@ -16,21 +16,20 @@
 
     FunctionTableController.$inject = [
         '$cookies',
-        '$rootScope',
         '$scope',
         '$location',
         'horizon.app.core.openstack-service-api.oasisdash',
         'horizon.dashboard.oasisdash.function.events',
         'horizon.framework.conf.resource-type-registry.service',
-        'horizon.dashboard.oasisdash.function.resourceType'
+        'horizon.dashboard.oasisdash.function.resourceType',
+        'horizon.dashboard.oasisdash.baseRoute',
     ];
 
-    function FunctionTableController($cookies, $rootScope, $scope, $location, oasis, events, registry, functionResourceType) {
+    function FunctionTableController($cookies, $scope, $location, oasis, events, registry, functionResourceType) {
         var ctrl = this;
         ctrl.function = [];
         ctrl.functionSrc = [];
         ctrl.functionResource = registry.getResourceType(functionResourceType);
-        $rootScope.index = 0;
 
         /**
          * Filtering - client-side MagicSearch
@@ -54,7 +53,7 @@
             }
         ];
 
-        var createWatcher = $scope.$on(events.CREATE_SUCCESS, onCreateSuccess);
+        //var createWatcher = $scope.$on(events.CREATE_SUCCESS, onCreateSuccess);
         //var deleteWatcher = $scope.$on(events.DELETE_SUCCESS, onDeleteSuccess);
 
         $scope.$on('$destroy', destroy);
@@ -62,25 +61,27 @@
         init();
 
         function init() {
-            console.log($rootScope.index);
             registry.initActions(functionResourceType, $scope);
             oasis.getFunctions().success(getFunctionsSuccess);
         }
 
         function getFunctionsSuccess(response) {
-            ctrl.functionSrc = response;
-        }
-
-        function getFunctionsSuccess(response) {
             console.log('ge function');
-            //if ( $cookies.get('function') != null )
-            //    response.append($cookies.get('function'));
+            var cookieName = $cookies.name;
+            console.log(cookieName);
+            if ( cookieName != null ) {
+                response.push({
+                    'name': cookieName,
+                    'desc': $cookies.desc
+                })
+            }
             ctrl.functionSrc = response;
         }
 
         function onCreateSuccess(e, createdItem) {
             ctrl.functionSrc.push(createdItem);
             e.stopPropagation();
+
         }
 
         //function onDeleteSuccess(e, removedIds) {
@@ -103,48 +104,9 @@
         }
 
         function destroy() {
-          createWatcher();
+          //createWatcher();
           //deleteWatcher();
         }
     }
 
-    //function FunctionTableController(oasis) {
-    //    var ctrl = this;
-    //    ctrl.function = [];
-    //    ctrl.functionSrc = [];
-    //    //ctrl.functionResource = registry.getResourceType(bayResourceType);
-    //
-    //    /**
-    //     * Filtering - client-side MagicSearch
-    //     * all facets for function table
-    //     */
-    //    ctrl.functionFacets = [
-    //        {
-    //            'label': gettext('Name'),
-    //            'name': 'name',
-    //            'singleton': true
-    //        },
-    //        {
-    //            'label': gettext('ID'),
-    //            'name': 'id',
-    //            'singleton': true
-    //        },
-    //        {
-    //            'label': gettext('Status'),
-    //            'name': 'status',
-    //            'singleton': true
-    //        }
-    //    ];
-    //    init();
-    //
-    //    ////////////////////////////////
-    //
-    //    function init() {
-    //        oasis.getFunctions().success(getFunctionsSuccess);
-    //    }
-    //
-    //    function getFunctionsSuccess(response) {
-    //        ctrl.functionSrc = response.items;
-    //    }
-    //}
 })();

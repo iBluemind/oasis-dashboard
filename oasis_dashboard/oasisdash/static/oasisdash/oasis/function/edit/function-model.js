@@ -11,22 +11,17 @@
     ];
 
     function functionModel(oasis) {
-        //var model = {
-        //    newFunctionSpec: {
-        //        name: null,
-        //        body: null,
-        //        links:'kjwook',
-        //        stack_id: 'stack-kjwook',
-        //        project_id: 'project-kjwook',
-        //        user_id: 'user-kjwook',
-        //        status: 'running'
-        //    },
         var model = {
             newFunctionSpec: {
                 name: null,
                 body: null,
+                links:'kjwook',
                 stack_id: 'stack-kjwook',
+                project_id: 'project-kjwook',
+                user_id: 'user-kjwook',
+                status: 'running'
             },
+
             // API methods
             init: init,
             createFunction: createFunction

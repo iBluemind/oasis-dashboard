@@ -19,7 +19,7 @@
 from django.conf.urls import patterns
 from django.conf.urls import url
 
-from oasis_dashboard.oasisdash.nodepool.policy import  views
+from oasis_dashboard.oasisdash.nodepool.policy import views
 
 urlpatterns = patterns(
     '',

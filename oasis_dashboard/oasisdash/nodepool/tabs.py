@@ -21,6 +21,9 @@ from oasis_dashboard.oasisdash.nodepool.policy import tables as policy_tables
 
 from oasis_dashboard.api import oasis
 
+import logging
+LOG = logging.getLogger(__name__)
+
 
 class Map(dict):
     """
@@ -64,33 +67,47 @@ class PolicyTab(tabs.TableTab):
 
     def get_nodepoolpolicytable_data(self):
 
-        example_policy = Map()
-        example_policy.id = 'aaa'
-        example_policy.policy_name = 'policy1'
-        example_policy.create_time = '2016-10-04'
-        example_policy2 = Map()
-        example_policy2.id = 'aaa2'
-        example_policy2.policy_name = 'policy2'
-        example_policy2.create_time = '2016-10-04'
-        example_policy3 = Map()
-        example_policy3.id = 'aaa3'
-        example_policy3.policy_name = 'policy3'
-        example_policy3.create_time = '2016-10-04'
-        example_policy4 = Map()
-        example_policy4.id = 'aaa4'
-        example_policy4.policy_name = 'policy4'
-        example_policy4.create_time = '2016-10-04'
-        policies = [
-            example_policy,
-            example_policy2,
-            example_policy3,
-            example_policy4,
-
+        items = [
+            {
+                'id': '1',
+                'policy_name': 'policy1',
+                'create_time': '2016-10-04'
+            },
+            {
+                'id': '2',
+                'policy_name': 'policy2',
+                'create_time': '2016-10-04'
+            },
+            {
+                'id': '3',
+                'policy_name': 'policy3',
+                'create_time': '2016-10-04'
+            },
+            {
+                'id': '4',
+                'policy_name': 'policy4',
+                'create_time': '2016-10-04'
+            }
         ]
-        # request = self.tab_group.request
+
+        request = self.tab_group.request
+        # policies = oasis.node_pool_policy_list(request)
+
+        if request.session.get('policy', False):
+            new_policy = request.session.get('policy')
+            LOG.debug('***********************************session')
+            LOG.debug(new_policy)
+            policy = {
+                'id': '5',
+                'policy_name': 'policy5',
+                'create_time': '2016-10-04'
+            }
+            items.append(policy)
+            # choices.append((policy['id'], policy['policy_name'], policy['create_time']))
+
         # policy = self.get_context_data(request)['policy']
         # policies.append({'policy_name': policy})
-        return policies
+        return items
 
 
 class NodePoolTab(tabs.TableTab):
@@ -100,9 +117,30 @@ class NodePoolTab(tabs.TableTab):
     template_name = "horizon/common/_detail_table.html"
 
     def get_nodepooltable_data(self):
-        request = self.tab_group.request
 
-        return oasis.node_pool_policy_list(request)
+        items = [
+            {
+                'id': '1',
+                'nodepool_name': 'nodepool1',
+                'create_time': '2016-10-04'
+            },
+            {
+                'id': '2',
+                'nodepool_name': 'nodepool2',
+                'create_time': '2016-10-04'
+            },
+            {
+                'id': '3',
+                'nodepool_name': 'nodepool3',
+                'create_time': '2016-10-04'
+            },
+            {
+                'id': '4',
+                'nodepool_name': 'nodepool5',
+                'create_time': '2016-10-04'
+            }
+        ]
+        return items
 
 
 class NodePoolTabs(tabs.TabGroup):

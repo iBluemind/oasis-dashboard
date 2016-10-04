@@ -73,7 +73,6 @@ def node_pool_update(request, params):
 def node_pool_policy_create(request, params):
     LOG.debug("********Policy Create call*************")
     # return oasisclient(request).nodepool_policy.create(**params)
-
     policies.append(params)
     return {}
 
