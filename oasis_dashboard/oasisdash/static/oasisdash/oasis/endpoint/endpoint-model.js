@@ -11,7 +11,7 @@
 
     function endpointModel(oasis) {
         var integrationModel = {
-            method: 'bb',
+            method: null,
             newFunctionSpec: [],
             endpoint: {
                 name: null,
@@ -24,7 +24,7 @@
 
 
         function createEndpoint() {
-            var finalSpec = angular.copy(integrationModel.newFunctionSpec);
+            var finalSpec = angular.copy(integrationModel.endpoint);
 
             cleanNullProperties(finalSpec);
 

@@ -60,11 +60,13 @@
 
         function init() {
             registry.initActions(functionResourceType, $scope);
+
             oasis.getFunctions().success(getFunctionsSuccess);
         }
 
         function getFunctionsSuccess(response) {
-            ctrl.functionSrc = response.items;
+            ctrl.functionSrc = response;
+            //ctrl.functionSrc = response.items;
         }
 
         function onCreateSuccess(e, createdItem) {

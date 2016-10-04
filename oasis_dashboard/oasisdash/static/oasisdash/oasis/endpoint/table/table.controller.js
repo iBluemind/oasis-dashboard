@@ -89,27 +89,29 @@
 
         function init() {
             registry.initActions(endpointResourceType, $scope);
-            //oasis.getEndpoints().success(getEndpointsSuccess);
-            var items = [
-                {
-                    id: '1e23ur919dh',
-                    name: 'endpoint1',
-                    status: 'running'
-                },
-                {
-                    id: '289f298r9',
-                    name: 'endpoint2',
-                    status: 'running'
-                }
-            ]
-            ctrl.endpointSrc = items;
+            oasis.getEndpoints().success(getEndpointsSuccess);
+            //var items = [
+            //    {
+            //        id: '1e23ur919dh',
+            //        name: 'endpoint1',
+            //        status: 'running'
+            //    },
+            //    {
+            //        id: '289f298r9',
+            //        name: 'endpoint2',
+            //        status: 'running'
+            //    }
+            //]
+            //ctrl.endpointSrc = items;
         }
 
         function getEndpointsSuccess(response) {
-            //ctrl.endpointSrc = response.items;
+            console.log('end point get')
+            ctrl.endpointSrc = response;
         }
 
         function onCreateSuccess(e, createdItem) {
+            console.log('end point create')
             ctrl.endpointSrc.push(createdItem);
             e.stopPropagation();
         }

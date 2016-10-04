@@ -28,13 +28,6 @@
       The headers for the table columns
     -->
 
-    <div class="row hz-container-actions">
-      <div class="col-xs-12 hz-container-action">
-          <a ng-href="project/endpoint/create" class="btn btn-default">Create</a>
-      </div>
-    </div>
-
-
     <tr>
         <th class="multi_select_column">
             <input type="checkbox" hz-select-all="table.endpoint">
@@ -46,11 +39,13 @@
             Name
         </th>
 
-        <th class="rsp-p2" st-sort="id" translate>
+        <th class="rsp-p1" st-sort="id" translate>
             ID
         </th>
-
-        <th class="rsp-p1" st-sort="id" translate>
+        <th class="rsp-p2" st-sort="description" translate>
+            Description
+        </th>
+        <th class="rsp-p1" st-sort="status" translate>
             Status
         </th>
     </tr>
@@ -83,7 +78,8 @@
         </td>
 
         <td class="rsp-p1"><a href='' ng-click="table.showDetailModal(b)">{$ b.name|noName $}</a></td>
-        <td class="rsp-p2">{$ b.id $}</td>
+        <td class="rsp-p1">{$ b.id $}</td>
+        <td class="rsp-p2">{$ b.desc $}</td>
         <td class="rsp-p1">{$ b.status $}</td>
 
         <td class="actions_column">

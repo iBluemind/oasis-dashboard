@@ -38,11 +38,15 @@
             Name
         </th>
 
-        <th class="rsp-p2" st-sort="id" translate>
+        <th class="rsp-p1" st-sort="id" translate>
             ID
         </th>
 
-        <th class="rsp-p1" st-sort="id" translate>
+        <th class="rsp-p2" st-sort="description" translate>
+            Description
+        </th>
+
+        <th class="rsp-p1" st-sort="status" translate>
             Status
         </th>
     </tr>
@@ -75,7 +79,8 @@
         </td>
 
         <td class="rsp-p1"><a ng-href="project/function/{$ b.id $}">{$ b.name|noName $}</a></td>
-        <td class="rsp-p2">{$ b.id $}</td>
+        <td class="rsp-p1">{$ b.id $}</td>
+        <td class="rsp-p2">{$ b.desc $}</td>
         <td class="rsp-p1">{$ b.status $}</td>
 
         <td class="actions_column">

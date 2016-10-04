@@ -14,16 +14,17 @@
         .controller('CreateFunctionInputController', CreateFunctionInputController);
 
     CreateFunctionInputController.$inject = [
+        '$location',
         '$state',
         '$scope',
         '$stateParams',
-        'horizon.dashboard.oasisdash.basePath',
+        'horizon.dashboard.oasisdash.baseRoute',
         'horizon.app.core.openstack-service-api.oasisdash',
         'horizon.app.core.openstack-service-api.keystone',
         'horizon.dashboard.oasisdash.function.functionModel',
     ]
 
-    function CreateFunctionInputController($state, $scope, $stateParams, basePath, oasis, keystone, model) {
+    function CreateFunctionInputController($location, $state, $scope, $stateParams, baseRoute, oasis, keystone, model) {
         var ctrl = this;
         ctrl.region = [];
         ctrl.endpoints = [];
@@ -48,8 +49,10 @@
             model.createFunction().success(createFunctionSuccess);
         }
 
-        function createFunctionSuccess() {
-            console.log('create function success')
+        function createFunctionSuccess(response) {
+            console.log('create function success');
+            console.log(response);
+            $location.path(baseRoute + 'function');
         }
 
         function getEndPointSuccess(response){
@@ -65,6 +68,7 @@
             }
 
             console.log(ctrl.endpoints);
+
         }
 
         function getSessionSuccess(response) {

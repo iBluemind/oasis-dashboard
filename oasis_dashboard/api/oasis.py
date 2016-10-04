@@ -85,14 +85,31 @@ def node_pool_policy_list(request):
 
 
 def function_get(request, function_id):
-    return oasisclient(request).function.get()
+    # return oasisclient(request).function.get()
+    return {
+        'id': '1q2e3r6-zc34',
+        'name': 'function1'
+        }
 
 
-def function_list(request, sort_dir='desc', sort_key='created_at',
-                 marker=None, paginate=False, reversed_order=False):
+
+def function_list(request):
     """Returns all functions."""
-    return oasisclient(request).function.list()
+    return [{
+        'id': '1q2e3r6-zc34',
+        'name': 'function1',
+        'status': 'running',
+        'desc': 'test function1'
+        },
+        {
+        'id': '123d23rfwef',
+        'name': 'function2',
+        'status': 'running',
+        'desc': 'test function2'
+        }
+    ]
 
+# return oasisclient(request).function.list()
 
 def function_update(request, function):
     pass
@@ -103,25 +120,50 @@ def function_delete(request, function):
 
 
 def function_create(request, **params):
-    return oasisclient(request).function.create(**params)
+    # return oasisclient(request).function.create(**params)
+    return {
+        'id': '1d353rg3-1wt43',
+        'name': 'function3',
+        'status': 'running',
+        'desc': 'test function3'
+        }
+
 
 
 def endpoint_create(request, **params):
-    return ''
+    # return ''
+    return {
+        'id': 'zasdf45-dfg',
+        'name': 'endpoint3',
+        'desc': 'test endpoint3',
+        'stats': 'running'
+        }
+
 
 
 def endpoint_get(request, id):
-    return ''
+    # return ''
+    return {
+        'id': '1234-abd-567',
+        'name': 'endpoint1',
+        'desc': 'test endpoint1',
+        'status': 'running'
+        }
+
 
 
 def endpoint_list(request):
     return [{
         'id': '1q2e3r6-zc34',
-        'name': 'endpoint1'
+        'name': 'endpoint1',
+        'desc': 'test endpoint1',
+        'status': 'running'
         },
         {
         'id': '123d23rfwef',
-        'name': 'endpoint2'
+        'name': 'endpoint2',
+        'desc': 'test endpoint2',
+        'status': 'running'
         }
     ]
 
