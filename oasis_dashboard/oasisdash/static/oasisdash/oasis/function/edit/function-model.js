@@ -15,10 +15,7 @@
             newFunctionSpec: {
                 name: null,
                 body: null,
-                links:'kjwook',
                 stack_id: 'stack-kjwook',
-                project_id: 'project-kjwook',
-                user_id: 'user-kjwook',
                 status: 'running'
             },
 
@@ -38,11 +35,7 @@
         }
 
         function createFunction() {
-            console.log('model');
-            console.log(model.newFunctionSpec);
             var finalSpec = angular.copy(model.newFunctionSpec);
-            console.log('final');
-            console.log(finalSpec);
             //cleanNullProperties(finalSpec);
 
             return oasis.createFunction(finalSpec);
