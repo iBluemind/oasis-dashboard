@@ -15,7 +15,6 @@
         .controller('FunctionTableController', FunctionTableController);
 
     FunctionTableController.$inject = [
-        '$cookies',
         '$scope',
         '$location',
         'horizon.app.core.openstack-service-api.oasisdash',
@@ -25,7 +24,7 @@
         'horizon.dashboard.oasisdash.baseRoute',
     ];
 
-    function FunctionTableController($cookies, $scope, $location, oasis, events, registry, functionResourceType) {
+    function FunctionTableController($scope, $location, oasis, events, registry, functionResourceType) {
         var ctrl = this;
         ctrl.function = [];
         ctrl.functionSrc = [];
@@ -53,7 +52,7 @@
             }
         ];
 
-        //var createWatcher = $scope.$on(events.CREATE_SUCCESS, onCreateSuccess);
+        var createWatcher = $scope.$on(events.CREATE_SUCCESS, onCreateSuccess);
         //var deleteWatcher = $scope.$on(events.DELETE_SUCCESS, onDeleteSuccess);
 
         $scope.$on('$destroy', destroy);
@@ -67,15 +66,8 @@
 
         function getFunctionsSuccess(response) {
             console.log('ge function');
-            var cookieName = $cookies.name;
-            console.log(cookieName);
-            if ( cookieName != null ) {
-                response.push({
-                    'name': cookieName,
-                    'desc': $cookies.desc
-                })
-            }
-            ctrl.functionSrc = response;
+            console.log(response.items)
+            ctrl.functionSrc = response.items;
         }
 
         function onCreateSuccess(e, createdItem) {
@@ -104,7 +96,7 @@
         }
 
         function destroy() {
-          //createWatcher();
+          createWatcher();
           //deleteWatcher();
         }
     }

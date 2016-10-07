@@ -14,18 +14,18 @@
         .controller('CreateFunctionInputController', CreateFunctionInputController);
 
     CreateFunctionInputController.$inject = [
-        '$cookies',
         '$location',
         '$state',
         '$scope',
         '$stateParams',
         'horizon.dashboard.oasisdash.baseRoute',
         'horizon.app.core.openstack-service-api.oasisdash',
-        'horizon.app.core.openstack-service-api.keystone',
         'horizon.dashboard.oasisdash.function.functionModel',
+        'horizon.framework.widgets.toast.service',
+        'horizon.dashboard.oasisdash.function.events',
     ]
 
-    function CreateFunctionInputController($cookies, $location, $state, $scope, $stateParams, baseRoute, oasis, keystone, model) {
+    function CreateFunctionInputController($location, $state, $scope, $stateParams, baseRoute, oasis, model, toast, events) {
         var ctrl = this;
 
         var functionId = $stateParams.functionId;
@@ -49,7 +49,6 @@
 
             if ( functionId != null )
             oasis.getFunction(functionId).success(getFunctionSuccess);
-            //keystone.getCurrentUserSession().success(getSessionSuccess);
         }
 
         function getFunctionSuccess(response) {
@@ -66,95 +65,77 @@
         }
 
         function createFunctionSuccess(response) {
-            console.log('create function success');
+            //console.log('create function success');
             console.log(response);
-            $cookies.name = model.newFunctionSpec.name;
-            $cookies.desc = model.newFunctionSpec.desc;
-            alert('Create Success');
-            //$location.path(baseRoute + 'function');
+            //toast.add('success', interpolate(message.success, [response.name]));
+            $scope.$emit(events.CREATE_SUCCESS, response);
+            $location.path(baseRoute + 'function');
         }
 
         function getEndPointSuccess(response){
 
             console.log(response);
-            response  = [
-                {
-                    'id': '1q2e3r6-zc34',
-                    'name': 'endpoint1',
-                    'desc': 'test endpoint1',
-                    'status': 'running'
-                },
-                {
-                    'id': '123d23rfwef',
-                    'name': 'endpoint2',
-                    'desc': 'test endpoint2',
-                    'status': 'running'
-                },
-                {
-                    'id': 'zasdf45-dfg',
-                    'name': 'endpoint3',
-                    'desc': 'test endpoint3',
-                    'stats': 'running'
-                }]
-
-
-            for (var i in response) {
-                var item = {
-                    unit: response[i].id,
-                    label: response[i].name
-                }
-
-                ctrl.endpoints.push(item)
-            }
-
-            var nodepools = [
-                {
-                    'id': '1f2343',
-                    'name': 'nodepool1'
-                },
-                {
-                    'id': '1f2343',
-                    'name': 'nodepool2'
-                },
-                {
-                    'id': '1f2343',
-                    'name': 'nodepool3'
-                },
-                {
-                    'id': '1f2343',
-                    'name': 'nodepool5'
-                },
-                {
-                    'id': '1f2343',
-                    'name': 'nodepool6'
-                }
-            ]
-            for (var i in nodepools) {
-                var item = {
-                    unit: nodepools[i].id,
-                    label: nodepools[i].name
-                }
-
-                ctrl.nodepools.push(item)
-            }
-            console.log(ctrl.endpoints);
-
-        }
-
-        function getSessionSuccess(response) {
-            var user = response.available_services_regions;
-            for (var i in user) {
-                var item = {
-                    unit: user[i],
-                    label: gettext(user[i])
-                }
-
-                ctrl.region.push(item)
-            }
-            if ($scope.selected instanceof Object) {
-                //$scope.model.newFunctionSpec.select_region = $scope.selected.services_region;
-                //$scope.changeBaymodel();
-            }
+            //response  = [
+            //    {
+            //        'id': '1q2e3r6-zc34',
+            //        'name': 'endpoint1',
+            //        'desc': 'test endpoint1',
+            //        'status': 'running'
+            //    },
+            //    {
+            //        'id': '123d23rfwef',
+            //        'name': 'endpoint2',
+            //        'desc': 'test endpoint2',
+            //        'status': 'running'
+            //    },
+            //    {
+            //        'id': 'zasdf45-dfg',
+            //        'name': 'endpoint3',
+            //        'desc': 'test endpoint3',
+            //        'stats': 'running'
+            //    }]
+            //
+            //
+            //for (var i in response) {
+            //    var item = {
+            //        unit: response[i].id,
+            //        label: response[i].name
+            //    }
+            //
+            //    ctrl.endpoints.push(item)
+            //}
+            //
+            //var nodepools = [
+            //    {
+            //        'id': '1f2343',
+            //        'name': 'nodepool1'
+            //    },
+            //    {
+            //        'id': '1f2343',
+            //        'name': 'nodepool2'
+            //    },
+            //    {
+            //        'id': '1f2343',
+            //        'name': 'nodepool3'
+            //    },
+            //    {
+            //        'id': '1f2343',
+            //        'name': 'nodepool5'
+            //    },
+            //    {
+            //        'id': '1f2343',
+            //        'name': 'nodepool6'
+            //    }
+            //]
+            //for (var i in nodepools) {
+            //    var item = {
+            //        unit: nodepools[i].id,
+            //        label: nodepools[i].name
+            //    }
+            //
+            //    ctrl.nodepools.push(item)
+            //}
+            //console.log(ctrl.endpoints);
         }
 
     }

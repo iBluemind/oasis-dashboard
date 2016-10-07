@@ -27,8 +27,6 @@ USER_AGENT = 'python-oasisclient'
 
 LOG = logging.getLogger(__name__)
 
-policies = []
-nodepool = []
 
 class Function(base.APIResourceWrapper):
     _attrs = ['id', 'project_id', 'stack_id', 'status', 'name', 'body', 'trust_id', 'trustee_username', 'trustee_user_id', 'turestee_password']
@@ -52,133 +50,97 @@ def oasisclient(request):
                              cacert=cacert)
 
 
-def node_pool_get(request):
-    # return oasisclient(request).nodepool.get()
-    return {}
+def node_pool_get(request, id):
+    return oasisclient(request).nodepool.get(id)
+
 
 def node_pool_create(request, params):
-    # return oasisclient(request).nodepool.create(**params)
-    LOG.debug(params)
-    nodepool.append(params)
-    return {}
+    return oasisclient(request).nodepool.create(**params)
+
 
 def node_pool_list(request, params):
-    # return oasisclient(request).nodepool.update(**params)
-    return nodepool
+    return oasisclient(request).nodepool.update(**params)
+
 
 def node_pool_update(request, params):
-    # return oasisclient(request).nodepool.update(**params)
-    return {}
+    return oasisclient(request).nodepool.update(**params)
+
 
 def node_pool_policy_create(request, params):
     LOG.debug("********Policy Create call*************")
-    # return oasisclient(request).nodepool_policy.create(**params)
-    policies.append(params)
-    return {}
+    return oasisclient(request).nodepool_policy.create(**params)
+
 
 def node_pool_policy_update(request, policy_id, params):
-    # return oasisclient(request).nodepool_policy.update(policy_id, **params)
-    return {}
+    return oasisclient(request).nodepool_policy.update(policy_id, **params)
+
 
 def node_pool_policy_list(request):
-    LOG.debug(policies)
-    return policies
-    # return [{
-    #     'id': '1q2e3r6-zc34',
-    #     'name': 'policy1'
-    #     },
-    # ]
+    return oasisclient(request).nodepool_policy.list()
 
 
 def function_get(request, function_id):
-    # return oasisclient(request).function.get()
-    return {
-        'id': '1q2e3r6-zc34',
-        'name': 'function1',
-        'desc': 'this is test function1',
-        'body': 'def test(self): '
-        }
-
+    return oasisclient(request).function.get(function_id)
 
 
 def function_list(request):
     """Returns all functions."""
-    return [{
-        'id': '1q2e3r6-zc34',
-        'name': 'function1',
-        'status': 'running',
-        'desc': 'test function1'
-        },
-        {
-        'id': '123d23rfwef',
-        'name': 'function2',
-        'status': 'running',
-        'desc': 'test function2'
-        }
-    ]
-
-# return oasisclient(request).function.list()
-
-def function_update(request, function):
-    pass
+    return oasisclient(request).function.list()
 
 
-def function_delete(request, function):
-    pass
+def function_update(request, id):
+    return oasisclient(request).function.update(id)
+
+
+def function_delete(request, id):
+    return oasisclient(request).function.delete(id)
 
 
 def function_create(request, **params):
-    # return oasisclient(request).function.create(**params)
-    return {
-        'id': '1d353rg3-1wt43',
-        'name': 'function3',
-        'status': 'running',
-        'desc': 'test function3'
-        }
-
+    return oasisclient(request).function.create(**params)
 
 
 def endpoint_create(request, **params):
-    # return ''
-    return {
-        'id': 'zasdf45-dfg',
-        'name': 'endpoint3',
-        'desc': 'test endpoint3',
-        'stats': 'running'
-        }
+    return oasisclient(request).endpoint.create(**params)
 
+    # return {
+    #     'id': 'zasdf45-dfg',
+    #     'name': 'endpoint3',
+    #     'desc': 'test endpoint3',
+    #     'stats': 'running'
+    #     }
 
 
 def endpoint_get(request, id):
-    # return ''
-    return {
-        'id': '1234-abd-567',
-        'name': 'endpoint1',
-        'desc': 'test endpoint1',
-        'status': 'running'
-        }
-
+    # return {
+    #     'id': '1234-abd-567',
+    #     'name': 'endpoint1',
+    #     'desc': 'test endpoint1',
+    #     'status': 'running'
+    #     }
+    return oasisclient(request).endpoint.get(id)
 
 
 def endpoint_list(request):
-    return [{
-        'id': '1q2e3r6-zc34',
-        'name': 'endpoint1',
-        'desc': 'test endpoint1',
-        'status': 'running'
-        },
-        {
-        'id': '123d23rfwef',
-        'name': 'endpoint2',
-        'desc': 'test endpoint2',
-        'status': 'running'
-        }
-    ]
+    # return [{
+    #     'id': '1q2e3r6-zc34',
+    #     'name': 'endpoint1',
+    #     'desc': 'test endpoint1',
+    #     'status': 'running'
+    #     },
+    #     {
+    #     'id': '123d23rfwef',
+    #     'name': 'endpoint2',
+    #     'desc': 'test endpoint2',
+    #     'status': 'running'
+    #     }
+    # ]
+    return oasisclient(request).endpoint.list()
 
 
-def endpoint_update(request, **params):
-    return ''
+def endpoint_update(request, id, **params):
+    return oasisclient(request).endpoint.update(id, **params)
 
 
-def endpoint_delete(request, **params):
-    return ''
+def endpoint_delete(request, id):
+    return oasisclient(request).endpoint.delete(id)

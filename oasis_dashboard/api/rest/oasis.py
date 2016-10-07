@@ -52,9 +52,10 @@ class Functions(generic.View):
     @rest_utils.ajax()
     def get(self, request):
         """Get function list"""
-        # result = oasis.function_list(request)
-        # return {'items': [change_to_id(n.to_dict()) for n in result]}
-        return oasis.function_list(request)
+        result = oasis.function_list(request)
+        LOG.debug("#############result################")
+        LOG.debug(result)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
 
     @rest_utils.ajax(data_required=True)
     def post(self, request):
@@ -63,11 +64,16 @@ class Functions(generic.View):
         Returns the new Function object on success.
         """
         LOG.debug('***************call create function************')
-        return oasis.function_create(request, **request.DATA)
+        # return oasis.function_create(request, **request.DATA)
         # return rest_utils.CreatedResponse(
         #     '/api/containers/baymodel/%s' % new_function.uuid,
         #     new_function.to_dict())
-    
+        new_function = oasis.function_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/functions/%s' % new_function.id,
+            new_function.to_dict())
+
+
 
 @urls.register
 class EndPoints(generic.View):
