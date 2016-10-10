@@ -34,15 +34,12 @@ class EditNodePoolAction(tables.LinkAction):
 
 
 class NodePoolTable(tables.DataTable):
-    nodepool_name = tables.Column("nodepool_name",
+    name = tables.Column("name",
                         link="horizon:oasisdash:nodepool:nodepool:update",
                         verbose_name=_("NodePool Name"))
 
-    create_time = tables.Column("create_time",
+    created_at = tables.Column("created_at",
                                 verbose_name=_("Create Time"))
-
-    def get_object_id(self, obj):
-        return "%s-%s" % (obj['id'], obj['nodepool_name'])
 
     class Meta(object):
         name = "nodepooltable"

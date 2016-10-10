@@ -34,15 +34,15 @@ class EditPolicyAction(tables.LinkAction):
 
 
 class NodePoolPolicyTable(tables.DataTable):
-    policy_name = tables.Column("policy_name",
+    name = tables.Column("name",
                          link="horizon:oasisdash:nodepool:policy:update",
                          verbose_name=_("PolicyName"))
 
-    create_time = tables.Column("create_time",
+    created_at = tables.Column("created_at",
                                 verbose_name=_("Create Time"))
 
-    def get_object_id(self, obj):
-        return "%s-%s" % (obj['id'], obj['policy_name'])
+    # def get_object_id(self, obj):
+    #     return "%s-%s" % (obj['id'], obj['name'])
 
     class Meta(object):
         name = "nodepoolpolicytable"

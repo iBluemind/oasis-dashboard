@@ -26,15 +26,9 @@ min_size = Column(Integer())
 
 
 class CreateForm(forms.SelfHandlingForm):
-    policy_name = forms.CharField(
+    name = forms.CharField(
         label=_("Name"),
         widget=forms.TextInput())
-
-    max_size = forms.IntegerField(
-        label=_("NodePool Max Size"),
-        min_value=1,
-        help_text=_('Input max size'),
-        required=True)
 
     min_size = forms.IntegerField(
         label=_("Nodepool Min Size"),
@@ -42,10 +36,10 @@ class CreateForm(forms.SelfHandlingForm):
         help_text=_('Input min size'),
         required=True)
 
-    scaledown_adjust = forms.IntegerField(
-        label=_("Scaledown Adjust"),
+    max_size = forms.IntegerField(
+        label=_("NodePool Max Size"),
         min_value=1,
-        help_text=_('Down number per one time'),
+        help_text=_('Input max size'),
         required=True)
 
     scaleup_adjust = forms.IntegerField(
@@ -60,12 +54,6 @@ class CreateForm(forms.SelfHandlingForm):
         help_text=_('cooldown Peroid scale up'),
         required=True)
 
-    scaledown_cooldown = forms.IntegerField(
-        label=_("Scaledown cooldown"),
-        min_value=1,
-        help_text=_('cooldown period scale down'),
-        required=True)
-
     scaleup_period = forms.IntegerField(
         label=_("Scaleup Period"),
         min_value=1,
@@ -78,13 +66,25 @@ class CreateForm(forms.SelfHandlingForm):
         help_text=_('Input scaleup evaluation period'),
         required=True)
 
-    scalueup_threshold = forms.IntegerField(
+    scaleup_threshold = forms.IntegerField(
         label=_("Scaleup Threshold"),
         min_value=1,
         help_text=_('Input scaleup threshold'),
         required=True)
 
-    scaledown_scale_period = forms.IntegerField(
+    scaledown_adjust = forms.IntegerField(
+        label=_("Scaledown Adjust"),
+        min_value=1,
+        help_text=_('Down number per one time'),
+        required=True)
+
+    scaledown_cooldown = forms.IntegerField(
+        label=_("Scaledown cooldown"),
+        min_value=1,
+        help_text=_('cooldown period scale down'),
+        required=True)
+
+    scaledown_period = forms.IntegerField(
         label=_("Scaledown Scale Period"),
         min_value=1,
         help_text=_('Input scaledown scale period'),
@@ -106,12 +106,12 @@ class CreateForm(forms.SelfHandlingForm):
     def handle(self, request, data):
         try:
             args = {
-                'policy_name': data['policy_name'],
+                'name': data['name'],
                 'scaledown_threshold': data['scaledown_threshold'],
                 'scaledown_evaluation_periods': data['scaledown_evaluation_periods'],
-                'scaledown_scale_period': data['scaledown_scale_period'],
-                'scalueup_threshold': data['scalueup_threshold'],
-                'scaleup_evaluation_periods ': data['scaleup_evaluation_periods'],
+                'scaledown_period': data['scaledown_period'],
+                'scaleup_threshold': data['scaleup_threshold'],
+                'scaleup_evaluation_periods': data['scaleup_evaluation_periods'],
                 'scaleup_period': data['scaleup_period'],
                 'scaledown_cooldown': data['scaledown_cooldown'],
                 'scaleup_cooldown': data['scaleup_cooldown'],

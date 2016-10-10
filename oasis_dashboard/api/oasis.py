@@ -27,6 +27,15 @@ USER_AGENT = 'python-oasisclient'
 
 LOG = logging.getLogger(__name__)
 
+def change_to_id(obj):
+    """Change key named 'uuid' to 'id'
+
+    Oasis returns objects with a field called 'uuid' many of Horizons
+    directives however expect objects to have a field called 'id'.
+    """
+    obj['id'] = obj.pop('id')
+    return obj
+
 
 class Function(base.APIResourceWrapper):
     _attrs = ['id', 'project_id', 'stack_id', 'status', 'name', 'body', 'trust_id', 'trustee_username', 'trustee_user_id', 'turestee_password']
@@ -34,6 +43,7 @@ class Function(base.APIResourceWrapper):
 
 class Policy(base.APIResourceWrapper):
     _attrs = ['id', 'project_id', 'user_id', 'name', 'total_vm_count', 'vm_count_per_user']
+
 
 
 @memoized
@@ -58,8 +68,8 @@ def node_pool_create(request, params):
     return oasisclient(request).nodepool.create(**params)
 
 
-def node_pool_list(request, params):
-    return oasisclient(request).nodepool.update(**params)
+def node_pool_list(request):
+    return oasisclient(request).nodepool.list()
 
 
 def node_pool_update(request, params):
@@ -67,7 +77,6 @@ def node_pool_update(request, params):
 
 
 def node_pool_policy_create(request, params):
-    LOG.debug("********Policy Create call*************")
     return oasisclient(request).nodepool_policy.create(**params)
 
 

@@ -44,6 +44,9 @@
         <th class="rsp-p1" st-sort="status" translate>
             Status
         </th>
+        <th class="rsp-p1" st-sort="created_at" translate>
+            Create Time
+        </th>
     </tr>
     </thead>
 
@@ -76,7 +79,7 @@
         <td class="rsp-p1"><a ui-sref="edit.code({functionId: '{$b.id$}'})">{$ b.name|noName $}</a></td>
         <td class="rsp-p2">{$ b.desc $}</td>
         <td class="rsp-p1">running</td>
-
+        <td class="rsp-p1">{$ b.created_at $}</td>
         <td class="actions_column">
             <!--
               Table-row-action-column:

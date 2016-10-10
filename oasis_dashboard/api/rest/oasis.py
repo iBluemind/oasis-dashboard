@@ -53,8 +53,6 @@ class Functions(generic.View):
     def get(self, request):
         """Get function list"""
         result = oasis.function_list(request)
-        LOG.debug("#############result################")
-        LOG.debug(result)
         return {'items': [change_to_id(n.to_dict()) for n in result]}
 
     @rest_utils.ajax(data_required=True)
@@ -63,11 +61,6 @@ class Functions(generic.View):
 
         Returns the new Function object on success.
         """
-        LOG.debug('***************call create function************')
-        # return oasis.function_create(request, **request.DATA)
-        # return rest_utils.CreatedResponse(
-        #     '/api/containers/baymodel/%s' % new_function.uuid,
-        #     new_function.to_dict())
         new_function = oasis.function_create(request, **request.DATA)
         return rest_utils.CreatedResponse(
             '/api/oasis/functions/%s' % new_function.id,
@@ -84,9 +77,8 @@ class EndPoints(generic.View):
     def get(self, request):
         """Get endpoint list"""
         LOG.debug('***************call endpoint list************')
-        # result = oasis.endpoint_list(request)
-        # return {'items': [change_to_id(n.to_dict()) for n in result]}
-        return oasis.endpoint_list(request)
+        result = oasis.endpoint_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
 
     @rest_utils.ajax(data_required=True)
     def post(self, request):
@@ -95,10 +87,10 @@ class EndPoints(generic.View):
         Returns the new EndPoint object on success.
         """
         LOG.debug('***************call create endpoint************')
-        return oasis.endpoint_create(request, **request.DATA)
-        # return rest_utils.CreatedResponse(
-        #     '/api/containers/baymodel/%s' % new_function.uuid,
-        #     new_function.to_dict())
+        new_endpoint = oasis.endpoint_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/endpoint/%s' % new_endpoint.id,
+            new_endpoint.to_dict())
 
 
 @urls.register
@@ -109,7 +101,6 @@ class EndPoint(generic.View):
     @rest_utils.ajax()
     def get(self, request):
         """Get endpoint list"""
-        # result = oasis.endpoint_get(request, '')
-        # return {'items': [change_to_id(n.to_dict()) for n in result]}
-        return oasis.endPoint_get(request, '')
+        result = oasis.endpoint_get(request, '')
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
 

@@ -52,11 +52,12 @@ class UpdateView(forms.ModalFormView):
     def get_initial(self):
         data = self._get_object()
         return {'policy_id': data['id'],
+                'name': data['name'],
                 'scaledown_threshold': data['scaledown_threshold'],
                 'scaledown_evaluation_periods': data['scaledown_evaluation_periods'],
-                'scaledown_scale_period': data['scaledown_scale_period'],
-                'scalueup_threshold': data['scalueup_threshold'],
-                'scaleup_evaluation_periods ': data['scaleup_evaluation_periods'],
+                'scaledown_period': data['scaledown_period'],
+                'scaleup_threshold': data['scaleup_threshold'],
+                'scaleup_evaluation_periods': data['scaleup_evaluation_periods'],
                 'scaleup_period': data['scaleup_period'],
                 'scaledown_cooldown': data['scaledown_cooldown'],
                 'scaleup_cooldown': data['scaleup_cooldown'],
