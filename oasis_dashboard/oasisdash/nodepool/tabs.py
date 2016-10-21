@@ -48,6 +48,8 @@ class NodePoolTab(tabs.TableTab):
 
         request = self.tab_group.request
         nodepools = oasis.node_pool_list(request)
+        LOG.debug('**************************************')
+        LOG.debug(nodepools)
         return nodepools
 
 

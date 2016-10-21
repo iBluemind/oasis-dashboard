@@ -1,4 +1,3 @@
-
 <div ng-controller="EndpointNameController as ctrl">
     <div class="row">
         <div class="col-xs-12">
@@ -6,25 +5,27 @@
             <div class="form-group">
                 <label class="control-label" for="endpoint-name" translate>Endpoint Name</label>
                 <input name="endpoint-name" type="text" class="form-control" id="endpoint-name"
-                       ng-model="integrationModel.endpoint.name"
+                       ng-model="model.endpoint.name"
                        placeholder="{$ 'Name of the endpoint to create.'|translate $}">
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="endpoint-description" translate>Endpoint Description</label>
                 <input name="endpoint-name" type="text" class="form-control" id="endpoint-description"
-                       ng-model="integrationModel.endpoint.desc"
+                       ng-model="model.endpoint.desc"
                        placeholder="{$ 'Description of the endpoint to create.'|translate $}">
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="endpoint-url" translate>Endpoint URL</label>
                 <input name="endpoint-url" type="text" class="form-control" id="endpoint-url"
-                       ng-model="integrationModel.endpoint.url"
+                       ng-model="model.endpoint.url"
                        placeholder="{$ 'URL of the endpoint to create.'|translate $}">
             </div>
-
-
         </div>
+
+        <button class="btn btn-default" ng-click="createEndPoint()">
+            Create
+        </button>
     </div>
 </div>

@@ -36,11 +36,14 @@
                 'id': 1,
             }
         ];
+        $scope.createHeader = createHeader;
         $scope.removeHeader = removeHeader;
         $scope.addHeader = addHeader;
         $scope.addResCode = addResCode;
         $scope.removeResCode = removeResCode;
         $scope.addResponse = addResponse;
+        $scope.createResCode = createResCode;
+        $scope.createResponse = createResponse;
         $scope.responses = [
             {
                 'id':1,
@@ -59,6 +62,10 @@
                 $scope.integrationModel = integrationModel;
             }
             $state.current.data = $scope.integrationModel;
+        }
+
+        function createHeader() {
+
         }
 
         function addHeader() {
@@ -83,6 +90,10 @@
             integrationModel.endpoint.spec.resCodes = $scope.integrationModel.newFunctionSpec[$scope.index].resCodes;
         }
 
+        function createResCode() {
+
+        }
+
         function removeResCode() {
             var lastItem = $scope.resCodes.length-1;
             $scope.integrationModel.newFunctionSpec[$scope.index].resCodes.splice(lastItem);
@@ -95,6 +106,10 @@
             $scope.integrationModel.newFunctionSpec[$scope.index].responses.push({'id': index});
             console.log($scope.integrationModel.newFunctionSpec[$scope.index].responses);
             integrationModel.endpoint.spec.responses = $scope.integrationModel.newFunctionSpec[$scope.index].responses;
+
+        }
+
+        function createResponse() {
 
         }
     }

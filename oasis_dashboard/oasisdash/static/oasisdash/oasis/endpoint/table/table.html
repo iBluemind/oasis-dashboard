@@ -38,12 +38,17 @@
         <th class="rsp-p1" st-sort="name" st-sort-default translate>
             Name
         </th>
-
+        <th class="rsp-p1" st-sort="url" st-sort-default translate>
+            Url
+        </th>
         <th class="rsp-p2" st-sort="description" translate>
             Description
         </th>
         <th class="rsp-p1" st-sort="status" translate>
             Status
+        </th>
+        <th class="rsp-p1" st-sort="created_at" translate>
+            Create Time
         </th>
     </tr>
     </thead>
@@ -75,8 +80,10 @@
         </td>
 
         <td class="rsp-p1"><a href='' ng-click="table.showDetailModal(b)">{$ b.name|noName $}</a></td>
+        <td class="rsp-p2">{$ b.url $}</td>
         <td class="rsp-p2">{$ b.desc $}</td>
         <td class="rsp-p1"> running </td>
+        <td class="rsp-p1"> {$ b.created_at $} </td>
 
         <td class="actions_column">
             <!--

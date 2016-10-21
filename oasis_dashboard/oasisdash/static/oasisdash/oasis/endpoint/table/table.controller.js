@@ -28,35 +28,10 @@
     function EndpointTableController($scope, $location, oasis, events, registry, endpointResourceType, wizardModalService, detailWorkFlow, model) {
         var ctrl = this;
 
-        ctrl.createEndpoint = createEndpoint;
-        ctrl.createEndpointAction = createEndpointAction;
         ctrl.endpoint = [];
         ctrl.endpointSrc = [];
         ctrl.endpointResource = registry.getResourceType(endpointResourceType);
         ctrl.showDetailModal = showDetailModal;
-
-        function createEndpoint() {
-            var localSpec = {
-                backdrop: 'static',
-                controller: 'CreateEndpointModalController as ctrl',
-                templateUrl: basePath + 'create-endpoint-modal.html'
-            };
-            $modal.open(localSpec).result.then(function create(result) {
-                return ctrl.createEndpointAction(result);
-            });
-        }
-
-        function createEndpointAction(result) {
-            //swiftAPI.createContainer(result.name, result.public).then(
-            //    function success() {
-            //        toastService.add('success', interpolate(
-            //            gettext('Container %(name)s created.'), result, true
-            //        ));
-            //        // generate a table row with no contents
-            //        ctrl.model.containers.push({name: result.name, count: 0, bytes: 0});
-            //    }
-            //);
-        }
 
         /**
          * Filtering - client-side MagicSearch
@@ -90,24 +65,13 @@
         function init() {
             registry.initActions(endpointResourceType, $scope);
             oasis.getEndpoints().success(getEndpointsSuccess);
-            //var items = [
-            //    {
-            //        id: '1e23ur919dh',
-            //        name: 'endpoint1',
-            //        status: 'running'
-            //    },
-            //    {
-            //        id: '289f298r9',
-            //        name: 'endpoint2',
-            //        status: 'running'
-            //    }
-            //]
             //ctrl.endpointSrc = items;
         }
 
         function getEndpointsSuccess(response) {
-            console.log('end point get')
-            ctrl.endpointSrc = response;
+            console.log('end point get');
+            console.log(response.items);
+            ctrl.endpointSrc = response.items;
         }
 
         function onCreateSuccess(e, createdItem) {

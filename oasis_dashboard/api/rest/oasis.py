@@ -46,7 +46,7 @@ class Function(generic.View):
 
 @urls.register
 class Functions(generic.View):
-    """API for Oasis Baymodels"""
+    """API for Oasis Functions"""
     url_regex = r'oasis/functions/$'
 
     @rest_utils.ajax()
@@ -65,7 +65,6 @@ class Functions(generic.View):
         return rest_utils.CreatedResponse(
             '/api/oasis/functions/%s' % new_function.id,
             new_function.to_dict())
-
 
 
 @urls.register
@@ -89,7 +88,7 @@ class EndPoints(generic.View):
         LOG.debug('***************call create endpoint************')
         new_endpoint = oasis.endpoint_create(request, **request.DATA)
         return rest_utils.CreatedResponse(
-            '/api/oasis/endpoint/%s' % new_endpoint.id,
+            '/api/oasis/endpoints/%s' % new_endpoint.id,
             new_endpoint.to_dict())
 
 

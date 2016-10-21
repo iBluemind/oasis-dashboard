@@ -14,27 +14,36 @@
         .controller('EndpointNameController', EndpointNameController);
 
     EndpointNameController.$inject = [
-        '$q',
         '$scope',
         '$state',
         'horizon.dashboard.oasisdash.endpoint.endpointModel',
     ];
 
-    function EndpointNameController($q, $scope, $state, integrationModel) {
+    function EndpointNameController($scope, $state, model) {
         var ctrl = this;
+
+        $scope.createEndPoint = createEndPoint;
 
         init();
 
         function init() {
-
-            if ($state.current.data && !isEmpty($state.current.data)) {
-                $scope.integrationModel = $state.current.data;
-            } else {
-                $scope.integrationModel = integrationModel;
-            }
-            $state.current.data = $scope.integrationModel;
+            $scope.model = model;
+            //if ($state.current.data && !isEmpty($state.current.data)) {
+            //    $scope.model = $state.current.data;
+            //} else {
+            //    $scope.model = model;
+            //}
+            //$state.current.data = $scope.model;
         }
 
+        function createEndPoint() {
+            console.log(model.endpointModel);
+            model.createEndpoint().success(createEndpointSuccess);
+        }
+
+        function createEndpointSuccess(response) {
+            //console.log(response);
+        }
     }
 
     var hasOwnProperty = Object.prototype.hasOwnProperty;

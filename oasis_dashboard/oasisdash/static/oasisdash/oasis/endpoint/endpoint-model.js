@@ -10,23 +10,19 @@
     ];
 
     function endpointModel(oasis) {
-        var integrationModel = {
-            method: null,
-            newFunctionSpec: [],
+        var endpointModel = {
             endpoint: {
                 name: null,
                 desc: null,
-                url: null,
-                spec: []
+                url: null
             },
             createEndpoint: createEndpoint
         };
 
-
         function createEndpoint() {
-            var finalSpec = angular.copy(integrationModel.endpoint);
+            var finalSpec = angular.copy(endpointModel.endpoint);
 
-            cleanNullProperties(finalSpec);
+            //cleanNullProperties(finalSpec);
 
             return oasis.createEndpoint(finalSpec);
         }
@@ -40,7 +36,7 @@
             }
         }
 
-        return integrationModel;
+        return endpointModel;
 
     }
 })();
