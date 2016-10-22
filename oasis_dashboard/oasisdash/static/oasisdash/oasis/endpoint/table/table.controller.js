@@ -65,17 +65,13 @@
         function init() {
             registry.initActions(endpointResourceType, $scope);
             oasis.getEndpoints().success(getEndpointsSuccess);
-            //ctrl.endpointSrc = items;
         }
 
         function getEndpointsSuccess(response) {
-            console.log('end point get');
-            console.log(response.items);
             ctrl.endpointSrc = response.items;
         }
 
         function onCreateSuccess(e, createdItem) {
-            console.log('end point create')
             ctrl.endpointSrc.push(createdItem);
             e.stopPropagation();
         }

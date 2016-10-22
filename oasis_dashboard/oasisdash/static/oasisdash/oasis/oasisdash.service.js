@@ -17,8 +17,18 @@
             getFunction: getFunction,
             getFunctions: getFunctions,
             createEndpoint  : createEndpoint,
+            createHttpApi: createHttpApi,
+            createRequest: createRequest,
+            createRequestHeader: createRequestHeader,
+            createResponse: createResponse,
+            createResponseCode: createResponseCode,
+            createResponseMessage: createResponseMessage,
             getEndpoint : getEndpoint,
-            getEndpoints : getEndpoints
+            getEndpoints : getEndpoints,
+            getRequestHeaders: getRequestHeaders,
+            getHttpApis: getHttpApis,
+            getResponseCodes: getResponseCodes,
+            getResponseMessages: getResponseMessages
         };
 
         return service;
@@ -65,6 +75,75 @@
                 });
         }
 
+        function createHttpApi(params) {
+            return apiService.post('/api/oasis/httpapis/', params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to create HttpApi.'));
+                });
+        }
 
+        function createRequest(params) {
+            return apiService.post('/api/oasis/requests/', params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to create Request.'));
+                });
+        }
+
+        function createRequestHeader(params) {
+            return apiService.post('/api/oasis/requestheaders/', params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to create RequestHeader.'));
+                });
+        }
+
+        function createResponse(params) {
+            return apiService.post('/api/oasis/responses/', params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to create Response.'));
+                });
+        }
+
+        function createResponseCode(params) {
+            return apiService.post('/api/oasis/responsecodes/', params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to create ResponseCode.'));
+                });
+        }
+
+        function createResponseMessage(params) {
+            return apiService.post('/api/oasis/responsemessages/', params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to create ResponseMessage.'));
+                });
+
+        }
+
+        function getResponseMessages() {
+           return apiService.get('/api/oasis/responsemessages/')
+                .error(function() {
+                    toastService.add('error', gettext('Unable to retrieve ResponseMessages.'));
+                });
+        }
+
+        function getRequestHeaders() {
+           return apiService.get('/api/oasis/requestheaders/')
+                .error(function() {
+                    toastService.add('error', gettext('Unable to retrieve RequestHeaders.'));
+                });
+        }
+
+        function getHttpApis() {
+            return apiService.get('/api/oasis/httpapis/')
+                .error(function() {
+                    toastService.add('error', gettext('Unable to retrieve HttpApis.'));
+                });
+        }
+
+        function getResponseCodes() {
+           return apiService.get('/api/oasis/responsecodes/')
+                .error(function() {
+                    toastService.add('error', gettext('Unable to retrieve ResponseCodes.'));
+                });
+        }
     };
 })();

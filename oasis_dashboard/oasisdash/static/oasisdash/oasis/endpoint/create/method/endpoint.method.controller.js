@@ -49,15 +49,36 @@
         }
 
         function selectMethod(method) {
-            var index = $scope.integrationModel.newFunctionSpec.length;
             var methodInfo = new Object();
-            methodInfo.id = index;
             methodInfo.method = method.label;
-            methodInfo.request = [];
-            methodInfo.responses = [];
-            methodInfo.resCodes = [];
-            $scope.integrationModel.newFunctionSpec.push(methodInfo);
+            integrationModel.httpapi.push(methodInfo);
+            integrationModel.newHttpApi = integrationModel.httpapi[integrationModel.httpapi.length - 1];
+            integrationModel.newHttpApi.endpoint_id = integrationModel.endpoint.id;
+            integrationModel.createHttpApi().success(onCreateHttpApiSuccess);
         }
+
+        function onCreateHttpApiSuccess(response) {
+            console.log('create http api success');
+            console.log(response);
+            //integrationModel.newHttpApi = response;
+            integrationModel.newRequest.http_api_id = response.id;
+            integrationModel.newResponse.http_api_id = response.id;
+            integrationModel.createRequest().success(onCreateRequestSuccess);
+            integrationModel.createResponse().success(onCreateResponseSuccess);
+        }
+
+        function onCreateRequestSuccess(response) {
+            console.log('create requestsuccess');
+            console.log(response);
+            integrationModel.newRequest = response;
+        }
+
+         function onCreateResponseSuccess(response) {
+            console.log('create response success');
+            console.log(response);
+            integrationModel.newResponse = response;
+        }
+
 
         function showSetting(method, index) {
             if ($scope.integrationModel.method!=null )

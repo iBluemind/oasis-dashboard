@@ -16,15 +16,57 @@
                 desc: null,
                 url: null
             },
-            createEndpoint: createEndpoint
+            httpapi: [],
+            request: {},
+            requestHeader: {},
+            response: {},
+            responseCode: {},
+            responseMessage: {},
+            newHttpApi: {},
+            newRequest: {},
+            newResponse: {},
+            createEndpoint: createEndpoint,
+            createHttpApi: createHttpApi,
+            createRequest: createRequest,
+            createResponse: createResponse,
+            createResponseCode: createResponseCode,
+            createResponseMessage: createResponseMessage,
+            createRequestHeader: createRequestHeader
         };
 
         function createEndpoint() {
             var finalSpec = angular.copy(endpointModel.endpoint);
-
-            //cleanNullProperties(finalSpec);
-
             return oasis.createEndpoint(finalSpec);
+        }
+
+        function createHttpApi() {
+            var finalSpec = angular.copy(endpointModel.newHttpApi);
+            return oasis.createHttpApi(finalSpec);
+        }
+
+        function createRequest() {
+            var finalSpec = angular.copy(endpointModel.newRequest);
+            return oasis.createRequest(finalSpec);
+        }
+
+        function createResponse() {
+            var finalSpec = angular.copy(endpointModel.newResponse);
+            return oasis.createResponse(finalSpec);
+        }
+
+        function createResponseCode() {
+            var finalSpec = angular.copy(endpointModel.responseCode);
+            return oasis.createResponseCode(finalSpec);
+        }
+
+        function createRequestHeader() {
+            var finalSpec = angular.copy(endpointModel.requestHeader);
+            return oasis.createRequestHeader(finalSpec);
+        }
+
+        function createResponseMessage() {
+            var finalSpec = angular.copy(endpointModel.responseMessage);
+            return oasis.createResponseMessage(finalSpec);
         }
 
         function cleanNullProperties(finalSpec) {

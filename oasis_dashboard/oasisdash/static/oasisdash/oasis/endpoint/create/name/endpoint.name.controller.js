@@ -37,12 +37,13 @@
         }
 
         function createEndPoint() {
-            console.log(model.endpointModel);
             model.createEndpoint().success(createEndpointSuccess);
         }
 
         function createEndpointSuccess(response) {
-            //console.log(response);
+            console.log('create endpoint');
+            console.log(response);
+            model.endpoint = response;
         }
     }
 

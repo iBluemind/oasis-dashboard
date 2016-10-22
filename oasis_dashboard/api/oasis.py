@@ -112,38 +112,12 @@ def function_create(request, **params):
 def endpoint_create(request, **params):
     return oasisclient(request).endpoint.create(**params)
 
-    # return {
-    #     'id': 'zasdf45-dfg',
-    #     'name': 'endpoint3',
-    #     'desc': 'test endpoint3',
-    #     'stats': 'running'
-    #     }
-
 
 def endpoint_get(request, id):
-    # return {
-    #     'id': '1234-abd-567',
-    #     'name': 'endpoint1',
-    #     'desc': 'test endpoint1',
-    #     'status': 'running'
-    #     }
     return oasisclient(request).endpoint.get(id)
 
 
 def endpoint_list(request):
-    # return [{
-    #     'id': '1q2e3r6-zc34',
-    #     'name': 'endpoint1',
-    #     'desc': 'test endpoint1',
-    #     'status': 'running'
-    #     },
-    #     {
-    #     'id': '123d23rfwef',
-    #     'name': 'endpoint2',
-    #     'desc': 'test endpoint2',
-    #     'status': 'running'
-    #     }
-    # ]
     return oasisclient(request).endpoint.list()
 
 
@@ -153,3 +127,56 @@ def endpoint_update(request, id, **params):
 
 def endpoint_delete(request, id):
     return oasisclient(request).endpoint.delete(id)
+
+
+def httpapi_create(request, **params):
+    return oasisclient(request).httpapi.create(**params)
+
+
+def httpapi_list(request):
+    return oasisclient(request).httpapi.list()
+
+
+def request_list(request):
+    return oasisclient(request).request.list()
+
+
+def request_create(request, **params):
+    return oasisclient(request).request.create(**params)
+
+
+def requestheader_list(request):
+    return oasisclient(request).request_header.list()
+
+
+def requestheader_create(request, **params):
+    return oasisclient(request).request_header.create(**params)
+
+
+def request_create(request, **params):
+    return oasisclient(request).request.create(**params)
+
+
+def response_list(request):
+    return oasisclient(request).response.list()
+
+
+def response_create(request, **params):
+    return oasisclient(request).response.create(**params)
+
+
+def responsecode_create(request, **params):
+    return oasisclient(request).response_code.create(**params)
+
+
+def responsecode_list(request):
+    return oasisclient(request).response_code.list()
+
+
+def responsemessage_create(request, **params):
+    return oasisclient(request).response_message.create(**params)
+
+
+def responsemessage_list(request):
+    return oasisclient(request).response_message.list()
+

@@ -22,33 +22,33 @@
 
     function IntegrationSettingController($scope, $state, $stateParams, integrationModel) {
         var ctrl = this;
+        var selectCodeId = null;
+
         $scope.index = $stateParams.index;
         $scope.method = $stateParams.param;
-        $scope.request = [
-            {
-                'id': 1,
-                'name': 'Content-Type',
-                'value': 'application/json'
-            }
-        ];
+
         $scope.resCodes = [
             {
-                'id': 1,
+                'code':null
             }
         ];
+
+        $scope.headers = [
+            {
+                'name': null,
+                'value': null
+            }
+        ];
+        $scope.selectCode = selectCode;
         $scope.createHeader = createHeader;
         $scope.removeHeader = removeHeader;
         $scope.addHeader = addHeader;
         $scope.addResCode = addResCode;
         $scope.removeResCode = removeResCode;
-        $scope.addResponse = addResponse;
-        $scope.createResCode = createResCode;
-        $scope.createResponse = createResponse;
-        $scope.responses = [
+        $scope.addResponseMesage = addResponseMesage;
+        $scope.responseMessages = [
             {
-                'id':1,
-                'selectCode':0,
-                'urlRegex':''
+                'message': null
             }
         ]
 
@@ -69,11 +69,23 @@
         }
 
         function addHeader() {
-            var length = $scope.integrationModel.newFunctionSpec[$scope.index].request.length;
-            $scope.integrationModel.newFunctionSpec[$scope.index].request.push({'id': length});
-            console.log('requests');
-            console.log($scope.integrationModel.newFunctionSpec[$scope.index].request);
-            integrationModel.endpoint.spec.request = $scope.integrationModel.newFunctionSpec[$scope.index].request;
+            var length = $scope.headers.length;
+            //$scope.headers.push({'id': length});
+            integrationModel.requestHeader.name = $scope.headers[length-1].name;
+            integrationModel.requestHeader.value = $scope.headers[length-1].value;
+            integrationModel.requestHeader.request_id = integrationModel.newRequest.id;
+            console.log(integrationModel.requestHeader);
+
+            if ( integrationModel.requestHeader.name != null )
+                integrationModel.createRequestHeader().success(onCreateRequestHeaderSuccess);
+
+        }
+
+        function onCreateRequestHeaderSuccess(response) {
+            console.log('onCreateRequestHeaderSuccess')
+            $scope.headers.push(response);
+            $scope.resCodes[$scope.resCodes.length-1].name='';
+            $scope.resCodes[$scope.resCodes.length-1].value='';
         }
 
         function removeHeader() {
@@ -85,32 +97,44 @@
         function addResCode() {
             console.log('res codes');
             var index = $scope.resCodes.length;
-            $scope.integrationModel.newFunctionSpec[$scope.index].resCodes.push({'id': index});
-            console.log($scope.integrationModel.newFunctionSpec[$scope.index].resCodes);
-            integrationModel.endpoint.spec.resCodes = $scope.integrationModel.newFunctionSpec[$scope.index].resCodes;
+            //$scope.resCodes.push({'id': index});
+            integrationModel.responseCode.status_code = $scope.resCodes[index-1].code
+            integrationModel.responseCode.response_id = integrationModel.newResponse.id;
+
+             if ( integrationModel.responseCode.status_code != null )
+                integrationModel.createResponseCode().success(onCreateResponseCodeSuccess);
         }
 
-        function createResCode() {
+        function onCreateResponseCodeSuccess(response) {
+            console.log('onCreateResponseCodeSuccess')
+            $scope.resCodes.push(response);
+        }
 
+        function selectCode(select) {
+            selectCodeId = select.code.id;
+            console.log('select code');
+            console.log(select);
+            console.log(select.code.id);
         }
 
         function removeResCode() {
             var lastItem = $scope.resCodes.length-1;
-            $scope.integrationModel.newFunctionSpec[$scope.index].resCodes.splice(lastItem);
-            integrationModel.endpoint.spec.resCodes = $scope.integrationModel.newFunctionSpec[$scope.index].resCodes;
+            //$scope.integrationModel.newFunctionSpec[$scope.index].resCodes.splice(lastItem);
+            //integrationModel.endpoint.spec.resCodes = $scope.integrationModel.newFunctionSpec[$scope.index].resCodes;
         }
 
-        function addResponse() {
+        function addResponseMesage() {
             console.log('responses');
-            var index = $scope.responses.length;
-            $scope.integrationModel.newFunctionSpec[$scope.index].responses.push({'id': index});
-            console.log($scope.integrationModel.newFunctionSpec[$scope.index].responses);
-            integrationModel.endpoint.spec.responses = $scope.integrationModel.newFunctionSpec[$scope.index].responses;
+            var index = $scope.responseMessages.length;
+            //console.log($scope.integrationModel.newFunctionSpec[$scope.index].responses);
+            integrationModel.responseMessage.message = $scope.responseMessages[index-1].message;
+            integrationModel.responseMessage.response_statuscode_id = selectCodeId;
 
+            integrationModel.createResponseMessage().success(onCreateResponseMessageSuccess);
         }
 
-        function createResponse() {
-
+        function onCreateResponseMessageSuccess(response) {
+            $scope.responseMessages.push(response);
         }
     }
 

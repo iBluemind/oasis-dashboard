@@ -103,3 +103,152 @@ class EndPoint(generic.View):
         result = oasis.endpoint_get(request, '')
         return {'items': [change_to_id(n.to_dict()) for n in result]}
 
+
+@urls.register
+class HttpApis(generic.View):
+    """API for Oasis HttpApis"""
+    url_regex = r'oasis/httpapis/$'
+
+    @rest_utils.ajax()
+    def get(self, request):
+        """Get httpapi list"""
+        LOG.debug('***************call httpapi list************')
+        result = oasis.httpapi_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new HttpApi.
+
+        Returns the new HttpApi object on success.
+        """
+        LOG.debug('***************call create httpapi************')
+        new_httpapi = oasis.httpapi_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/httpapis/%s' % new_httpapi.id,
+            new_httpapi.to_dict())
+
+
+@urls.register
+class Responses(generic.View):
+    """API for Oasis Responses"""
+    url_regex = r'oasis/responses/$'
+
+    @rest_utils.ajax()
+    def get(self, request):
+        """Get response list"""
+        LOG.debug('***************call response list************')
+        result = oasis.response_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new Response.
+
+        Returns the new Response object on success.
+        """
+        LOG.debug('***************call response response************')
+        new_response = oasis.response_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/responses/%s' % new_response.id,
+            new_response.to_dict())
+
+
+@urls.register
+class ResponseCodes(generic.View):
+    """API for Oasis Response Codes"""
+    url_regex = r'oasis/responsecodes/$'
+
+    @rest_utils.ajax()
+    def get(self, request):
+        """Get response list"""
+        LOG.debug('***************call response code list************')
+        result = oasis.responsecode_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new Response Code.
+
+        Returns the new Response Code object on success.
+        """
+        LOG.debug('***************call response code list ************')
+        new_responsecode = oasis.responsecode_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/responsecodes/%s' % new_responsecode.id,
+            new_responsecode.to_dict())
+
+
+@urls.register
+class ResponseMessages(generic.View):
+    """API for Oasis Response Messages"""
+    url_regex = r'oasis/responsemessages/$'
+
+    @rest_utils.ajax()
+    def get(self, request):
+        """Get response list"""
+        LOG.debug('***************call response message list************')
+        result = oasis.responsemessage_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new Response Code.
+
+        Returns the new Response Code object on success.
+        """
+        LOG.debug('***************call response message list ************')
+        new_responsemessage = oasis.responsemessage_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/responsemessages/%s' % new_responsemessage.id,
+            new_responsemessage.to_dict())
+
+
+@urls.register
+class Requests(generic.View):
+    """API for Oasis Requests"""
+    url_regex = r'oasis/requests/$'
+
+    @rest_utils.ajax()
+    def get(self, request):
+        """Get response list"""
+        LOG.debug('***************call request list************')
+        result = oasis.request_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new Request.
+
+        Returns the new Request object on success.
+        """
+        LOG.debug('***************call request response************')
+        new_request = oasis.request_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/requests/%s' % new_request.id,
+            new_request.to_dict())
+
+
+@urls.register
+class RequestHeaders(generic.View):
+    """API for Oasis RequestHeaders"""
+    url_regex = r'oasis/requestheaders/$'
+
+    @rest_utils.ajax()
+    def get(self, request):
+        """Get response list"""
+        LOG.debug('***************call request header list************')
+        result = oasis.requestheader_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new Request Header.
+
+        Returns the new RequestHeader object on success.
+        """
+        LOG.debug('***************call request header ************')
+        new_requestheader = oasis.requestheader_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/requestheaders/%s' % new_requestheader.id,
+            new_requestheader.to_dict())
