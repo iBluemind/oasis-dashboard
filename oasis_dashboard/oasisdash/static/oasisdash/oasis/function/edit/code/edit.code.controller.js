@@ -28,16 +28,17 @@
     function CreateFunctionInputController($location, $state, $scope, $stateParams, baseRoute, oasis, model, toast, events) {
         var ctrl = this;
 
-        var functionId = $stateParams.functionId;
+        $scope.functionId = $stateParams.functionId;
         ctrl.region = [];
         ctrl.endpoints = [];
         ctrl.createFunction = createFunction;
         ctrl.nodepools=[];
+
         init();
 
         function init() {
 
-            console.log('function Id : ' + functionId);
+            console.log('function Id : ' + $scope.functionId);
             //model.init();
             if ($state.current.data && !isEmpty($state.current.data)) {
                 $scope.model = $state.current.data;
@@ -47,8 +48,8 @@
             $state.current.data = $scope.model;
             oasis.getEndpoints().success(getEndPointSuccess);
 
-            if ( functionId != null )
-            oasis.getFunction(functionId).success(getFunctionSuccess);
+            if ( $scope.functionId != -1 )
+                oasis.getFunction($scope.functionId).success(getFunctionSuccess);
         }
 
         function getFunctionSuccess(response) {
@@ -60,12 +61,18 @@
         }
 
         function createFunction() {
-            console.log(model.newFunctionSpec);
-            model.createFunction().success(createFunctionSuccess);
+            console.log('crea te function');
+            if ( $scope.functionId == -1 )
+                model.createFunction().success(createFunctionSuccess);
+            else {
+                //model.newFunctionSpec.id = $scope.functionId;
+                //console.log(model.newFunctionSpec);
+                model.updateFunction($scope.functionId).success(createFunctionSuccess);
+            }
         }
 
         function createFunctionSuccess(response) {
-            //console.log('create function success');
+            console.log('create function success');
             console.log(response);
             //toast.add('success', interpolate(message.success, [response.name]));
             $scope.$emit(events.CREATE_SUCCESS, response);
@@ -74,68 +81,16 @@
 
         function getEndPointSuccess(response){
 
-            console.log(response);
-            //response  = [
-            //    {
-            //        'id': '1q2e3r6-zc34',
-            //        'name': 'endpoint1',
-            //        'desc': 'test endpoint1',
-            //        'status': 'running'
-            //    },
-            //    {
-            //        'id': '123d23rfwef',
-            //        'name': 'endpoint2',
-            //        'desc': 'test endpoint2',
-            //        'status': 'running'
-            //    },
-            //    {
-            //        'id': 'zasdf45-dfg',
-            //        'name': 'endpoint3',
-            //        'desc': 'test endpoint3',
-            //        'stats': 'running'
-            //    }]
-            //
-            //
-            //for (var i in response) {
-            //    var item = {
-            //        unit: response[i].id,
-            //        label: response[i].name
-            //    }
-            //
-            //    ctrl.endpoints.push(item)
-            //}
-            //
-            //var nodepools = [
-            //    {
-            //        'id': '1f2343',
-            //        'name': 'nodepool1'
-            //    },
-            //    {
-            //        'id': '1f2343',
-            //        'name': 'nodepool2'
-            //    },
-            //    {
-            //        'id': '1f2343',
-            //        'name': 'nodepool3'
-            //    },
-            //    {
-            //        'id': '1f2343',
-            //        'name': 'nodepool5'
-            //    },
-            //    {
-            //        'id': '1f2343',
-            //        'name': 'nodepool6'
-            //    }
-            //]
-            //for (var i in nodepools) {
-            //    var item = {
-            //        unit: nodepools[i].id,
-            //        label: nodepools[i].name
-            //    }
-            //
-            //    ctrl.nodepools.push(item)
-            //}
-            //console.log(ctrl.endpoints);
+            //console.log(response);
+
+            for (var i in response.items) {
+                var item = {
+                    unit: response.items[i].id,
+                    label: response.items[i].name
+                }
+
+                ctrl.endpoints.push(item)
+            }
         }
 
     }

@@ -24,5 +24,8 @@ from oasis_dashboard.oasisdash.nodepool.policy import views
 urlpatterns = patterns(
     '',
     url(r'^create/$', views.CreateView.as_view(), name='create'),
-    url(r'^update/$', views.UpdateView.as_view(), name='update'),
+    url(r'^(?P<nodepool_policy_id>[^/]+)/update/$',
+        views.UpdateView.as_view(), name='update'),
+    url(r'^(?P<nodepool_policy_id>[^/]+)/detail/$',
+        views.DetailView.as_view(), name='detail'),
 )

@@ -31,7 +31,7 @@ class PolicyTab(tabs.TableTab):
     slug = "nodepoolpolicytab"
     template_name = "horizon/common/_detail_table.html"
 
-    def get_nodepoolpolicytable_data(self):
+    def get_policy_data(self):
 
         request = self.tab_group.request
         policies = oasis.node_pool_policy_list(request)
@@ -44,7 +44,7 @@ class NodePoolTab(tabs.TableTab):
     slug = "nodepooltab"
     template_name = "horizon/common/_detail_table.html"
 
-    def get_nodepooltable_data(self):
+    def get_nodepool_data(self):
 
         request = self.tab_group.request
         nodepools = oasis.node_pool_list(request)

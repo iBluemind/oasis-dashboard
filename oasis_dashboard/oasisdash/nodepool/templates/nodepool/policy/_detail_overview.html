@@ -1,0 +1,36 @@
+{% load i18n %}
+
+
+<div class="detail">
+  <dl class="dl-horizontal">
+
+    <dt>ID</dt>
+    <dd>{{ policy.id }}</dd>
+    <dt>ScaleDown Threshold</dt>
+    <dd>{{policy.scaledown_threshold}}</dd>
+    <dt>ScaleDown Evaluation Periods</dt>
+    <dd>{{policy.scaledown_evaluation_periods}}</dd>
+    <dt>ScaleDown Period</dt>
+    <dd>{{policy.scaledown_period}}</dd>
+    <dt>ScaleUp Threshold</dt>
+    <dd>{{policy.scaleup_threshold}}</dd>
+    <dt>ScaleUp Evaluation Periods</dt>
+    <dd>{{policy.scaleup_evaluation_periods}}</dd>
+    <dt>Scaleup Period</dt>
+    <dd>{{policy.scaleup_period}}</dd>
+    <dt>ScaleDown CoolDown</dt>
+    <dd>{{policy.scaledown_cooldown}}</dd>
+    <dt>ScaleUp CoolDown</dt>
+    <dd>{{policy.scaleup_cooldown}}</dd>
+    <dt>ScaleDown Adjust</dt>
+    <dd>{{policy.scaledown_adjust}}</dd>
+    <dt>ScaleUp Adjust</dt>
+    <dd>{{policy.scaleup_adjust}}</dd>
+    <dt>Max Size</dt>
+    <dd>{{policy.max_size}}</dd>
+    <dt>Min Size</dt>
+    <dd>{{policy.min_size}}</dd>
+
+  </dl>
+</div>
+

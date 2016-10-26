@@ -23,6 +23,7 @@ import logging
 
 LOG = logging.getLogger(__name__)
 
+
 def change_to_id(obj):
     """Change key named 'uuid' to 'id'
 
@@ -41,7 +42,27 @@ class Function(generic.View):
     @rest_utils.ajax()
     def get(self, request, function_id):
         """Get a specific function"""
-        return oasis.function_get(request, function_id)
+        return oasis.function_get(request, function_id).to_dict()
+
+    @rest_utils.ajax(data_required=True)
+    def patch(self, request, function_id):
+        """Update a Function.
+
+        Returns the Function object on success.
+        """
+        LOG.debug('***************call update function************')
+        new_function = oasis.function_update(request, function_id, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/functions/%s' % new_function.id,
+            new_function.to_dict())
+
+    @rest_utils.ajax()
+    def delete(self, request, function_id):
+        """Delete Function by id.
+
+        Returns HTTP 204 (no content) on successful deletion.
+        """
+        oasis.function_delete(request, function_id)
 
 
 @urls.register

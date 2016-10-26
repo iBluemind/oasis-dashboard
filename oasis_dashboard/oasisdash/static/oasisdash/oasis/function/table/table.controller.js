@@ -16,7 +16,7 @@
 
     FunctionTableController.$inject = [
         '$scope',
-        '$location',
+        '$state',
         'horizon.app.core.openstack-service-api.oasisdash',
         'horizon.dashboard.oasisdash.function.events',
         'horizon.framework.conf.resource-type-registry.service',
@@ -24,11 +24,12 @@
         'horizon.dashboard.oasisdash.baseRoute',
     ];
 
-    function FunctionTableController($scope, $location, oasis, events, registry, functionResourceType) {
+    function FunctionTableController($scope, $state, oasis, events, registry, functionResourceType) {
         var ctrl = this;
         ctrl.function = [];
         ctrl.functionSrc = [];
         ctrl.functionResource = registry.getResourceType(functionResourceType);
+        $scope.showFunction = showFunction;
 
         /**
          * Filtering - client-side MagicSearch
@@ -53,7 +54,7 @@
         ];
 
         var createWatcher = $scope.$on(events.CREATE_SUCCESS, onCreateSuccess);
-        //var deleteWatcher = $scope.$on(events.DELETE_SUCCESS, onDeleteSuccess);
+        var deleteWatcher = $scope.$on(events.DELETE_SUCCESS, onDeleteSuccess);
 
         $scope.$on('$destroy', destroy);
 
@@ -65,8 +66,6 @@
         }
 
         function getFunctionsSuccess(response) {
-            console.log('ge function');
-            console.log(response.items)
             ctrl.functionSrc = response.items;
         }
 
@@ -76,14 +75,20 @@
 
         }
 
-        //function onDeleteSuccess(e, removedIds) {
-        //    ctrl.baysSrc = difference(ctrl.baysSrc, removedIds, 'id');
-        //    e.stopPropagation();
-        //
-        //    // after deleting the items
-        //    // we need to clear selected items from table controller
-        //    $scope.$emit('hzTable:clearSelected');
-        //}
+        function showFunction(id) {
+            $state.go('edit.code', {'functionId':id});
+        }
+
+        function onDeleteSuccess(e, removedIds) {
+            console.log('delete success');
+            //ctrl.function_id = difference(ctrl.function_id, removedIds, 'id');
+            ctrl.functionSrc = difference(ctrl.functionSrc, removedIds, 'id');
+            e.stopPropagation();
+
+            // after deleting the items
+            // we need to clear selected items from table controller
+            $scope.$emit('hzTable:clearSelected');
+        }
 
         function difference(currentList, otherList, key) {
           return currentList.filter(filter);
@@ -97,7 +102,7 @@
 
         function destroy() {
           createWatcher();
-          //deleteWatcher();
+          deleteWatcher();
         }
     }
 

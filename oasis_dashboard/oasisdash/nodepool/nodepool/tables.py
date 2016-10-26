@@ -11,14 +11,14 @@
 #    under the License.
 
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse_lazy
-
+from django.utils.translation import ungettext_lazy
+from openstack_dashboard import policy
 from horizon import tables
-
+from oasis_dashboard.api import oasis
 
 class CreateNodePoolAction(tables.LinkAction):
     name = "create"
-    verbose_name = _("Create Policy")
+    verbose_name = _("Create NodePool")
     url = "horizon:oasisdash:nodepool:nodepool:create"
     classes = ("ajax-modal",)
     icon = "plus"
@@ -26,22 +26,46 @@ class CreateNodePoolAction(tables.LinkAction):
 
 class EditNodePoolAction(tables.LinkAction):
     name = "update"
-    verbose_name = _("Edit Policy")
-    url = reverse_lazy("horizon:oasisdash:nodepool:policy:update")
+    verbose_name = _("Edit NodePool")
+    url = "horizon:oasisdash:nodepool:nodepool:update"
     classes = ("ajax-modal",)
-    icon = "pencil"
-    policy_rules = (("network", "update_network"),)
+    policy_rules = (("nodepool_id", "id"),)
+
+
+class DeleteNodePoolAction(policy.PolicyTargetMixin, tables.DeleteAction):
+    @staticmethod
+    def action_present(count):
+        return ungettext_lazy(
+            u"Delete NodePool",
+            u"Delete NodePools",
+            count
+        )
+
+    @staticmethod
+    def action_past(count):
+        return ungettext_lazy(
+            u"Deleted NodePool",
+            u"Deleted NodePools",
+            count
+        )
+
+    def allowed(self, request, datum):
+        return True
+
+    def delete(self, request, obj_id):
+        oasis.node_pool_delete(request, obj_id)
 
 
 class NodePoolTable(tables.DataTable):
     name = tables.Column("name",
-                        link="horizon:oasisdash:nodepool:nodepool:update",
+                        link="horizon:oasisdash:nodepool:nodepool:detail",
                         verbose_name=_("NodePool Name"))
 
     created_at = tables.Column("created_at",
                                 verbose_name=_("Create Time"))
 
     class Meta(object):
-        name = "nodepooltable"
+        name = "nodepool"
         verbose_name = _("NodePool")
-        table_actions = (CreateNodePoolAction,)
+        table_actions = (CreateNodePoolAction, )
+        row_actions = (EditNodePoolAction, DeleteNodePoolAction)

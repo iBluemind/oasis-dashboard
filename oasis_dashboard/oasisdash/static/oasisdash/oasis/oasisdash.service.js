@@ -16,15 +16,17 @@
             createFunction: createFunction,
             getFunction: getFunction,
             getFunctions: getFunctions,
-            createEndpoint  : createEndpoint,
+            updateFunction: updateFunction,
+            deleteFunction: deleteFunction,
+            createEndpoint: createEndpoint,
             createHttpApi: createHttpApi,
             createRequest: createRequest,
             createRequestHeader: createRequestHeader,
             createResponse: createResponse,
             createResponseCode: createResponseCode,
             createResponseMessage: createResponseMessage,
-            getEndpoint : getEndpoint,
-            getEndpoints : getEndpoints,
+            getEndpoint: getEndpoint,
+            getEndpoints: getEndpoints,
             getRequestHeaders: getRequestHeaders,
             getHttpApis: getHttpApis,
             getResponseCodes: getResponseCodes,
@@ -41,15 +43,30 @@
         }
 
         function getFunction(id) {
-          return apiService.get('/api/oasis/function/' + id)
-            .error(function() {
-              toastService.add('error', gettext('Unable to retrieve the Function.'));
+            return apiService.get('/api/oasis/function/' + id)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve the Function.'));
+                });
+        }
+
+        function deleteFunction(id, suppressError) {
+            var promise = apiService.delete('/api/oasis/function/' + id);
+            return suppressError ? promise : promise.error(function () {
+                var msg = gettext('Unable to delete the Function with id: %(id)s');
+                toastService.add('error', interpolate(msg, {id: id}, true));
             });
         }
 
+        function updateFunction(id, params) {
+            return apiService.patch('/api/oasis/function/' + id, params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to update the Function.'));
+                });
+        }
+
         function getFunctions() {
-           return apiService.get('/api/oasis/functions/')
-                .error(function() {
+            return apiService.get('/api/oasis/functions/')
+                .error(function () {
                     toastService.add('error', gettext('Unable to retrieve Function.'));
                 });
         }
@@ -62,15 +79,15 @@
         }
 
         function getEndpoint(id) {
-          return apiService.get('/api/oasis/endpoint/' + id)
-            .error(function() {
-              toastService.add('error', gettext('Unable to retrieve the Endpoint.'));
-            });
+            return apiService.get('/api/oasis/endpoint/' + id)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve the Endpoint.'));
+                });
         }
 
         function getEndpoints() {
-           return apiService.get('/api/oasis/endpoints/')
-                .error(function() {
+            return apiService.get('/api/oasis/endpoints/')
+                .error(function () {
                     toastService.add('error', gettext('Unable to retrieve Endpoints.'));
                 });
         }
@@ -119,29 +136,29 @@
         }
 
         function getResponseMessages() {
-           return apiService.get('/api/oasis/responsemessages/')
-                .error(function() {
+            return apiService.get('/api/oasis/responsemessages/')
+                .error(function () {
                     toastService.add('error', gettext('Unable to retrieve ResponseMessages.'));
                 });
         }
 
         function getRequestHeaders() {
-           return apiService.get('/api/oasis/requestheaders/')
-                .error(function() {
+            return apiService.get('/api/oasis/requestheaders/')
+                .error(function () {
                     toastService.add('error', gettext('Unable to retrieve RequestHeaders.'));
                 });
         }
 
         function getHttpApis() {
             return apiService.get('/api/oasis/httpapis/')
-                .error(function() {
+                .error(function () {
                     toastService.add('error', gettext('Unable to retrieve HttpApis.'));
                 });
         }
 
         function getResponseCodes() {
-           return apiService.get('/api/oasis/responsecodes/')
-                .error(function() {
+            return apiService.get('/api/oasis/responsecodes/')
+                .error(function () {
                     toastService.add('error', gettext('Unable to retrieve ResponseCodes.'));
                 });
         }

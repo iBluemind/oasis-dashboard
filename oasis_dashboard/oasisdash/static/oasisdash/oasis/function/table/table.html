@@ -2,8 +2,6 @@
        hz-table ng-cloak
        st-table="table.function"
        st-safe-src="table.functionSrc"
-       default-sort="name"
-       default-sort-reverse="false"
        class="table table-striped table-rsp table-detail">
 
     <thead>
@@ -11,13 +9,6 @@
       Table-batch-actions:
       This is where batch actions like searching, creating, and deleting.
     -->
-    <tr>
-        <th colspan="100" class="search-header">
-            <hz-magic-search-bar group-classes="input-group-sm" icon-classes="fa-search"
-                                 filter-facets="table.functionFacets">
-            </hz-magic-search-bar>
-        </th>
-    </tr>
     <tr class="action-row">
         <th colspan="100">
             <a ui-sref="edit" class="btn btn-default">Create Function</a>
@@ -28,11 +19,6 @@
       The headers for the table columns
     -->
     <tr>
-        <th class="multi_select_column">
-            <input type="checkbox" hz-select-all="table.function">
-        </th>
-
-        <th class="expander"></th>
 
         <th class="rsp-p1" st-sort="name" st-sort-default translate>
             Name
@@ -63,20 +49,21 @@
 
     <tr ng-repeat-start="b in table.function track by b.id">
 
-        <td class="multi_select_column">
-            <input type="checkbox"
-                   ng-model="tCtrl.selections[b.id].checked"
-                   hz-select="b">
-        </td>
+        <!--<td class="multi_select_column">-->
+            <!--<input type="checkbox"-->
+                   <!--ng-model="tCtrl.selections[b.id].checked"-->
+                   <!--hz-select="b">-->
+        <!--</td>-->
 
-        <td class="expander">
-    <span class="fa fa-chevron-right"
-          hz-expand-detail
-          duration="200">
-    </span>
-        </td>
+        <!--<td class="expander">-->
+            <!--<span class="fa fa-chevron-right"-->
+                  <!--hz-expand-detail-->
+                  <!--duration="200">-->
+            <!--</span>-->
+        <!--</td>-->
 
-        <td class="rsp-p1"><a ui-sref="edit.code({functionId: '{$b.id$}'})">{$ b.name|noName $}</a></td>
+        <!--<td class="rsp-p1"><a ui-sref="edit.code({functionId: '{$b.id$}'})">{$ b.name|noName $}</a></td>-->
+        <td class="rsp-p1"><a href="" ng-click="showFunction(b.id)">{$ b.name|noName $}</a></td>
         <td class="rsp-p2">{$ b.desc $}</td>
         <td class="rsp-p1">running</td>
         <td class="rsp-p1">{$ b.created_at $}</td>

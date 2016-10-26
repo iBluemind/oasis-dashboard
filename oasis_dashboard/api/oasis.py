@@ -72,8 +72,12 @@ def node_pool_list(request):
     return oasisclient(request).nodepool.list()
 
 
-def node_pool_update(request, params):
-    return oasisclient(request).nodepool.update(**params)
+def node_pool_update(request, nodepool_id, params):
+    return oasisclient(request).nodepool.update(nodepool_id, **params)
+
+
+def node_pool_delete(request, nodepool_id):
+    return oasisclient(request).nodepool.delete(nodepool_id)
 
 
 def node_pool_policy_create(request, params):
@@ -88,6 +92,14 @@ def node_pool_policy_list(request):
     return oasisclient(request).nodepool_policy.list()
 
 
+def node_pool_policy_delete(request, policy_id):
+    return oasisclient(request).nodepool_policy.delete(policy_id)
+
+
+def node_pool_policy_get(request, id):
+    return oasisclient(request).nodepool_policy.get(id)
+
+
 def function_get(request, function_id):
     return oasisclient(request).function.get(function_id)
 
@@ -97,8 +109,8 @@ def function_list(request):
     return oasisclient(request).function.list()
 
 
-def function_update(request, id):
-    return oasisclient(request).function.update(id)
+def function_update(request, id, params):
+    return oasisclient(request).function.update(id, params)
 
 
 def function_delete(request, id):

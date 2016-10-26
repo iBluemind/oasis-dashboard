@@ -16,12 +16,14 @@
                 name: null,
                 body: null,
                 stack_id: 'stack-kjwook',
+                //user_id: '7872143c6089412aa96ff5c6e6f714c7',
                 status: 'running'
             },
 
             // API methods
             init: init,
-            createFunction: createFunction
+            createFunction: createFunction,
+            updateFunction: updateFunction
         };
 
         function initNewFunctionSpec() {
@@ -39,6 +41,13 @@
             //cleanNullProperties(finalSpec);
 
             return oasis.createFunction(finalSpec);
+        }
+
+        function updateFunction(id) {
+             var finalSpec = angular.copy(model.newFunctionSpec);
+            //cleanNullProperties(finalSpec);
+
+            return oasis.updateFunction(id, finalSpec);
         }
 
         return model;

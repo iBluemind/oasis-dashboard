@@ -19,9 +19,13 @@
 from django.conf.urls import patterns
 from django.conf.urls import url
 
-from oasis_dashboard.oasisdash.nodepool.nodepool import  views
+from oasis_dashboard.oasisdash.nodepool.nodepool import views
 
 urlpatterns = patterns(
     '',
     url(r'^create/$', views.CreateView.as_view(), name='create'),
+    url(r'^(?P<nodepool_id>[^/]+)/update/$',
+        views.UpdateView.as_view(), name='update'),
+    url(r'^(?P<nodepool_id>[^/]+)/detail/$',
+        views.DetailView.as_view(), name='detail'),
 )

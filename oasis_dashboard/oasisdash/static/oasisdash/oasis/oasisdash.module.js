@@ -69,6 +69,7 @@
                 url:'/code',
                 templateUrl: path+'function/edit/code/code.html',
                 controller : 'CreateFunctionInputController',
+                params: {'functionId': -1},
                 data : {
 
                 }

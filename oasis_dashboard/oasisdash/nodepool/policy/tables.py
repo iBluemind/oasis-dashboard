@@ -10,10 +10,11 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-
+from django.utils.translation import ungettext_lazy
+from openstack_dashboard import policy
 from horizon import tables
+from oasis_dashboard.api import oasis
 
 
 class CreatePolicyAction(tables.LinkAction):
@@ -24,28 +25,50 @@ class CreatePolicyAction(tables.LinkAction):
     icon = "plus"
 
 
-class EditPolicyAction(tables.LinkAction):
+class EditPolicy(tables.LinkAction):
     name = "update"
     verbose_name = _("Edit Policy")
-    url = reverse_lazy("horizon:oasisdash:nodepool:policy:update")
+    url = "horizon:oasisdash:nodepool:policy:update"
     classes = ("ajax-modal",)
-    icon = "pencil"
-    policy_rules = (("network", "update_network"),)
+    policy_target_attrs = (("nodepool_policy_id", "id"),)
+
+
+class DeletePolicy(policy.PolicyTargetMixin, tables.DeleteAction):
+    @staticmethod
+    def action_present(count):
+        return ungettext_lazy(
+            u"Delete Policy",
+            u"Delete Policies",
+            count
+        )
+
+    @staticmethod
+    def action_past(count):
+        return ungettext_lazy(
+            u"Deleted Policy",
+            u"Deleted Policies",
+            count
+        )
+
+    def allowed(self, request, datum):
+        return True
+
+    def delete(self, request, obj_id):
+        oasis.node_pool_policy_delete(request, obj_id)
 
 
 class NodePoolPolicyTable(tables.DataTable):
     name = tables.Column("name",
-                         link="horizon:oasisdash:nodepool:policy:update",
+                         link="horizon:oasisdash:nodepool:policy:detail",
                          verbose_name=_("PolicyName"))
 
-    created_at = tables.Column("created_at",
-                                verbose_name=_("Create Time"))
+    created_at = tables.Column("created_at", verbose_name=_("Create Time"))
 
     # def get_object_id(self, obj):
     #     return "%s-%s" % (obj['id'], obj['name'])
 
     class Meta(object):
-        name = "nodepoolpolicytable"
+        name = "policy"
         verbose_name = _("NodePool Policy")
         table_actions = (CreatePolicyAction,)
-
+        row_actions = (EditPolicy, DeletePolicy)

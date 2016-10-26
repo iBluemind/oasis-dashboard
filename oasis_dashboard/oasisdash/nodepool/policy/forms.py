@@ -18,8 +18,7 @@ min_size = Column(Integer())
     scaledown_cooldown = Column(Integer())
     scaleup_period = Column(Integer())
     scaleup_evaluation_periods = Column(Integer())
-    scalueup_threshold = Column(Integer())
-    scaledown_scale_period = Column(Integer())
+    scaleup_threshold = Column(Integer())
     scaledown_evaluation_periods = Column(Integer())
     scaledown_threshold = Column(Integer())
 """
@@ -140,6 +139,10 @@ class UpdateForm(forms.SelfHandlingForm):
         widget=forms.TextInput(
             attrs={'readonly': 'readonly'}))
 
+    name = forms.CharField(
+        label=_("Name"),
+        widget=forms.TextInput())
+
     max_size = forms.IntegerField(
         label=_("NodePool Max Size"),
         min_value=1,
@@ -188,16 +191,10 @@ class UpdateForm(forms.SelfHandlingForm):
         help_text=_('Input scaleup evaluation period'),
         required=True)
 
-    scalueup_threshold = forms.IntegerField(
+    scaleup_threshold = forms.IntegerField(
         label=_("Scaleup Threshold"),
         min_value=1,
         help_text=_('Input scaleup threshold'),
-        required=True)
-
-    scaledown_scale_period = forms.IntegerField(
-        label=_("Scaledown Scale Period"),
-        min_value=1,
-        help_text=_('Input scaledown scale period'),
         required=True)
 
     scaledown_evaluation_periods = forms.IntegerField(
@@ -209,22 +206,22 @@ class UpdateForm(forms.SelfHandlingForm):
     scaledown_threshold = forms.IntegerField(
         label=_("Scaledown Threshold"),
         min_value=1,
-
         help_text=_('Input scaledown threshold'),
         required=True)
 
     def handle(self, request, data):
         try:
             args = {
+                'name': data['name'],
                 'scaledown_threshold': data['scaledown_threshold'],
                 'scaledown_evaluation_periods': data['scaledown_evaluation_periods'],
-                'scaledown_scale_period': data['scaledown_scale_period'],
-                'scalueup_threshold': data['scalueup_threshold'],
-                'scaleup_evaluation_periods ': data['scaleup_evaluation_periods'],
+                'scaleup_threshold': data['scaleup_threshold'],
+                'scaleup_evaluation_periods': data['scaleup_evaluation_periods'],
                 'scaleup_period': data['scaleup_period'],
                 'scaledown_cooldown': data['scaledown_cooldown'],
                 'scaleup_cooldown': data['scaleup_cooldown'],
                 'scaledown_adjust': data['scaledown_adjust'],
+                'scaledown_period': data['scaledown_period'],
                 'scaleup_adjust': data['scaleup_adjust'],
                 'max_size': data['max_size'],
                 'min_size': data['min_size']
