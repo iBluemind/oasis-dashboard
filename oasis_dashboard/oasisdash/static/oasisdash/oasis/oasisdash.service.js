@@ -13,6 +13,7 @@
 
     function OasisAPI(apiService, toastService, gettext) {
         var service = {
+            getNodePools: getNodePools,
             createFunction: createFunction,
             getFunction: getFunction,
             getFunctions: getFunctions,
@@ -27,13 +28,23 @@
             createResponseMessage: createResponseMessage,
             getEndpoint: getEndpoint,
             getEndpoints: getEndpoints,
+            deleteEndpoint: deleteEndpoint,
+            updateEndpoint: updateEndpoint,
             getRequestHeaders: getRequestHeaders,
             getHttpApis: getHttpApis,
+            getHttpApi: getHttpApi,
             getResponseCodes: getResponseCodes,
             getResponseMessages: getResponseMessages
         };
 
         return service;
+
+        function getNodePools() {
+            return apiService.get('/api/oasis/nodepools/')
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve NodePool Policies.'));
+                });
+        }
 
         function createFunction(params) {
             return apiService.post('/api/oasis/functions/', params)
@@ -92,10 +103,32 @@
                 });
         }
 
+        function deleteEndpoint(id, suppressError) {
+            var promise = apiService.delete('/api/oasis/endpoint/' + id);
+            return suppressError ? promise : promise.error(function () {
+                var msg = gettext('Unable to delete the Endpoint with id: %(id)s');
+                toastService.add('error', interpolate(msg, {id: id}, true));
+            });
+        }
+
+        function updateEndpoint(id, params) {
+            return apiService.patch('/api/oasis/endpoint/' + id, params)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to update the Endpoint.'));
+                });
+        }
+
         function createHttpApi(params) {
             return apiService.post('/api/oasis/httpapis/', params)
                 .error(function () {
                     toastService.add('error', gettext('Unable to create HttpApi.'));
+                });
+        }
+
+        function getHttpApi(id) {
+            return apiService.get('/api/oasis/httpapi/' + id)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve the HttpApi.'));
                 });
         }
 

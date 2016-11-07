@@ -185,6 +185,12 @@ class UpdateForm(forms.SelfHandlingForm):
         help_text=_('Input scaleup period'),
         required=True)
 
+    scaledown_period = forms.IntegerField(
+        label=_("Scaledown Period"),
+        min_value=1,
+        help_text=_('Input scaledown period'),
+        required=True)
+
     scaleup_evaluation_periods = forms.IntegerField(
         label=_("Scaleup Evaluation Period"),
         min_value=1,

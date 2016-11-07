@@ -21,8 +21,8 @@
         'horizon.framework.conf.resource-type-registry.service',
         'horizon.dashboard.oasisdash.endpoint.resourceType',
         'horizon.framework.widgets.modal.wizard-modal.service',
-        'horizon.dashboard.oasisdash.endpoint.detailworkflow',
-        'horizon.dashboard.oasisdash.endpoint.endpointDetailModel'
+        'horizon.dashboard.oasisdash.endpoint.createworkflow',
+        'horizon.dashboard.oasisdash.endpoint.endpointModel'
     ];
 
     function EndpointTableController($scope, $location, oasis, events, registry, endpointResourceType, wizardModalService, detailWorkFlow, model) {
@@ -33,30 +33,8 @@
         ctrl.endpointResource = registry.getResourceType(endpointResourceType);
         ctrl.showDetailModal = showDetailModal;
 
-        /**
-         * Filtering - client-side MagicSearch
-         * all facets for endpoint table
-         */
-        ctrl.endpointFacets = [
-            {
-                'label': gettext('Name'),
-                'name': 'name',
-                'singleton': true
-            },
-            {
-                'label': gettext('ID'),
-                'name': 'id',
-                'singleton': true
-            },
-            {
-                'label': gettext('Status'),
-                'name': 'status',
-                'singleton': true
-            }
-        ];
-
         var createWatcher = $scope.$on(events.CREATE_SUCCESS, onCreateSuccess);
-        //var deleteWatcher = $scope.$on(events.DELETE_SUCCESS, onDeleteSuccess);
+        var deleteWatcher = $scope.$on(events.DELETE_SUCCESS, onDeleteSuccess);
 
         $scope.$on('$destroy', destroy);
 
@@ -76,8 +54,11 @@
             e.stopPropagation();
         }
 
-        function showDetailModal(func) {
-            $scope.params = func;
+        function showDetailModal(id) {
+            //$state.go('edit.code', {'endpointId':id});
+            //$scope.params = func;
+            //console.log(id);
+            model.endpoint.id = id;
             $scope.model = model;
             wizardModalService.modal({
                 scope: $scope,
@@ -90,14 +71,16 @@
 
         }
 
-        //endpoint onDeleteSuccess(e, removedIds) {
-        //    ctrl.baysSrc = difference(ctrl.baysSrc, removedIds, 'id');
-        //    e.stopPropagation();
-        //
-        //    // after deleting the items
-        //    // we need to clear selected items from table controller
-        //    $scope.$emit('hzTable:clearSelected');
-        //}
+        function onDeleteSuccess(e, removedIds) {
+            console.log('delete success');
+            //ctrl.function_id = difference(ctrl.function_id, removedIds, 'id');
+            ctrl.endpointSrc = difference(ctrl.endpointSrc, removedIds, 'id');
+            e.stopPropagation();
+
+            // after deleting the items
+            // we need to clear selected items from table controller
+            $scope.$emit('hzTable:clearSelected');
+        }
 
         function difference(currentList, otherList, key) {
             return currentList.filter(filter);
@@ -111,7 +94,7 @@
 
         function destroy() {
             createWatcher();
-            //deleteWatcher();
+            deleteWatcher();
         }
     }
 

@@ -31,27 +31,6 @@
         ctrl.functionResource = registry.getResourceType(functionResourceType);
         $scope.showFunction = showFunction;
 
-        /**
-         * Filtering - client-side MagicSearch
-         * all facets for function table
-         */
-        ctrl.functionFacets = [
-            {
-                'label': gettext('Name'),
-                'name': 'name',
-                'singleton': true
-            },
-            {
-                'label': gettext('ID'),
-                'name': 'id',
-                'singleton': true
-            },
-            {
-                'label': gettext('Status'),
-                'name': 'status',
-                'singleton': true
-            }
-        ];
 
         var createWatcher = $scope.$on(events.CREATE_SUCCESS, onCreateSuccess);
         var deleteWatcher = $scope.$on(events.DELETE_SUCCESS, onDeleteSuccess);

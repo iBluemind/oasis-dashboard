@@ -45,19 +45,26 @@ class Policy(base.APIResourceWrapper):
     _attrs = ['id', 'project_id', 'user_id', 'name', 'total_vm_count', 'vm_count_per_user']
 
 
-
 @memoized
 def oasisclient(request):
 
+    oasis_url = ""
+
+    try:
+        oasis_url = base.url_for(request, 'oasis')
+    except exceptions.ServiceCatalogException:
+        LOG.debug('No Oasis service is configured.')
+        return None
+
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     cacert = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
+    LOG.debug(oasis_url)
 
     return oasis_client.Client(username=request.user.username,
-                             project_id=request.user.tenant_id,
-                             input_auth_token=request.user.token.id,
-                             oasis_url="http://172.16.176.149:9417",
-                             insecure=insecure,
-                             cacert=cacert)
+                               project_id=request.user.tenant_id,
+                               input_auth_token=request.user.token.id,
+                               oasis_url=oasis_url,
+                               insecure=insecure)
 
 
 def node_pool_get(request, id):
@@ -133,8 +140,8 @@ def endpoint_list(request):
     return oasisclient(request).endpoint.list()
 
 
-def endpoint_update(request, id, **params):
-    return oasisclient(request).endpoint.update(id, **params)
+def endpoint_update(request, id, params):
+    return oasisclient(request).endpoint.update(id, params)
 
 
 def endpoint_delete(request, id):
@@ -147,6 +154,10 @@ def httpapi_create(request, **params):
 
 def httpapi_list(request):
     return oasisclient(request).httpapi.list()
+
+
+def httpapi_get(request, id):
+    return oasisclient(request).httpapi.get(id)
 
 
 def request_list(request):

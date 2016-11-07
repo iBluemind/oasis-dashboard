@@ -13,11 +13,13 @@
     function functionModel(oasis) {
         var model = {
             newFunctionSpec: {
+                endpoint_id: null,
+                nodepool_id: null,
                 name: null,
                 body: null,
-                stack_id: 'stack-kjwook',
-                //user_id: '7872143c6089412aa96ff5c6e6f714c7',
-                status: 'running'
+                stack_id: null,
+                user_id:  null,
+                status: null
             },
 
             // API methods

@@ -17,9 +17,10 @@
         '$scope',
         '$state',
         'horizon.dashboard.oasisdash.endpoint.endpointModel',
+        'horizon.app.core.openstack-service-api.oasisdash'
     ];
 
-    function IntegrationController($scope, $state, integrationModel) {
+    function IntegrationController($scope, $state, integrationModel, oasis) {
         var ctrl = this;
 
         $scope.function_method = [{unit: "get", label: "GET"},
@@ -46,6 +47,21 @@
                 $scope.integrationModel = integrationModel;
             }
             $state.current.data = $scope.integrationModel;
+
+            if ( $scope.model.endpoint.id != null ) {
+                oasis.getHttpApi($scope.model.endpoint.id).success(onGetHttpApiSuccess);
+            }
+        }
+
+        function onGetHttpApiSuccess(response) {
+            console.log('onGetHttpApiSuccess');
+            console.log(response);
+            for (var i in response.items) {
+                var methodInfo = new Object();
+                methodInfo.method = response.items[i].method;
+                integrationModel.httpapi.push(methodInfo);
+            }
+            console.log(integrationModel);
         }
 
         function selectMethod(method) {

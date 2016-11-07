@@ -94,6 +94,7 @@
             integrationModel.endpoint.spec.request = $scope.integrationModel.newFunctionSpec[$scope.index].request;
         }
 
+
         function addResCode() {
             console.log('res codes');
             var index = $scope.resCodes.length;

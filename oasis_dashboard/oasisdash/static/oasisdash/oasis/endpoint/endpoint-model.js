@@ -12,6 +12,7 @@
     function endpointModel(oasis) {
         var endpointModel = {
             endpoint: {
+                id: null,
                 name: null,
                 desc: null,
                 url: null
@@ -36,6 +37,7 @@
 
         function createEndpoint() {
             var finalSpec = angular.copy(endpointModel.endpoint);
+            cleanNullProperties(finalSpec)
             return oasis.createEndpoint(finalSpec);
         }
 

@@ -16,17 +16,20 @@
     EndpointNameController.$inject = [
         '$scope',
         '$state',
+        '$stateParams',
         'horizon.dashboard.oasisdash.endpoint.endpointModel',
+        'horizon.app.core.openstack-service-api.oasisdash'
     ];
 
-    function EndpointNameController($scope, $state, model) {
+    function EndpointNameController($scope, $state, $stateParams, model, oasis) {
         var ctrl = this;
-
+        //$scope.endpointId = $stateParams.endpointId;
         $scope.createEndPoint = createEndPoint;
 
         init();
 
         function init() {
+
             $scope.model = model;
             //if ($state.current.data && !isEmpty($state.current.data)) {
             //    $scope.model = $state.current.data;
@@ -34,6 +37,10 @@
             //    $scope.model = model;
             //}
             //$state.current.data = $scope.model;
+
+            if ( $scope.model.endpoint.id != null ) {
+                oasis.getEndpoint($scope.model.endpoint.id).success(onGetEndpointSuccess);
+            }
         }
 
         function createEndPoint() {
@@ -44,6 +51,13 @@
             console.log('create endpoint');
             console.log(response);
             model.endpoint = response;
+        }
+
+        function onGetEndpointSuccess(response) {
+            model.endpoint.name = response.name;
+            model.endpoint.desc = response.desc;
+            model.endpoint.url = response.url;
+
         }
     }
 

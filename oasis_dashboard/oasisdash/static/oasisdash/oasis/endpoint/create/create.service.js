@@ -34,7 +34,6 @@
 
         function initScope($scope) {
             scope = $scope;
-
             scope.workflow = createWorkflow;
             scope.model = model;
             scope.$on('$destroy', function () {
@@ -56,14 +55,15 @@
         }
 
         function submit() {
-            console.log(model.endpoint);
-            return model.createEndpoint().then(success);
+            //console.log(model.endpoint);
+            success()
+            //return model.createEndpoint().then(success);
         }
 
-        function success(response) {
-            console.log(response);
+        function success() {
+            console.log('create endpoint');
             //toast.add('success', interpolate(message.success, response.data.id));
-            scope.$emit(events.CREATE_SUCCESS, response.data);
+            scope.$emit(events.CREATE_SUCCESS, {});
         }
 
         return service;

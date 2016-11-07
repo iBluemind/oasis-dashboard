@@ -29,7 +29,6 @@
         var ctrl = this;
 
         $scope.functionId = $stateParams.functionId;
-        ctrl.region = [];
         ctrl.endpoints = [];
         ctrl.createFunction = createFunction;
         ctrl.nodepools=[];
@@ -47,9 +46,21 @@
             }
             $state.current.data = $scope.model;
             oasis.getEndpoints().success(getEndPointSuccess);
+            oasis.getNodePools().success(onGetNodePoolPoliciesSuccess);
 
             if ( $scope.functionId != -1 )
                 oasis.getFunction($scope.functionId).success(getFunctionSuccess);
+        }
+
+        function onGetNodePoolPoliciesSuccess(response) {
+            for (var i in response.items) {
+                var item = {
+                    unit: response.items[i].id,
+                    label: response.items[i].name
+                }
+
+                ctrl.nodepools.push(item)
+            }
         }
 
         function getFunctionSuccess(response) {
@@ -58,6 +69,11 @@
             $scope.model.newFunctionSpec.name = response.name;
             $scope.model.newFunctionSpec.desc = response.desc;
             $scope.model.newFunctionSpec.body = response.body;
+            $scope.model.newFunctionSpec.endpoint_id = response.endpoint_id;
+            $scope.model.newFunctionSpec.nodepool_id = response.nodepool_id;
+            $scope.model.newFunctionSpec.status = response.status;
+            $scope.model.newFunctionSpec.stack_id = response.stack_id;
+
         }
 
         function createFunction() {

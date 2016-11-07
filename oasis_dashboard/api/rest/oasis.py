@@ -30,8 +30,23 @@ def change_to_id(obj):
     Oasis returns objects with a field called 'uuid' many of Horizons
     directives however expect objects to have a field called 'id'.
     """
+    print 'pppp'
+    print obj
+    print 'pppp'
     obj['id'] = obj.pop('id')
     return obj
+
+
+@urls.register
+class NodePoolPolicies(generic.View):
+    """API for Oasis Functions"""
+    url_regex = r'oasis/nodepools/$'
+
+    @rest_utils.ajax()
+    def get(self, request):
+        """Get function list"""
+        result = oasis.node_pool_list(request)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
 
 
 @urls.register
@@ -119,23 +134,34 @@ class EndPoint(generic.View):
     url_regex = r'oasis/endpoint/(?P<endpoint_id>[^/]+)$'
 
     @rest_utils.ajax()
-    def get(self, request):
-        """Get endpoint list"""
-        result = oasis.endpoint_get(request, '')
-        return {'items': [change_to_id(n.to_dict()) for n in result]}
+    def get(self, request, endpoint_id):
+        """Get a specific endpoint"""
+        return oasis.endpoint_get(request, endpoint_id).to_dict()
 
+    @rest_utils.ajax(data_required=True)
+    def patch(self, request, endpoint_id):
+        """Update a Endpoint.
+
+        Returns the Endpoint object on success.
+        """
+        LOG.debug('***************call update endpoint************')
+        new_endpoint = oasis.endpoint_update(request, endpoint_id, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/endpoints/%s' % new_endpoint.id,
+            new_endpoint.to_dict())
+
+    @rest_utils.ajax()
+    def delete(self, request, endpoint_id):
+        """Delete Endpoint by id.
+
+        Returns HTTP 204 (no content) on successful deletion.
+        """
+        oasis.endpoint_delete(request, endpoint_id)
 
 @urls.register
 class HttpApis(generic.View):
     """API for Oasis HttpApis"""
     url_regex = r'oasis/httpapis/$'
-
-    @rest_utils.ajax()
-    def get(self, request):
-        """Get httpapi list"""
-        LOG.debug('***************call httpapi list************')
-        result = oasis.httpapi_list(request)
-        return {'items': [change_to_id(n.to_dict()) for n in result]}
 
     @rest_utils.ajax(data_required=True)
     def post(self, request):
@@ -148,6 +174,38 @@ class HttpApis(generic.View):
         return rest_utils.CreatedResponse(
             '/api/oasis/httpapis/%s' % new_httpapi.id,
             new_httpapi.to_dict())
+
+
+@urls.register
+class HttpApi(generic.View):
+    """API for Oasis Endpoints"""
+    url_regex = r'oasis/httpapi/(?P<endpoint_id>[^/]+)$'
+
+    @rest_utils.ajax()
+    def get(self, request, endpoint_id):
+        """Get a specific httpapi"""
+        result = oasis.httpapi_get(request, endpoint_id)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax(data_required=True)
+    def patch(self, request, endpoint_id):
+        """Update a Endpoint.
+
+        Returns the Endpoint object on success.
+        """
+        LOG.debug('***************call update endpoint************')
+        new_endpoint = oasis.endpoint_update(request, endpoint_id, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/endpoints/%s' % new_endpoint.id,
+            new_endpoint.to_dict())
+
+    @rest_utils.ajax()
+    def delete(self, request, endpoint_id):
+        """Delete Endpoint by id.
+
+        Returns HTTP 204 (no content) on successful deletion.
+        """
+        oasis.endpoint_delete(request, endpoint_id)
 
 
 @urls.register

@@ -2,8 +2,6 @@
        hz-table ng-cloak
        st-table="table.endpoint"
        st-safe-src="table.endpointSrc"
-       default-sort="name"
-       default-sort-reverse="false"
        class="table table-striped table-rsp table-detail">
 
     <thead>
@@ -11,13 +9,7 @@
       Table-batch-actions:
       This is where batch actions like searching, creating, and deleting.
     -->
-    <tr>
-        <th colspan="100" class="search-header">
-            <hz-magic-search-bar group-classes="input-group-sm" icon-classes="fa-search"
-                                 filter-facets="table.endpointFacets">
-            </hz-magic-search-bar>
-        </th>
-    </tr>
+
     <tr class="action-row">
         <th colspan="100">
             <actions allowed="table.endpointResource.batchActions" type="batch"></actions>
@@ -29,11 +21,6 @@
     -->
 
     <tr>
-        <th class="multi_select_column">
-            <input type="checkbox" hz-select-all="table.endpoint">
-        </th>
-
-        <th class="expander"></th>
 
         <th class="rsp-p1" st-sort="name" st-sort-default translate>
             Name
@@ -47,7 +34,7 @@
         <th class="rsp-p1" st-sort="status" translate>
             Status
         </th>
-        <th class="rsp-p1" st-sort="created_at" translate>
+        <th class="rsp-p2" st-sort="created_at" translate>
             Create Time
         </th>
     </tr>
@@ -66,24 +53,11 @@
 
     <tr ng-repeat-start="b in table.endpoint track by b.id">
 
-        <td class="multi_select_column">
-            <input type="checkbox"
-                   ng-model="tCtrl.selections[b.id].checked"
-                   hz-select="b">
-        </td>
-
-        <td class="expander">
-        <span class="fa fa-chevron-right"
-              hz-expand-detail
-              duration="200">
-        </span>
-        </td>
-
-        <td class="rsp-p1"><a href='' ng-click="table.showDetailModal(b)">{$ b.name|noName $}</a></td>
+        <td class="rsp-p1"><a href='' ng-click="table.showDetailModal(b.id)">{$ b.name|noName $}</a></td>
         <td class="rsp-p2">{$ b.url $}</td>
         <td class="rsp-p2">{$ b.desc $}</td>
         <td class="rsp-p1"> running </td>
-        <td class="rsp-p1"> {$ b.created_at $} </td>
+        <td class="rsp-p2"> {$ b.created_at $} </td>
 
         <td class="actions_column">
             <!--
