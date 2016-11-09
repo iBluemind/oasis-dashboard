@@ -18,7 +18,6 @@
                 name: null,
                 body: null,
                 stack_id: null,
-                user_id:  null,
                 status: null
             },
 

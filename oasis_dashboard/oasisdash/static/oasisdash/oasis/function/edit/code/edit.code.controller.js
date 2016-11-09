@@ -38,13 +38,14 @@
         function init() {
 
             console.log('function Id : ' + $scope.functionId);
+            $scope.model = model;
             //model.init();
-            if ($state.current.data && !isEmpty($state.current.data)) {
-                $scope.model = $state.current.data;
-            } else {
-                $scope.model = model;
-            }
-            $state.current.data = $scope.model;
+            //if ($state.current.data && !isEmpty($state.current.data)) {
+            //    $scope.model = $state.current.data;
+            //} else {
+            //    $scope.model = model;
+            //}
+            //$state.current.data = $scope.model;
             oasis.getEndpoints().success(getEndPointSuccess);
             oasis.getNodePools().success(onGetNodePoolPoliciesSuccess);
 
@@ -58,8 +59,18 @@
                     unit: response.items[i].id,
                     label: response.items[i].name
                 }
-
                 ctrl.nodepools.push(item)
+            }
+        }
+
+        function getEndPointSuccess(response){
+            //console.log(response);
+            for (var i in response.items) {
+                var item = {
+                    unit: response.items[i].id,
+                    label: response.items[i].name
+                }
+                ctrl.endpoints.push(item)
             }
         }
 
@@ -77,7 +88,8 @@
         }
 
         function createFunction() {
-            console.log('crea te function');
+            console.log('create function');
+            console.log(model.newFunctionSpec);
             if ( $scope.functionId == -1 )
                 model.createFunction().success(createFunctionSuccess);
             else {
@@ -93,20 +105,6 @@
             //toast.add('success', interpolate(message.success, [response.name]));
             $scope.$emit(events.CREATE_SUCCESS, response);
             $location.path(baseRoute + 'function');
-        }
-
-        function getEndPointSuccess(response){
-
-            //console.log(response);
-
-            for (var i in response.items) {
-                var item = {
-                    unit: response.items[i].id,
-                    label: response.items[i].name
-                }
-
-                ctrl.endpoints.push(item)
-            }
         }
 
     }
