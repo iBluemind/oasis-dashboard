@@ -31,22 +31,25 @@
         //$scope.selectMethods = [];
         $scope.selectMethod = selectMethod;
         $scope.showSetting = showSetting;
+        $scope.removeHttpApi = removeHttpApi;
+
+        var deleteIndex;
 
         init();
 
         function init() {
-            //$scope.integrationModel = integrationModel;
-            if ($state.current.data && !isEmpty($state.current.data)) {
-                $scope.integrationModel = $state.current.data;
-                if ( $state.current.data.method != null ){
-                    var method = $state.current.data.method;
-                    var index = $state.current.data.index;
-                    $state.go('endpoint', {param:method, index:index});
-                }
-            } else {
-                $scope.integrationModel = integrationModel;
-            }
-            $state.current.data = $scope.integrationModel;
+            $scope.integrationModel = integrationModel;
+            //if ($state.current.data && !isEmpty($state.current.data)) {
+            //    $scope.integrationModel = $state.current.data;
+            //    if ( $state.current.data.method != null ){
+            //        var method = $state.current.data.method;
+            //        var index = $state.current.data.index;
+            //        $state.go('endpoint', {param:method, index:index});
+            //    }
+            //} else {
+            //    $scope.integrationModel = integrationModel;
+            //}
+            //$state.current.data = $scope.integrationModel;
 
             if ( $scope.model.endpoint.id != null ) {
                 oasis.getHttpApi($scope.model.endpoint.id).success(onGetHttpApiSuccess);
@@ -55,28 +58,27 @@
 
         function onGetHttpApiSuccess(response) {
             console.log('onGetHttpApiSuccess');
-            console.log(response);
+            console.log(response.items);
             for (var i in response.items) {
                 var methodInfo = new Object();
+                methodInfo.id = response.items[i].id;
                 methodInfo.method = response.items[i].method;
-                integrationModel.httpapi.push(methodInfo);
+                $scope.integrationModel.httpapi.push(methodInfo);
             }
-            console.log(integrationModel);
         }
 
         function selectMethod(method) {
-            var methodInfo = new Object();
-            methodInfo.method = method.label;
-            integrationModel.httpapi.push(methodInfo);
-            integrationModel.newHttpApi = integrationModel.httpapi[integrationModel.httpapi.length - 1];
+            integrationModel.newHttpApi.method = method.label;
             integrationModel.newHttpApi.endpoint_id = integrationModel.endpoint.id;
             integrationModel.createHttpApi().success(onCreateHttpApiSuccess);
         }
 
         function onCreateHttpApiSuccess(response) {
-            console.log('create http api success');
-            console.log(response);
-            //integrationModel.newHttpApi = response;
+            var newHttpApi = new Object();
+            newHttpApi.id = response.id;
+            newHttpApi.method = response.method;
+            integrationModel.httpapi.push(newHttpApi);
+
             integrationModel.newRequest.http_api_id = response.id;
             integrationModel.newResponse.http_api_id = response.id;
             integrationModel.createRequest().success(onCreateRequestSuccess);
@@ -84,23 +86,29 @@
         }
 
         function onCreateRequestSuccess(response) {
-            console.log('create requestsuccess');
-            console.log(response);
-            integrationModel.newRequest = response;
+            integrationModel.newRequest.request_id = response.id;
         }
 
          function onCreateResponseSuccess(response) {
-            console.log('create response success');
-            console.log(response);
-            integrationModel.newResponse = response;
+            integrationModel.newResponse.response_id = response.id;
         }
-
 
         function showSetting(method, index) {
             if ($scope.integrationModel.method!=null )
                 $scope.integrationModel.method = method;
             $state.current.data.index = index;
             $state.go('endpoint', {'index':index, 'param':method});
+        }
+
+        function removeHttpApi(index) {
+            deleteIndex = index;
+            var id = integrationModel.httpapi[index].id;
+            oasis.deleteHttpApi(id, true).success(onDeleteHttpApiSuccess);
+        }
+
+        function onDeleteHttpApiSuccess(response) {
+            console.log('delete success')
+            integrationModel.httpapi.splice(deleteIndex,1);
         }
     }
 

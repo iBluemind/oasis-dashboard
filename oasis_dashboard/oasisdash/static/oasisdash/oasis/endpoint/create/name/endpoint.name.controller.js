@@ -29,14 +29,8 @@
         init();
 
         function init() {
-
+            model.init();
             $scope.model = model;
-            //if ($state.current.data && !isEmpty($state.current.data)) {
-            //    $scope.model = $state.current.data;
-            //} else {
-            //    $scope.model = model;
-            //}
-            //$state.current.data = $scope.model;
 
             if ( $scope.model.endpoint.id != null ) {
                 oasis.getEndpoint($scope.model.endpoint.id).success(onGetEndpointSuccess);

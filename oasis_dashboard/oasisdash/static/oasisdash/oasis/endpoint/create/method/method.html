@@ -9,7 +9,7 @@
 
         <div ng-repeat="select in integrationModel.httpapi">
             <a href="" ng-click="showSetting(select.method, $index)"> {$ select.method $} </a>
-            <button class="btn btn-default" ng-click="selectMethods.splice($index,1)">Delete</button>
+            <button class="btn btn-default" ng-click="removeHttpApi($index)">Delete</button>
         </div>
     </div>
 

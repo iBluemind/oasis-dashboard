@@ -32,8 +32,22 @@
             createResponse: createResponse,
             createResponseCode: createResponseCode,
             createResponseMessage: createResponseMessage,
-            createRequestHeader: createRequestHeader
+            createRequestHeader: createRequestHeader,
+            init: init
         };
+
+        function init() {
+            endpointModel.request = {}
+            endpointModel.requestHeader = {}
+            endpointModel.response = {}
+            endpointModel.responseCode = {}
+            endpointModel.responseMessage = {}
+            //endpointModel.newHttpApi = {}
+            //endpointModel.newRequest = {}
+            //endpointModel.newResponse = {}
+            endpointModel.httpapi = []
+
+        }
 
         function createEndpoint() {
             var finalSpec = angular.copy(endpointModel.endpoint);

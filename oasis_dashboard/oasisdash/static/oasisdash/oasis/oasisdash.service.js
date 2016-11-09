@@ -33,6 +33,7 @@
             getRequestHeaders: getRequestHeaders,
             getHttpApis: getHttpApis,
             getHttpApi: getHttpApi,
+            deleteHttpApi: deleteHttpApi,
             getResponseCodes: getResponseCodes,
             getResponseMessages: getResponseMessages
         };
@@ -130,6 +131,14 @@
                 .error(function () {
                     toastService.add('error', gettext('Unable to retrieve the HttpApi.'));
                 });
+        }
+
+        function deleteHttpApi(id, suppressError) {
+            var promise = apiService.delete('/api/oasis/httpapi/' + id);
+            return suppressError ? promise : promise.error(function () {
+                var msg = gettext('Unable to delete the HttpApi with id: %(id)s');
+                toastService.add('error', interpolate(msg, {id: id}, true));
+            });
         }
 
         function createRequest(params) {

@@ -160,6 +160,10 @@ def httpapi_get(request, id):
     return oasisclient(request).httpapi.get(id)
 
 
+def httpapi_delete(request, id) :
+    return oasisclient(request).httpapi.delete(id)
+
+
 def request_list(request):
     return oasisclient(request).request.list()
 

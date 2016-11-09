@@ -55,13 +55,13 @@
         init();
 
         function init() {
-
-            if ($state.current.data && !isEmpty($state.current.data)) {
-                $scope.integrationModel = $state.current.data;
-            } else {
-                $scope.integrationModel = integrationModel;
-            }
-            $state.current.data = $scope.integrationModel;
+            integrationModel.init();
+            //if ($state.current.data && !isEmpty($state.current.data)) {
+            //    $scope.integrationModel = $state.current.data;
+            //} else {
+            //    $scope.integrationModel = integrationModel;
+            //}
+            //$state.current.data = $scope.integrationModel;
         }
 
         function createHeader() {
@@ -73,8 +73,7 @@
             //$scope.headers.push({'id': length});
             integrationModel.requestHeader.name = $scope.headers[length-1].name;
             integrationModel.requestHeader.value = $scope.headers[length-1].value;
-            integrationModel.requestHeader.request_id = integrationModel.newRequest.id;
-            console.log(integrationModel.requestHeader);
+            integrationModel.requestHeader.request_id = integrationModel.newRequest.request_id;
 
             if ( integrationModel.requestHeader.name != null )
                 integrationModel.createRequestHeader().success(onCreateRequestHeaderSuccess);
@@ -84,8 +83,8 @@
         function onCreateRequestHeaderSuccess(response) {
             console.log('onCreateRequestHeaderSuccess')
             $scope.headers.push(response);
-            $scope.resCodes[$scope.resCodes.length-1].name='';
-            $scope.resCodes[$scope.resCodes.length-1].value='';
+            $scope.headers[$scope.headers.length-1].name='';
+            $scope.headers[$scope.headers.length-1].value='';
         }
 
         function removeHeader() {
@@ -100,7 +99,7 @@
             var index = $scope.resCodes.length;
             //$scope.resCodes.push({'id': index});
             integrationModel.responseCode.status_code = $scope.resCodes[index-1].code
-            integrationModel.responseCode.response_id = integrationModel.newResponse.id;
+            integrationModel.responseCode.response_id = integrationModel.newResponse.response_id;
 
              if ( integrationModel.responseCode.status_code != null )
                 integrationModel.createResponseCode().success(onCreateResponseCodeSuccess);

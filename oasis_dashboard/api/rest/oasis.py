@@ -158,6 +158,7 @@ class EndPoint(generic.View):
         """
         oasis.endpoint_delete(request, endpoint_id)
 
+
 @urls.register
 class HttpApis(generic.View):
     """API for Oasis HttpApis"""
@@ -201,11 +202,11 @@ class HttpApi(generic.View):
 
     @rest_utils.ajax()
     def delete(self, request, endpoint_id):
-        """Delete Endpoint by id.
+        """Delete HttpApi by id.
 
         Returns HTTP 204 (no content) on successful deletion.
         """
-        oasis.endpoint_delete(request, endpoint_id)
+        oasis.httpapi_delete(request, endpoint_id)
 
 
 @urls.register
