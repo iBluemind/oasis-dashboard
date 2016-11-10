@@ -22,7 +22,6 @@
     ];
 
     function IntegrationSettingController($scope, $state, $stateParams, integrationModel, oasis) {
-        var ctrl = this;
         var selectCodeId = null;
         var requestId;
         var deleteIndex;
@@ -126,12 +125,6 @@
             $scope.model.headers[$scope.model.headers.length-1].name='';
             $scope.model.headers[$scope.model.headers.length-1].value='';
         }
-
-        //function removeHeader(index) {
-        //    var lastItem = $scope.integrationModel.newFunctionSpec[$scope.index].request.length-1;
-        //    $scope.integrationModel.newFunctionSpec[$scope.index].request.splice(lastItem);
-        //    integrationModel.endpoint.spec.request = $scope.integrationModel.newFunctionSpec[$scope.index].request;
-        //}
 
         function removeHeader(index) {
             console.log('removeHeader' +' , ' + index);
