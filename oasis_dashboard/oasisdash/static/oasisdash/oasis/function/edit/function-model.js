@@ -18,7 +18,7 @@
                 name: null,
                 body: null,
                 stack_id: null,
-                status: null
+                status: 'running'
             },
 
             // API methods
