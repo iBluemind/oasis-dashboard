@@ -16,11 +16,13 @@ function install_oasis_dashboard {
 
 function configure_oasis_dashboard {
     cp -a ${OASIS_DASHBOARD_DIR}/oasis_dashboard/enabled/* ${DEST}/horizon/openstack_dashboard/local/enabled/
-    # NOTE: If locale directory does not exist, compilemessages will fail,
-    # so check for an existence of locale directory is required.
-    if [ -d ${OASIS_DASHBOARD_DIR}/oasis_dashboard/locale ]; then
-        (cd ${OASIS_DASHBOARD_DIR}/dasos_dashboard; DJANGO_SETTINGS_MODULE=openstack_dashboard.settings ../manage.py compilemessages)
-    fi
+
+    local horizon_manage_py="$HORIZON_DIR/manage.py"
+
+    python "$horizon_manage_py" collectstatic --noinput
+    python "$horizon_manage_py" compress --force
+
+    restart_apache_server
 }
 
 # check for service enabled
