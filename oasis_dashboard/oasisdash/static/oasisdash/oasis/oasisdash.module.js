@@ -63,6 +63,7 @@
             .state('edit',{
                 url:baseRoute+'function/edit',
                 controller: 'TabsController',
+                params: {'functionId': -1},
                 templateUrl: path+'function/edit/edit.html',
             })
             .state('edit.code',{
