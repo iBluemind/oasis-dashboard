@@ -13,7 +13,7 @@
         </div>
 
         <div class="row">
-            <fieldset data-ng-repeat="header in headers">
+            <fieldset data-ng-repeat="header in model.headers">
                 <div class="col-md-3">
                     <div>
                         <label></label>
@@ -37,8 +37,8 @@
                         <label> </label>
                     </div>
                     <div>
-                        <button type="button" id="button" class="btn btn-default full-config-hide" ng-show="$last"
-                                ng-click="removeHeader()">
+                        <button type="button" id="button" class="btn btn-default full-config-hide" ng-show="!$last"
+                                ng-click="removeHeader($index)">
                             Delete
                         </button>
                     </div>
@@ -55,78 +55,79 @@
             </div>
         </div>
 
-        <h3>Response Code</h3>
+        <!--<h3>Response Code</h3>-->
 
-        <div class="row">
-            <label class="control-label" translate>Response Code</label>
-        </div>
+        <!--<div class="row">-->
+            <!--<label class="control-label" translate>Response Code</label>-->
+        <!--</div>-->
 
-        <div class="row">
+        <!--<div class="row">-->
 
-            <fieldset data-ng-repeat="code in resCodes">
-                <div class="col-md-3">
-                    <div><label></label></div>
-                    <div>
-                        <input name="resCode" type="text" class="form-control" id="resCode"
-                               ng-model="code.code"
-                               placeholder="{$ 'code of the response to create.'|translate $}">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div><label></label></div>
-                    <div>
-                        <button type="button" class="btn btn-default full-config-hide" ng-show="$last"
-                                ng-click="removeResCode()">
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
+            <!--<fieldset data-ng-repeat="code in resCodes">-->
+                <!--<div class="col-md-3">-->
+                    <!--<div><label></label></div>-->
+                    <!--<div>-->
+                        <!--<input name="resCode" type="text" class="form-control" id="resCode"-->
+                               <!--ng-model="code.code"-->
+                               <!--placeholder="{$ 'code of the response to create.'|translate $}">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-3">-->
+                    <!--<div><label></label></div>-->
+                    <!--<div>-->
+                        <!--<button type="button" class="btn btn-default full-config-hide" ng-show="$last"-->
+                                <!--ng-click="removeResCode()">-->
+                            <!--Delete-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</fieldset>-->
+        <!--</div>-->
 
-        <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-default" ng-click="addResCode()">
-                    Add
-                </button>
+        <!--<div class="row">-->
+            <!--<div class="col-md-4">-->
+                <!--<button class="btn btn-default" ng-click="addResCode()">-->
+                    <!--Add-->
+                <!--</button>-->
 
-            </div>
-        </div>
+            <!--</div>-->
+        <!--</div>-->
 
-        <h3>Response Setting</h3>
+        <!--<h3>Response Setting</h3>-->
 
-        <fieldset data-ng-repeat="response in responseMessages">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <select name="select-code" id="select-code" ng-model="response.code"
-                            class="form-control" ng-change="selectCode(response)"
-                            ng-options="code as code.status_code for code in resCodes">
-                    </select>
-                </div>
+        <!--<fieldset data-ng-repeat="response in responseMessages">-->
+            <!--<div class="col-md-3">-->
+                <!--<div class="form-group">-->
+                    <!--<select name="select-code" id="select-code" ng-model="response.code"-->
+                            <!--class="form-control" ng-change="selectCode(response)"-->
+                            <!--ng-options="code as code.status_code for code in resCodes">-->
+                    <!--</select>-->
+                <!--</div>-->
 
-                <div class="form-group">
-                    <input name="header-value" type="text" class="form-control" id="res-regex"
-                           ng-model="response.message"
-                           placeholder="{$ 'URL regex of response to create.'|translate $}">
-                </div>
-            </div>
-            <div class="col-xs-3">
-                <div class="form-group" style='display:table-cell;vertical-align:middle'>
-                    <button type="button" class="btn btn-default full-config-hide" ng-show="$last"
-                            ng-click="removeResponse()">
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </fieldset>
+                <!--<div class="form-group">-->
+                    <!--<input name="header-value" type="text" class="form-control" id="res-regex"-->
+                           <!--ng-model="response.message"-->
+                           <!--placeholder="{$ 'URL regex of response to create.'|translate $}">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-xs-3">-->
+                <!--<div class="form-group" style='display:table-cell;vertical-align:middle'>-->
+                    <!--<button type="button" class="btn btn-default full-config-hide" ng-show="$last"-->
+                            <!--ng-click="removeResponse()">-->
+                        <!--Delete-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</fieldset>-->
 
-        <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-default" ng-click="addResponseMesage()">
-                    Add
-                </button>
+        <!--<div class="row">-->
+            <!--<div class="col-md-4">-->
+                <!--<button class="btn btn-default" ng-click="addResponseMesage()">-->
+                    <!--Add-->
+                <!--</button>-->
 
-            </div>
-        </div>
+            <!--</div>-->
+        <!--</div>-->
+
     </div>
 </div>

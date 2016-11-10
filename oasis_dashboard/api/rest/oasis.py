@@ -30,9 +30,6 @@ def change_to_id(obj):
     Oasis returns objects with a field called 'uuid' many of Horizons
     directives however expect objects to have a field called 'id'.
     """
-    print 'pppp'
-    print obj
-    print 'pppp'
     obj['id'] = obj.pop('id')
     return obj
 
@@ -210,6 +207,82 @@ class HttpApi(generic.View):
 
 
 @urls.register
+class Requests(generic.View):
+    """API for Oasis Requests"""
+    url_regex = r'oasis/requests/$'
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new Request.
+
+        Returns the new Request object on success.
+        """
+        LOG.debug('***************call request response************')
+        new_request = oasis.request_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/requests/%s' % new_request.id,
+            new_request.to_dict())
+
+
+@urls.register
+class Request(generic.View):
+    """API for Oasis Requests"""
+    url_regex = r'oasis/request/(?P<httpapi_id>[^/]+)$'
+
+    @rest_utils.ajax()
+    def get(self, request, httpapi_id):
+        """Get response list"""
+        LOG.debug('***************call request list************')
+        return oasis.request_get(request, httpapi_id).to_dict()
+        # return oasis.function_get(request, function_id).to_dict()
+        # return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+
+@urls.register
+class RequestHeaders(generic.View):
+    """API for Oasis RequestHeaders"""
+    url_regex = r'oasis/requestheaders/(?P<request_id>[^/]+)$'
+
+    @rest_utils.ajax()
+    def get(self, request, request_id):
+        """Get response list"""
+        LOG.debug('***************call request header list************')
+        result = oasis.requestheader_get(request, request_id)
+        return {'items': [change_to_id(n.to_dict()) for n in result]}
+
+    @rest_utils.ajax()
+    def delete(self, request, request_id):
+        """Delete RequestHeader by id.
+
+        Returns HTTP 204 (no content) on successful deletion.
+        """
+        oasis.requestheader_delete(request, request_id)
+
+@urls.register
+class RequestHeader(generic.View):
+    """API for Oasis RequestHeaders"""
+    url_regex = r'oasis/requestheader/$'
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request):
+        """Create a new Request Header.
+
+        Returns the new RequestHeader object on success.
+        """
+        LOG.debug('***************call request header ************')
+        new_requestheader = oasis.requestheader_create(request, **request.DATA)
+        return rest_utils.CreatedResponse(
+            '/api/oasis/requestheaders/%s' % new_requestheader.id,
+            new_requestheader.to_dict())
+
+
+
+
+
+
+
+
+@urls.register
 class Responses(generic.View):
     """API for Oasis Responses"""
     url_regex = r'oasis/responses/$'
@@ -283,52 +356,3 @@ class ResponseMessages(generic.View):
             '/api/oasis/responsemessages/%s' % new_responsemessage.id,
             new_responsemessage.to_dict())
 
-
-@urls.register
-class Requests(generic.View):
-    """API for Oasis Requests"""
-    url_regex = r'oasis/requests/$'
-
-    @rest_utils.ajax()
-    def get(self, request):
-        """Get response list"""
-        LOG.debug('***************call request list************')
-        result = oasis.request_list(request)
-        return {'items': [change_to_id(n.to_dict()) for n in result]}
-
-    @rest_utils.ajax(data_required=True)
-    def post(self, request):
-        """Create a new Request.
-
-        Returns the new Request object on success.
-        """
-        LOG.debug('***************call request response************')
-        new_request = oasis.request_create(request, **request.DATA)
-        return rest_utils.CreatedResponse(
-            '/api/oasis/requests/%s' % new_request.id,
-            new_request.to_dict())
-
-
-@urls.register
-class RequestHeaders(generic.View):
-    """API for Oasis RequestHeaders"""
-    url_regex = r'oasis/requestheaders/$'
-
-    @rest_utils.ajax()
-    def get(self, request):
-        """Get response list"""
-        LOG.debug('***************call request header list************')
-        result = oasis.requestheader_list(request)
-        return {'items': [change_to_id(n.to_dict()) for n in result]}
-
-    @rest_utils.ajax(data_required=True)
-    def post(self, request):
-        """Create a new Request Header.
-
-        Returns the new RequestHeader object on success.
-        """
-        LOG.debug('***************call request header ************')
-        new_requestheader = oasis.requestheader_create(request, **request.DATA)
-        return rest_utils.CreatedResponse(
-            '/api/oasis/requestheaders/%s' % new_requestheader.id,
-            new_requestheader.to_dict())

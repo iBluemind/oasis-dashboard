@@ -84,7 +84,7 @@
             })
             .state('endpoint', {
                 url: baseRoute + 'endpoint',
-                params: {'index': 0, 'endpointId': -1},
+                params: {'index': 0, 'httpApiId': -1},
                 templateUrl: path + 'endpoint/create/method/setting/method.setting.html',
                 data: {}
             })

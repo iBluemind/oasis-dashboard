@@ -33,7 +33,8 @@
             createResponseCode: createResponseCode,
             createResponseMessage: createResponseMessage,
             createRequestHeader: createRequestHeader,
-            init: init
+            init: init,
+            requestHeaderInit: requestHeaderInit
         };
 
         function init() {
@@ -46,7 +47,13 @@
             //endpointModel.newRequest = {}
             //endpointModel.newResponse = {}
             endpointModel.httpapi = []
+        }
 
+        function requestHeaderInit() {
+            endpointModel.request = {}
+            endpointModel.requestHeader = {}
+            endpointModel.newRequest = {}
+            endpointModel.newResponse = {}
         }
 
         function createEndpoint() {

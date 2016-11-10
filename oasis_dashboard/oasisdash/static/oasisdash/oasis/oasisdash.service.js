@@ -14,26 +14,35 @@
     function OasisAPI(apiService, toastService, gettext) {
         var service = {
             getNodePools: getNodePools,
+
             createFunction: createFunction,
             getFunction: getFunction,
             getFunctions: getFunctions,
             updateFunction: updateFunction,
             deleteFunction: deleteFunction,
+
             createEndpoint: createEndpoint,
-            createHttpApi: createHttpApi,
-            createRequest: createRequest,
-            createRequestHeader: createRequestHeader,
-            createResponse: createResponse,
-            createResponseCode: createResponseCode,
-            createResponseMessage: createResponseMessage,
             getEndpoint: getEndpoint,
             getEndpoints: getEndpoints,
             deleteEndpoint: deleteEndpoint,
             updateEndpoint: updateEndpoint,
-            getRequestHeaders: getRequestHeaders,
+
+            createHttpApi: createHttpApi,
             getHttpApis: getHttpApis,
             getHttpApi: getHttpApi,
             deleteHttpApi: deleteHttpApi,
+
+            createRequest: createRequest,
+            getRequest: getRequest,
+            deleteRequest: deleteRequest,
+
+            createRequestHeader: createRequestHeader,
+            getRequestHeaders: getRequestHeaders,
+            deleteRequestHeader: deleteRequestHeader,
+
+            createResponse: createResponse,
+            createResponseCode: createResponseCode,
+            createResponseMessage: createResponseMessage,
             getResponseCodes: getResponseCodes,
             getResponseMessages: getResponseMessages
         };
@@ -47,6 +56,7 @@
                 });
         }
 
+        /////////////////Functions APIs//////////////////////
         function createFunction(params) {
             return apiService.post('/api/oasis/functions/', params)
                 .error(function () {
@@ -83,6 +93,7 @@
                 });
         }
 
+        /////////////////EndPoints APIs//////////////////////
         function createEndpoint(params) {
             return apiService.post('/api/oasis/endpoints/', params)
                 .error(function () {
@@ -119,6 +130,7 @@
                 });
         }
 
+        /////////////////HttpApis APIs//////////////////////
         function createHttpApi(params) {
             return apiService.post('/api/oasis/httpapis/', params)
                 .error(function () {
@@ -141,6 +153,14 @@
             });
         }
 
+        function getHttpApis() {
+            return apiService.get('/api/oasis/httpapis/')
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve HttpApis.'));
+                });
+        }
+
+        ///////////Requests APIs//////////////
         function createRequest(params) {
             return apiService.post('/api/oasis/requests/', params)
                 .error(function () {
@@ -148,10 +168,48 @@
                 });
         }
 
+        function getRequest(httpApiId) {
+            return apiService.get('/api/oasis/request/' + httpApiId)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve Request.'));
+                });
+        }
+
+        function deleteRequest(httpApiId, suppressError) {
+            var promise = apiService.delete('/api/oasis/request/' + httpApiId);
+            return suppressError ? promise : promise.error(function () {
+                var msg = gettext('Unable to delete the Request with id: %(id)s');
+                toastService.add('error', interpolate(msg, {id: id}, true));
+            });
+        }
+
         function createRequestHeader(params) {
-            return apiService.post('/api/oasis/requestheaders/', params)
+            return apiService.post('/api/oasis/requestheader/', params)
                 .error(function () {
                     toastService.add('error', gettext('Unable to create RequestHeader.'));
+                });
+        }
+
+        function getRequestHeaders(requestId) {
+            return apiService.get('/api/oasis/requestheaders/' + requestId)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve RequestHeaders.'));
+                });
+        }
+
+        function deleteRequestHeader(id, suppressError) {
+            var promise = apiService.delete('/api/oasis/requestheaders/' + id);
+            return suppressError ? promise : promise.error(function () {
+                var msg = gettext('Unable to delete the RequestHeader with id: %(id)s');
+                toastService.add('error', interpolate(msg, {id: id}, true));
+            });
+        }
+
+        /////////////////Responses APIs////////////
+        function getResponseCodes() {
+            return apiService.get('/api/oasis/responsecodes/')
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve ResponseCodes.'));
                 });
         }
 
@@ -184,25 +242,5 @@
                 });
         }
 
-        function getRequestHeaders() {
-            return apiService.get('/api/oasis/requestheaders/')
-                .error(function () {
-                    toastService.add('error', gettext('Unable to retrieve RequestHeaders.'));
-                });
-        }
-
-        function getHttpApis() {
-            return apiService.get('/api/oasis/httpapis/')
-                .error(function () {
-                    toastService.add('error', gettext('Unable to retrieve HttpApis.'));
-                });
-        }
-
-        function getResponseCodes() {
-            return apiService.get('/api/oasis/responsecodes/')
-                .error(function () {
-                    toastService.add('error', gettext('Unable to retrieve ResponseCodes.'));
-                });
-        }
     };
 })();

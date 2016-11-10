@@ -18,44 +18,60 @@
         '$state',
         '$stateParams',
         'horizon.dashboard.oasisdash.endpoint.endpointModel',
+        'horizon.app.core.openstack-service-api.oasisdash'
     ];
 
-    function IntegrationSettingController($scope, $state, $stateParams, integrationModel) {
+    function IntegrationSettingController($scope, $state, $stateParams, integrationModel, oasis) {
         var ctrl = this;
         var selectCodeId = null;
+        var requestId;
+        var deleteIndex;
 
-        $scope.index = $stateParams.index;
-        $scope.method = $stateParams.param;
+        var responseId;
 
-        $scope.resCodes = [
-            {
-                'code':null
-            }
-        ];
+        var httpApiId = $stateParams.httpApiId;
+        //$scope.method = $stateParams.param;
 
-        $scope.headers = [
+        $scope.model.headers = [
             {
                 'name': null,
                 'value': null
             }
         ];
-        $scope.selectCode = selectCode;
-        $scope.createHeader = createHeader;
+        //$scope.selectCode = selectCode;
         $scope.removeHeader = removeHeader;
         $scope.addHeader = addHeader;
-        $scope.addResCode = addResCode;
-        $scope.removeResCode = removeResCode;
-        $scope.addResponseMesage = addResponseMesage;
-        $scope.responseMessages = [
-            {
-                'message': null
-            }
-        ]
+
+        //$scope.resCodes = [
+        //    {
+        //        'code':null
+        //    }
+        //];
+        //$scope.addResCode = addResCode;
+        //$scope.removeResCode = removeResCode;
+        //$scope.addResponseMesage = addResponseMesage;
+        //$scope.responseMessages = [
+        //    {
+        //        'message': null
+        //    }
+        //]
 
         init();
 
         function init() {
-            integrationModel.init();
+            $scope.model.requestHeaderInit();
+
+            console.log('httpApiId : ' + httpApiId);
+            requestId = $scope.model.newRequest.request_id;
+            console.log('requestId : ' + requestId);
+
+            if ( requestId != null ) {
+                oasis.getRequestHeaders(requestId).success(onGetRequestHeadersSuccess);
+            } else {
+                oasis.getRequest(httpApiId).success(onGetRequestSuccess);
+            }
+
+            //responseId = integrationModel.newRequest.response_id;
             //if ($state.current.data && !isEmpty($state.current.data)) {
             //    $scope.integrationModel = $state.current.data;
             //} else {
@@ -64,36 +80,74 @@
             //$state.current.data = $scope.integrationModel;
         }
 
-        function createHeader() {
+        function onGetRequestSuccess(response) {
+            console.log('onGetRequestSuccess')
+            console.log(response);
+            $scope.model.newRequest.request_id = response.id;
+            oasis.getRequestHeaders(response.id).success(onGetRequestHeadersSuccess);
+        }
 
+        //function selectCode(select) {
+        //    selectCodeId = select.code.id;
+        //    console.log('select code');
+        //    console.log(select);
+        //    console.log(select.code.id);
+        //}
+
+        function onGetRequestHeadersSuccess(response) {
+            console.log('onGetRequestHeadersSuccess');
+            console.log(response);
+
+            for (var i in response.items) {
+                var methodInfo = new Object();
+                methodInfo.name = response.items[i].name;
+                methodInfo.value = response.items[i].value;
+                methodInfo.id = response.items[i].id;
+                $scope.model.headers.unshift(methodInfo);
+            }
         }
 
         function addHeader() {
-            var length = $scope.headers.length;
+            var length = $scope.model.headers.length;
             //$scope.headers.push({'id': length});
-            integrationModel.requestHeader.name = $scope.headers[length-1].name;
-            integrationModel.requestHeader.value = $scope.headers[length-1].value;
-            integrationModel.requestHeader.request_id = integrationModel.newRequest.request_id;
-
-            if ( integrationModel.requestHeader.name != null )
-                integrationModel.createRequestHeader().success(onCreateRequestHeaderSuccess);
+            $scope.model.requestHeader.name = $scope.model.headers[length-1].name;
+            $scope.model.requestHeader.value = $scope.model.headers[length-1].value;
+            $scope.model.requestHeader.request_id = $scope.model.newRequest.request_id;
+            console.log('addHeader');
+            console.log($scope.model.headers[length-1].name +' , ' + $scope.model.headers[length-1].value + ', ' + $scope.model.newRequest.request_id);
+            if ( $scope.model.requestHeader.name != null )
+                $scope.model.createRequestHeader().success(onCreateRequestHeaderSuccess);
 
         }
 
         function onCreateRequestHeaderSuccess(response) {
             console.log('onCreateRequestHeaderSuccess')
-            $scope.headers.push(response);
-            $scope.headers[$scope.headers.length-1].name='';
-            $scope.headers[$scope.headers.length-1].value='';
+            $scope.model.headers.push(response);
+            $scope.model.headers[$scope.model.headers.length-1].name='';
+            $scope.model.headers[$scope.model.headers.length-1].value='';
         }
 
-        function removeHeader() {
-            var lastItem = $scope.integrationModel.newFunctionSpec[$scope.index].request.length-1;
-            $scope.integrationModel.newFunctionSpec[$scope.index].request.splice(lastItem);
-            integrationModel.endpoint.spec.request = $scope.integrationModel.newFunctionSpec[$scope.index].request;
+        //function removeHeader(index) {
+        //    var lastItem = $scope.integrationModel.newFunctionSpec[$scope.index].request.length-1;
+        //    $scope.integrationModel.newFunctionSpec[$scope.index].request.splice(lastItem);
+        //    integrationModel.endpoint.spec.request = $scope.integrationModel.newFunctionSpec[$scope.index].request;
+        //}
+
+        function removeHeader(index) {
+            console.log('removeHeader' +' , ' + index);
+            deleteIndex = index;
+            var id = $scope.model.headers[index].id;
+            oasis.deleteRequestHeader(id, true).success(onDeleteRequestHeaderSuccess);
+        }
+
+        function onDeleteRequestHeaderSuccess(response) {
+            console.log('delete success')
+            $scope.model.headers.splice(deleteIndex,1);
         }
 
 
+//TODO Response Setting
+/*
         function addResCode() {
             console.log('res codes');
             var index = $scope.resCodes.length;
@@ -108,13 +162,6 @@
         function onCreateResponseCodeSuccess(response) {
             console.log('onCreateResponseCodeSuccess')
             $scope.resCodes.push(response);
-        }
-
-        function selectCode(select) {
-            selectCodeId = select.code.id;
-            console.log('select code');
-            console.log(select);
-            console.log(select.code.id);
         }
 
         function removeResCode() {
@@ -136,6 +183,7 @@
         function onCreateResponseMessageSuccess(response) {
             $scope.responseMessages.push(response);
         }
+*/
     }
 
     var hasOwnProperty = Object.prototype.hasOwnProperty;

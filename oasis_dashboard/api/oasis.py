@@ -164,24 +164,28 @@ def httpapi_delete(request, id) :
     return oasisclient(request).httpapi.delete(id)
 
 
-def request_list(request):
-    return oasisclient(request).request.list()
-
-
-def request_create(request, **params):
-    return oasisclient(request).request.create(**params)
-
-
 def requestheader_list(request):
     return oasisclient(request).request_header.list()
+
+
+def requestheader_get(request, id):
+    return oasisclient(request).request_header.get(id)
 
 
 def requestheader_create(request, **params):
     return oasisclient(request).request_header.create(**params)
 
 
+def requestheader_delete(request, header_id):
+    return oasisclient(request).request_header.delete(header_id)
+
+
 def request_create(request, **params):
     return oasisclient(request).request.create(**params)
+
+
+def request_get(request, id) :
+    return oasisclient(request).request.get(id)
 
 
 def response_list(request):
