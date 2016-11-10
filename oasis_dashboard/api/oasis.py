@@ -116,8 +116,8 @@ def function_list(request):
     return oasisclient(request).function.list()
 
 
-def function_update(request, id, params):
-    return oasisclient(request).function.update(id, params)
+def function_update(request, id, **params):
+    return oasisclient(request).function.update(id, **params)
 
 
 def function_delete(request, id):

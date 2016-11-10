@@ -28,8 +28,7 @@
         };
 
         function initNewFunctionSpec() {
-            model.newFunctionSpec = {
-            };
+            model.newFunctionSpec = {};
         }
 
         function init() {
@@ -39,15 +38,13 @@
 
         function createFunction() {
             var finalSpec = angular.copy(model.newFunctionSpec);
-            //cleanNullProperties(finalSpec);
-
+            cleanNullProperties(finalSpec);
             return oasis.createFunction(finalSpec);
         }
 
         function updateFunction(id) {
-             var finalSpec = angular.copy(model.newFunctionSpec);
-            //cleanNullProperties(finalSpec);
-
+            var finalSpec = angular.copy(model.newFunctionSpec);
+            cleanNullProperties(finalSpec);
             return oasis.updateFunction(id, finalSpec);
         }
 
@@ -62,6 +59,15 @@
 
         return integrationModel;
 
+    }
+
+    function cleanNullProperties(finalSpec) {
+        // Initially clean fields that don't have any value.
+        for (var key in finalSpec) {
+            if (finalSpec.hasOwnProperty(key) && finalSpec[key] === null) {
+                delete finalSpec[key];
+            }
+        }
     }
 })
 ();
